@@ -13,6 +13,11 @@
 >
 > 우리의 플렛폼에 함께 참여하여 후배들의 취업, 진로 결정에 조금이나마 보탬이 되어주셨으면 한다.
 
+## Github Repository
+> [BackEnd](https://github.com/BaeJunH0/AlumniLink_BE)
+>
+> [FrontEnd](https://github.com/neverx3gu/AlumniLink_FE)
+
 ## 프로젝트 주요 기능 ( 기능이 들어갈 것 )
 
 ## 기능 별 주안점 ( 기능 별로 어필하고 싶은 부분 적기, 기술적인 부분 )

@@ -32,3 +32,4 @@
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
 
 ## 참조 ( 프로젝트 노션을 쓰게 되면 그거 링크 달기, 아니면 레퍼런스 링크도 좋음 )
+.

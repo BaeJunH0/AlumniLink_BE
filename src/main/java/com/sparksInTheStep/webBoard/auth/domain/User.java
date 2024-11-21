@@ -10,7 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

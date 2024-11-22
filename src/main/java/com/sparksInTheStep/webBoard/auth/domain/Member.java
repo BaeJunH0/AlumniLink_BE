@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class User {
+@Entity
+@Table(name = "member")
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,16 +23,16 @@ public class User {
     @Column(nullable = false)
     private UUID password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
-    private User(String nickname, String password){
+    private Member(String nickname, String password){
         this.nickname = nickname;
         this.password = encodePassword(password);
     }
 
-    public static User of(String nickname, String password){
-        return new User(nickname, password);
+    public static Member of(String nickname, String password){
+        return new Member(nickname, password);
     }
 
     private UUID encodePassword(String password){

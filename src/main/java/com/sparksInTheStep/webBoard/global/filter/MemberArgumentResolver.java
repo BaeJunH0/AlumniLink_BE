@@ -1,7 +1,7 @@
 package com.sparksInTheStep.webBoard.global.filter;
 
-import com.sparksInTheStep.webBoard.auth.application.UserService;
-import com.sparksInTheStep.webBoard.auth.application.dto.UserInfo;
+import com.sparksInTheStep.webBoard.auth.application.MemberService;
+import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.auth.util.JwtUtil;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 @RequiredArgsConstructor
 public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
-    private final UserService userService;
+    private final MemberService memberService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {

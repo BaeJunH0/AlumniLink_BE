@@ -1,8 +1,8 @@
 package com.sparksInTheStep.webBoard.auth.presentation;
 
-import com.sparksInTheStep.webBoard.auth.application.UserService;
-import com.sparksInTheStep.webBoard.auth.application.dto.UserCommand;
-import com.sparksInTheStep.webBoard.auth.presentation.dto.UserRequest;
+import com.sparksInTheStep.webBoard.auth.application.MemberService;
+import com.sparksInTheStep.webBoard.auth.application.dto.MemberCommand;
+import com.sparksInTheStep.webBoard.auth.presentation.dto.MemberRequest;
 import com.sparksInTheStep.webBoard.auth.util.JwtUtil;
 import com.sparksInTheStep.webBoard.auth.util.Token;
 import lombok.RequiredArgsConstructor;
@@ -16,24 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-public class UserController {
-    private final UserService userService;
+public class MemberController {
+    private final MemberService memberService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserRequest userRequest){
-        if(userService.passCheck(UserCommand.from(userRequest))){
+    public ResponseEntity<?> login(@RequestBody MemberRequest memberRequest){
+        if(memberService.memberCheck(MemberCommand.from(memberRequest))){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String accessToken = JwtUtil.makeAccessToken(userRequest.nickname());
+        String accessToken = JwtUtil.makeAccessToken(memberRequest.nickname());
         return new ResponseEntity<>(Token.of(accessToken), HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRequest userRequest){
-        userService.makeNewUser(UserCommand.from(userRequest));
+    public ResponseEntity<?> register(@RequestBody MemberRequest memberRequest){
+        memberService.makeNewUser(MemberCommand.from(memberRequest));
 
-        String accessToken = JwtUtil.makeAccessToken(userRequest.nickname());
+        String accessToken = JwtUtil.makeAccessToken(memberRequest.nickname());
         return new ResponseEntity<>(Token.of(accessToken), HttpStatus.CREATED);
     }
 }

@@ -37,10 +37,10 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         token = token.substring(7); // "Bearer " 부분을 제거
 
         String nickname = JwtUtil.getNicknameFromToken(token);
-        if(!userService.isExistUser(nickname)) {
+        if(!memberService.isExistMember(nickname)) {
             throw new IllegalArgumentException("유효하지 않은 로그인 정보입니다!");
         }
 
-        return UserInfo.of(nickname);
+        return MemberInfo.of(nickname);
     }
 }

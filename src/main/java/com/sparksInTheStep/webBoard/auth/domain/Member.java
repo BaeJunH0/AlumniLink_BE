@@ -10,8 +10,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "member")
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,13 +20,13 @@ public class User {
     @Column(nullable = false)
     private UUID password;
 
-    private User(String nickname, String password){
+    private Member(String nickname, String password){
         this.nickname = nickname;
         this.password = encodePassword(password);
     }
 
-    public static User of(String nickname, String password){
-        return new User(nickname, password);
+    public static Member of(String nickname, String password){
+        return new Member(nickname, password);
     }
 
     private UUID encodePassword(String password){

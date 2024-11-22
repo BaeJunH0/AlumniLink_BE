@@ -1,6 +1,5 @@
 package com.sparksInTheStep.webBoard.auth.util;
 
-import com.sparksInTheStep.webBoard.auth.presentation.dto.UserRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

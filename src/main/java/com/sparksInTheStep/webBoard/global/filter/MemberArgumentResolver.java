@@ -1,8 +1,8 @@
 package com.sparksInTheStep.webBoard.global.filter;
 
-import com.sparksInTheStep.webBoard.auth.application.UserService;
-import com.sparksInTheStep.webBoard.auth.application.dto.UserInfo;
-import com.sparksInTheStep.webBoard.auth.token.JwtTokenProvider;
+import com.sparksInTheStep.webBoard.auth.application.MemberService;
+import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.auth.util.JwtUtil;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -15,8 +15,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 @RequiredArgsConstructor
 public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
-    private final UserService userService;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final MemberService memberService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -37,11 +36,11 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
         token = token.substring(7); // "Bearer " 부분을 제거
 
-        String nickname = jwtTokenProvider.getNicknameFromToken(token);
-        if(!userService.isExistUser(nickname)) {
+        String nickname = JwtUtil.getNicknameFromToken(token);
+        if(!memberService.isExistMember(nickname)) {
             throw new IllegalArgumentException("유효하지 않은 로그인 정보입니다!");
         }
 
-        return UserInfo.of(nickname);
+        return MemberInfo.of(nickname);
     }
 }

@@ -18,8 +18,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/save")
-    public void savePost(/*@AuthorizedUser MemberInfo memberInfo,*/ @RequestBody PostRequest request) {
-        MemberInfo memberInfo = new MemberInfo("admin");
+    public void savePost(@AuthorizedUser MemberInfo memberInfo, @RequestBody PostRequest request) {
+        //MemberInfo memberInfo = new MemberInfo("admin");
         postService.createPost(memberInfo, PostCommand.from(request));
     }
 }

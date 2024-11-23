@@ -21,7 +21,6 @@ public class PostService {
     @Transactional
     public void createPost(MemberInfo userInfo, PostCommand postCommand) {
         Member member = memberRepository.findByNickname(userInfo.nickname());
-        System.out.println(member.getId()+"dddd");
         member.addPost(new Post(postCommand, member));
     }
 }

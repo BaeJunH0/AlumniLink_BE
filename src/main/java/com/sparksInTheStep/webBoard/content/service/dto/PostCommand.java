@@ -9,6 +9,6 @@ public record PostCommand (
         String tag
 ){
     public static PostCommand from(PostRequest postRequest) {
-        return new PostCommand(postRequest.title(), postRequest.content(), postRequest.tag());
+        return new PostCommand(postRequest.title(), postRequest.body(), postRequest.tag());
     }
 }

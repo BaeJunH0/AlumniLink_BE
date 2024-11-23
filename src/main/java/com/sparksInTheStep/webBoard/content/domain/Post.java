@@ -28,10 +28,11 @@ public class Post extends TimeStamp{
     @JoinColumn(name = "user_id")
     private Member member;
 
-    public Post(PostCommand postCommand) {
+    public Post(PostCommand postCommand, Member member) {
         this.title = postCommand.title();
         this.body = postCommand.body();
         this.tag = PostType.valueOf(postCommand.tag());
+        this.member = member;
     }
 
 }

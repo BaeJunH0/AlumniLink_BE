@@ -2,7 +2,7 @@ package com.sparksInTheStep.webBoard.global.filter;
 
 import com.sparksInTheStep.webBoard.auth.application.MemberService;
 import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
-import com.sparksInTheStep.webBoard.auth.util.JwtUtil;
+import com.sparksInTheStep.webBoard.auth.token.JwtTokenProvider;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -16,6 +16,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     private final MemberService memberService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -36,7 +37,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
         token = token.substring(7); // "Bearer " 부분을 제거
 
-        String nickname = JwtUtil.getNicknameFromToken(token);
+        String nickname = jwtTokenProvider.getNicknameFromToken(token);
         if(!memberService.isExistMember(nickname)) {
             throw new IllegalArgumentException("유효하지 않은 로그인 정보입니다!");
         }

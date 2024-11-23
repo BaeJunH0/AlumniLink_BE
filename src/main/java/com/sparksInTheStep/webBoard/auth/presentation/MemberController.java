@@ -3,8 +3,8 @@ package com.sparksInTheStep.webBoard.auth.presentation;
 import com.sparksInTheStep.webBoard.auth.application.MemberService;
 import com.sparksInTheStep.webBoard.auth.application.dto.MemberCommand;
 import com.sparksInTheStep.webBoard.auth.presentation.dto.MemberRequest;
-import com.sparksInTheStep.webBoard.auth.util.JwtUtil;
-import com.sparksInTheStep.webBoard.auth.util.Token;
+import com.sparksInTheStep.webBoard.auth.token.JwtTokenProvider;
+import com.sparksInTheStep.webBoard.auth.token.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class MemberController {
     private final MemberService memberService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody MemberRequest memberRequest){
@@ -25,7 +26,7 @@ public class MemberController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String accessToken = JwtUtil.makeAccessToken(memberRequest.nickname());
+        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
         return new ResponseEntity<>(Token.of(accessToken), HttpStatus.OK);
     }
 
@@ -33,7 +34,7 @@ public class MemberController {
     public ResponseEntity<?> register(@RequestBody MemberRequest memberRequest){
         memberService.makeNewUser(MemberCommand.from(memberRequest));
 
-        String accessToken = JwtUtil.makeAccessToken(memberRequest.nickname());
+        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
         return new ResponseEntity<>(Token.of(accessToken), HttpStatus.CREATED);
     }
 }

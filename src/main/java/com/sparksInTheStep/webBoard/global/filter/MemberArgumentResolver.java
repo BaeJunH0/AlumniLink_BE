@@ -2,7 +2,7 @@ package com.sparksInTheStep.webBoard.global.filter;
 
 import com.sparksInTheStep.webBoard.auth.application.MemberService;
 import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
-import com.sparksInTheStep.webBoard.auth.token.JwtTokenProvider;
+import com.sparksInTheStep.webBoard.auth.util.JwtUtil;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

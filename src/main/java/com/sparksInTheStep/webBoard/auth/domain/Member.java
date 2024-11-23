@@ -23,9 +23,6 @@ public class Member {
     @Column(nullable = false)
     private UUID password;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();
-
     private Member(String nickname, String password){
         this.nickname = nickname;
         this.password = encodePassword(password);
@@ -44,7 +41,4 @@ public class Member {
         return this.password.equals(password);
     }
 
-    public void addPost(Post post){
-        this.posts.add(post);
-    }
 }

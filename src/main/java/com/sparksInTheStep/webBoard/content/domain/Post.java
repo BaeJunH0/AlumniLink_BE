@@ -12,10 +12,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 public class Post extends TimeStamp{
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
@@ -25,7 +26,7 @@ public class Post extends TimeStamp{
     private PostType tag;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     public Post(PostCommand postCommand, Member member) {
@@ -34,6 +35,7 @@ public class Post extends TimeStamp{
         this.tag = PostType.valueOf(postCommand.tag());
         this.member = member;
     }
+
 
 }
 

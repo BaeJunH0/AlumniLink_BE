@@ -21,7 +21,7 @@ public class MemberService {
     }
 
     public boolean memberCheck(MemberCommand memberCommand){
-        if(isExistMember(memberCommand.nickname())){
+        if(!isExistMember(memberCommand.nickname())){
             Member savedMember = memberRepository.findByNickname(memberCommand.nickname());
             Member checkMember = Member.of(memberCommand.nickname(), memberCommand.password());
 

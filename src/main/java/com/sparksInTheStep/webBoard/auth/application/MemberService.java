@@ -21,8 +21,11 @@ public class MemberService {
     }
 
     public boolean memberCheck(MemberCommand memberCommand){
-        if(isExistMember(memberCommand.nickname())){
+        if(!isExistMember(memberCommand.nickname())){
             Member savedMember = memberRepository.findByNickname(memberCommand.nickname());
+            if(savedMember == null){
+                throw new NoSuchFieldError("로그인 정보와 일치하지 않습니다");
+            }
             Member checkMember = Member.of(memberCommand.nickname(), memberCommand.password());
 
             return savedMember.passCheck(checkMember.getPassword());

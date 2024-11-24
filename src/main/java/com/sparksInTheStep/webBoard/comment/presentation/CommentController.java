@@ -32,7 +32,7 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<?> postComment(
-            @AuthorizedUser MemberInfo memberInfo,
+            @AuthorizedUser MemberInfo.Default memberInfo,
             @RequestBody CommentRequest.Create commentRequest
     ) {
         commentService.makeNewComment(
@@ -45,7 +45,7 @@ public class CommentController {
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity<?> deleteComment(
-            @AuthorizedUser MemberInfo memberInfo,
+            @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long commentId
     ) throws AuthenticationException {
         commentService.deleteComment(memberInfo.nickname(), commentId);

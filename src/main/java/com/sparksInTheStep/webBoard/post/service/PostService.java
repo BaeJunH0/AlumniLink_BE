@@ -28,7 +28,7 @@ public class PostService {
 
     // DB 읽기 동작의 경우에는 readOnly로 할 것
     @Transactional(readOnly = true)
-    public List<PostInfo> getPostsByMember(MemberInfo memberInfo) {
+    public List<PostInfo> getPostsByMember(MemberInfo.Default memberInfo) {
         Member member = memberRepository.findByNickname(memberInfo.nickname());
 
         List<Post> posts = postRepository.findByMember(member);
@@ -45,7 +45,7 @@ public class PostService {
     }
 
     @Transactional
-    public void deletePost(MemberInfo memberInfo, Long postId) throws AuthenticationException {
+    public void deletePost(MemberInfo.Default memberInfo, Long postId) throws AuthenticationException {
         Member member = memberRepository.findByNickname(memberInfo.nickname());
         Post post = postRepository.findPostById(postId)
                 .orElseThrow(

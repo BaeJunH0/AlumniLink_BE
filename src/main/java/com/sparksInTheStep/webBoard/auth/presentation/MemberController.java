@@ -22,7 +22,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody MemberRequest memberRequest){
-        if(memberService.memberCheck(MemberCommand.from(memberRequest))){
+        if(!memberService.memberCheck(MemberCommand.from(memberRequest))){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
@@ -36,5 +36,15 @@ public class MemberController {
 
         String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
         return new ResponseEntity<>(Token.of(accessToken), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/adminLogin")
+    public ResponseEntity<?> adminLogin(@RequestBody MemberRequest memberRequest){
+        if(!memberService.adminCheck(MemberCommand.from(memberRequest))){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
+        return new ResponseEntity<>(Token.of(accessToken), HttpStatus.OK);
     }
 }

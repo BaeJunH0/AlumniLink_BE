@@ -2,8 +2,16 @@ package com.sparksInTheStep.webBoard.auth.presentation.dto;
 
 import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
 
-public record MemberResponse(String nickname) {
-    public static MemberResponse from(MemberInfo memberInfo){
-        return new MemberResponse(memberInfo.nickname());
+public record MemberResponse() {
+    public record Default(String nickname){
+        public static MemberResponse.Default from(MemberInfo.Default memberInfo){
+            return new MemberResponse.Default(memberInfo.nickname());
+        }
+    }
+
+    public record Special(String nickname, Long id, boolean isAdmin){
+        public static MemberResponse.Special from(MemberInfo.Special memberInfo){
+            return new MemberResponse.Special(memberInfo.nickname(), memberInfo.id(), memberInfo.isAdmin());
+        }
     }
 }

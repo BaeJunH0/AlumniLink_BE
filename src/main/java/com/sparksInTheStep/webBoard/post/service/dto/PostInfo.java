@@ -7,6 +7,7 @@ import com.sparksInTheStep.webBoard.post.domain.PostType;
 import java.time.LocalDateTime;
 
 public record PostInfo(
+        Long id,
         String title,
         String body,
         PostType tag,
@@ -17,6 +18,7 @@ public record PostInfo(
     public static PostInfo from(Post post)
     {
        return new PostInfo(
+               post.getId(),
                post.getTitle(),
                post.getBody(),
                post.getTag(),

@@ -7,6 +7,7 @@ import com.sparksInTheStep.webBoard.post.controller.dto.PostResponse;
 import java.time.LocalDateTime;
 
 public record CommentResponse(
+        Long id,
         String body,
         LocalDateTime createdAt,
         MemberResponse memberResponse,
@@ -14,6 +15,7 @@ public record CommentResponse(
 ) {
     public static CommentResponse from(CommentInfo commentInfo){
         return new CommentResponse(
+                commentInfo.id(),
                 commentInfo.body(),
                 commentInfo.createdAt(),
                 MemberResponse.from(commentInfo.memberInfo()),

@@ -6,6 +6,7 @@ import com.sparksInTheStep.webBoard.post.service.dto.PostInfo;
 import java.time.LocalDateTime;
 
 public record PostResponse(
+        Long id,
         String nickname,
         String title,
         String body,
@@ -15,6 +16,7 @@ public record PostResponse(
 ) {
     public static PostResponse from(PostInfo postInfo) {
         return new PostResponse(
+                postInfo.id(),
                 postInfo.memberInfo().nickname(),
                 postInfo.title(),
                 postInfo.body(),

@@ -1,4 +1,4 @@
-package com.sparksInTheStep.webBoard.global.errorHandling;
+package com.sparksInTheStep.webBoard.global.errorHandling.errorCode;
 
 import org.springframework.http.HttpStatus;
 

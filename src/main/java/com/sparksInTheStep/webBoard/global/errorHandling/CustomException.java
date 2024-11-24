@@ -1,5 +1,6 @@
 package com.sparksInTheStep.webBoard.global.errorHandling;
 
+import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.ErrorCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 

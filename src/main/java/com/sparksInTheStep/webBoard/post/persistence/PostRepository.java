@@ -1,7 +1,7 @@
-package com.sparksInTheStep.webBoard.content.persistence;
+package com.sparksInTheStep.webBoard.post.persistence;
 
 import com.sparksInTheStep.webBoard.auth.domain.Member;
-import com.sparksInTheStep.webBoard.content.domain.Post;
+import com.sparksInTheStep.webBoard.post.domain.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

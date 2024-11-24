@@ -4,6 +4,9 @@ import com.sparksInTheStep.webBoard.auth.application.MemberService;
 import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.auth.token.JwtTokenProvider;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
+import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
+import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.AuthErrorCode;
+import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.MemberErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -31,14 +34,17 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             WebDataBinderFactory binderFactory
     ) {
         String token = webRequest.getHeader("Authorization");
-        if (token == null || !token.startsWith("Bearer ")) {
-            throw new IllegalArgumentException("인증 방식이 잘못되었거나, 토큰이 없습니다!");
+        if (token == null) {
+            throw CustomException.of(AuthErrorCode.TOKEN_IS_EMPTY);
+        }
+        if (!token.startsWith("Bearer ")){
+            throw CustomException.of(AuthErrorCode.TOKEN_IS_INVALID);
         }
 
         token = token.substring(7); // "Bearer " 부분을 제거
         String nickname = jwtTokenProvider.getNicknameFromToken(token);
         if(!memberService.isExistMember(nickname)) {
-            throw new IllegalArgumentException("유효하지 않은 로그인 정보입니다!");
+            throw CustomException.of(MemberErrorCode.NOT_FOUND);
         }
 
         return memberService.loginMember(nickname);

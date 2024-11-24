@@ -17,16 +17,16 @@ public enum AuthErrorCode implements ErrorCode{
 
     @Override
     public HttpStatus httpStatus() {
-        return null;
+        return this.httpStatus;
     }
 
     @Override
     public String code() {
-        return null;
+        return this.errorCode;
     }
 
     @Override
     public String message() {
-        return null;
+        return this.message;
     }
 }

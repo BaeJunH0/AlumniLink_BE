@@ -12,7 +12,7 @@ import java.net.URI;
 @RestControllerAdvice
 public class CustomExceptionHandler {
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ProblemDetail> handleInplaceException(
+    public ResponseEntity<ProblemDetail> handleCustomException(
             HttpServletRequest request,
             CustomException exception
     ) {

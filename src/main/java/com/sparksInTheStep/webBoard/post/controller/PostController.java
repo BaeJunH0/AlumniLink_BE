@@ -21,7 +21,7 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<String> savePost(
-            @AuthorizedUser MemberInfo memberInfo,
+            @AuthorizedUser MemberInfo.Default memberInfo,
             @RequestBody PostRequest request
     ) {
         postService.createPost(memberInfo.nickname(), PostCommand.from(request));
@@ -30,7 +30,7 @@ public class PostController {
 
     @GetMapping("/my")
     public ResponseEntity<List<PostResponse>> getPostsByMember(
-            @AuthorizedUser MemberInfo memberInfo
+            @AuthorizedUser MemberInfo.Default memberInfo
     ) {
         return ResponseEntity.ok(
                 postService.getPostsByMember(memberInfo).stream().
@@ -41,7 +41,7 @@ public class PostController {
 
     @DeleteMapping
     public ResponseEntity<String> deletePost(
-            @AuthorizedUser MemberInfo memberInfo,
+            @AuthorizedUser MemberInfo.Default memberInfo,
             @RequestBody Long postId
     ) throws AuthenticationException {
         postService.deletePost(memberInfo, postId);

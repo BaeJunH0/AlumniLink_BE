@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="KR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 관리 페이지</title>
+    <link rel="stylesheet" href="/css/admin.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/admin.js"></script>
+</head>
+<body>
+<div class="header" id="header">
+
+</div>
+<h1>Member Manage Page</h1>
+
+<table id="member-table">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nickname</th>
+        <th scope="col">IsAdmin</th>
+        <th scope="col">Granting</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody id="member-tbody">
+    <!-- AJAX를 통해 데이터를 로드 -->
+    </tbody>
+</table>
+<div>
+    <button id="prevPage">Prev</button>
+    <button id="search" onclick="getMembers(currentPage)">검색</button>
+    <button id="nextPage">Next</button>
+</div>
+</body>
+</html>

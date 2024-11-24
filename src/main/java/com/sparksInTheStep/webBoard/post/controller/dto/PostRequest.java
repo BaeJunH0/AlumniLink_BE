@@ -1,4 +1,4 @@
-package com.sparksInTheStep.webBoard.content.controller.dto;
+package com.sparksInTheStep.webBoard.post.controller.dto;
 
 public record PostRequest(
         String title,

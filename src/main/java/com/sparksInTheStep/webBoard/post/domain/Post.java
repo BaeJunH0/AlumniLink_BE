@@ -1,10 +1,9 @@
-package com.sparksInTheStep.webBoard.content.domain;
+package com.sparksInTheStep.webBoard.post.domain;
 
 import com.sparksInTheStep.webBoard.auth.domain.Member;
-import com.sparksInTheStep.webBoard.content.service.dto.PostCommand;
+import com.sparksInTheStep.webBoard.post.service.dto.PostCommand;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,10 +34,5 @@ public class Post extends TimeStamp{
         this.tag = PostType.valueOf(postCommand.tag());
         this.member = member;
     }
-
-
 }
 
-enum PostType{
-    STUDY, FREE, FUTURE
-}

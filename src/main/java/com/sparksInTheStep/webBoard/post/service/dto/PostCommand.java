@@ -1,7 +1,6 @@
-package com.sparksInTheStep.webBoard.content.service.dto;
+package com.sparksInTheStep.webBoard.post.service.dto;
 
-import com.sparksInTheStep.webBoard.content.controller.dto.PostRequest;
-import com.sparksInTheStep.webBoard.content.domain.Post;
+import com.sparksInTheStep.webBoard.post.controller.dto.PostRequest;
 
 public record PostCommand (
         String title,

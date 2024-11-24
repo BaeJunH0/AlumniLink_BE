@@ -22,7 +22,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody MemberRequest memberRequest){
-        if(memberService.memberCheck(MemberCommand.from(memberRequest))){
+        if(!memberService.memberCheck(MemberCommand.from(memberRequest))){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 

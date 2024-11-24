@@ -2,7 +2,7 @@ package com.sparksInTheStep.webBoard.global.filter;
 
 import com.sparksInTheStep.webBoard.auth.application.MemberService;
 import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
-import com.sparksInTheStep.webBoard.auth.util.JwtUtil;
+import com.sparksInTheStep.webBoard.auth.token.JwtTokenProvider;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -36,12 +36,11 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         }
 
         token = token.substring(7); // "Bearer " 부분을 제거
-        System.out.println("token: " + token);
         String nickname = jwtTokenProvider.getNicknameFromToken(token);
         if(!memberService.isExistMember(nickname)) {
             throw new IllegalArgumentException("유효하지 않은 로그인 정보입니다!");
         }
 
-        return MemberInfo.of(nickname);
+        return memberService.loginMember(nickname);
     }
 }

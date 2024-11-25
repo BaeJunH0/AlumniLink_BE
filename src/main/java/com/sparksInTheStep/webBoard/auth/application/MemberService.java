@@ -4,7 +4,8 @@ import com.sparksInTheStep.webBoard.auth.application.dto.MemberCommand;
 import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.auth.domain.Member;
 import com.sparksInTheStep.webBoard.auth.persistent.MemberRepository;
-import com.sun.jdi.request.DuplicateRequestException;
+import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
+import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.MemberErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class MemberService {
     @Transactional
     public void makeNewUser(MemberCommand memberCommand){
         if(isExistMember(memberCommand.nickname())){
-            throw new DuplicateRequestException("이미 존재하는 닉네임 입니다");
+            throw CustomException.of(MemberErrorCode.DUPLICATED_NICKNAME);
         }
 
         memberRepository.save(Member.of(memberCommand.nickname(), memberCommand.password()));
@@ -25,11 +26,8 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public boolean memberCheck(MemberCommand memberCommand){
-        if(!isExistMember(memberCommand.nickname())){
+        if(isExistMember(memberCommand.nickname())){
             Member savedMember = memberRepository.findByNickname(memberCommand.nickname());
-            if(savedMember == null){
-                throw new NoSuchFieldError("로그인 정보와 일치하지 않습니다");
-            }
             Member checkMember = Member.of(memberCommand.nickname(), memberCommand.password());
 
             return savedMember.passCheck(checkMember.getPassword());

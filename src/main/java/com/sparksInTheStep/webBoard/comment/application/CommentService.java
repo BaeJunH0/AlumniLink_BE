@@ -9,6 +9,8 @@ import com.sparksInTheStep.webBoard.comment.persistent.CommentRepository;
 import com.sparksInTheStep.webBoard.post.persistence.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +24,8 @@ public class CommentService {
     public final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public List<CommentInfo> readCommentsByPostId(Long postId){
-        return commentRepository.findAllByPostId(postId).stream()
-                .map(CommentInfo::from)
-                .toList();
+    public Page<CommentInfo> readCommentsByPostId(Long postId, Pageable pageable){
+        return commentRepository.findAllByPostId(postId, pageable).map(CommentInfo::from);
     }
 
     @Transactional

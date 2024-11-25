@@ -8,6 +8,8 @@ import com.sparksInTheStep.webBoard.comment.presentation.dto.CommentResponse;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +22,12 @@ public class CommentController {
 
     @GetMapping
     public ResponseEntity<?> getComment(
-            @RequestBody CommentRequest.Find postParam
+            @RequestBody CommentRequest.Find postParam,
+            @PageableDefault Pageable pageable
     ) {
         return new ResponseEntity<>(
-                commentService.readCommentsByPostId(postParam.postId()).stream()
-                        .map(CommentResponse::from)
-                        .toList(),
+                commentService.readCommentsByPostId(postParam.postId(), pageable)
+                        .map(CommentResponse::from),
                 HttpStatus.OK
         );
     }

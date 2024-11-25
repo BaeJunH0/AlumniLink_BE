@@ -19,23 +19,33 @@ public class Member {
     private String nickname;
     @Column(nullable = false)
     private UUID password;
+    @Column(nullable = false)
+    private boolean admin;
 
-    private Member(String nickname, String password){
+    private Member(String nickname, String password) {
         this.nickname = nickname;
         this.password = encodePassword(password);
+        this.admin = false;
     }
 
-    public static Member of(String nickname, String password){
+    public static Member of(String nickname, String password) {
         return new Member(nickname, password);
     }
 
-    private UUID encodePassword(String password){
-        long seed = password.hashCode();
-        return new UUID(seed, ~seed);
+    public void granting() {
+        this.admin = true;
     }
 
-    public boolean passCheck(UUID password){
+    public boolean passCheck(UUID password) {
         return this.password.equals(password);
     }
 
+    public boolean adminCheck() {
+        return this.admin;
+    }
+
+    private UUID encodePassword(String password) {
+        long seed = password.hashCode();
+        return new UUID(seed, ~seed);
+    }
 }

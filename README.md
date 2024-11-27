@@ -31,20 +31,20 @@
    - 로그인 한 사용자만 등록, 삭제 가능
 
 ## 기능 별 주안점
-**0. 전체적으로 집중한 부분**
-    - **3Layered Architecture** ( **Persistent - Application - Presentation** ) 에 맞추어 DTO 및 메서드 사용에 집중
-    - **Custom Error 코드**를 사용하고, **Controller Advice를 이용하여 전역적으로 에러를 처리**
+**1. 전체적으로 집중한 부분**
+   - **3Layered Architecture** ( **Persistent - Application - Presentation** ) 에 맞추어 DTO 및 메서드 사용에 집중
+   - **Custom Error 코드**를 사용하고, **Controller Advice를 이용하여 전역적으로 에러를 처리**
+    
+**2. 로그인 및 회원가입 기능**
+   - **JWT 토큰**, **HandlerMethodArgumentResolver** 두 가지를 조합하여 **Presentation 계층에서 로그인 유저 필터링**
+   - 비밀번호 저장 시, **UUID 형태로 저장**하여 **복호화를 불가**하도록 하여 보안성을 높임
+   - admin 계정을 운용하여 **관리자 기능을 사용 가능** ( 현재는 사용자 관리만 가능, 추후 추가 가능 / 관리자 페이지 구현 )
+    
+**3. 게시물 조회, 등록, 삭제 기능**
 
-**1. 로그인 및 회원가입 기능**
-    - **JWT 토큰**, **HandlerMethodArgumentResolver** 두 가지를 조합하여 **Presentation 계층에서 로그인 유저 필터링**
-    - 비밀번호 저장 시, **UUID 형태로 저장**하여 **복호화를 불가**하도록 하여 보안성을 높임
-    - admin 계정을 운용하여 **관리자 기능을 사용 가능** ( 현재는 사용자 관리만 가능, 추후 추가 가능 / 관리자 페이지 구현 )
-
-**2. 게시물 조회, 등록, 삭제 기능**
-
-**3. 댓글 조회, 등록, 삭제 기능**
-    - 댓글 조회 과정에서 성능 저하 문제 발생 시 fetch join 추가 예정
-
+**4. 댓글 조회, 등록, 삭제 기능**
+   - 댓글 조회 과정에서 성능 저하 문제 발생 시 fetch join 추가 예정
+    
 ## 테스팅
 ### 게시물
 - 

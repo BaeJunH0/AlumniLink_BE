@@ -1,6 +1,6 @@
 package com.sparksInTheStep.webBoard.post.controller;
 
-import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.post.controller.dto.PostRequest;
 import com.sparksInTheStep.webBoard.post.controller.dto.PostResponse;
 import com.sparksInTheStep.webBoard.post.service.PostService;

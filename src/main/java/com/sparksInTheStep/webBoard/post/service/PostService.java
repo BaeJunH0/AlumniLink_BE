@@ -1,8 +1,8 @@
 package com.sparksInTheStep.webBoard.post.service;
 
-import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
-import com.sparksInTheStep.webBoard.auth.domain.Member;
-import com.sparksInTheStep.webBoard.auth.persistent.MemberRepository;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.member.domain.Member;
+import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import com.sparksInTheStep.webBoard.post.domain.Post;
 import com.sparksInTheStep.webBoard.post.persistence.PostRepository;
 import com.sparksInTheStep.webBoard.post.service.dto.PostCommand;

@@ -1,7 +1,10 @@
 package com.sparksInTheStep.webBoard.comment.application;
 
-import com.sparksInTheStep.webBoard.auth.domain.Member;
-import com.sparksInTheStep.webBoard.auth.persistent.MemberRepository;
+import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
+import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.CommentErrorCode;
+import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.PostErrorCode;
+import com.sparksInTheStep.webBoard.member.domain.Member;
+import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import com.sparksInTheStep.webBoard.comment.application.dto.CommentCommand;
 import com.sparksInTheStep.webBoard.comment.application.dto.CommentInfo;
 import com.sparksInTheStep.webBoard.comment.domain.Comment;
@@ -14,8 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -25,7 +26,15 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public Page<CommentInfo> readCommentsByPostId(Long postId, Pageable pageable){
-        return commentRepository.findAllByPostId(postId, pageable).map(CommentInfo::from);
+        if(isExistId(postId)){
+            return commentRepository.findAllByPostId(postId, pageable).map(CommentInfo::from);
+        }
+        throw CustomException.of(PostErrorCode.NOT_FOUND);
+    }
+
+    @Transactional(readOnly = true)
+    protected boolean isExistId(Long id){
+        return commentRepository.existsById(id);
     }
 
     @Transactional
@@ -34,20 +43,20 @@ public class CommentService {
                 commentCommand.Body(),
                 memberRepository.findByNickname(nickname),
                 postRepository.findPostById(commentCommand.postId()).orElseThrow(
-                        ()-> new NoSuchFieldError("게시물을 찾을 수 없습니다")
+                        () -> CustomException.of(PostErrorCode.NOT_FOUND)
                 )
         ));
     }
 
     @Transactional
-    public void deleteComment(String nickname, Long id) throws AuthenticationException {
+    public void deleteComment(String nickname, Long id) {
         Member member = memberRepository.findByNickname(nickname);
         Comment comment = commentRepository.findById(id).orElseThrow(
-                () -> new NoSuchFieldError("댓글을 찾을 수 없습니다")
+                () -> CustomException.of(CommentErrorCode.NOT_FOUND)
         );
 
         if(comment.getMember() != member){
-            throw new AuthenticationException("자신의 댓글만 지울 수 있습니다");
+            throw CustomException.of(CommentErrorCode.NOT_MY_COMMENT);
         }
         commentRepository.deleteById(id);
     }

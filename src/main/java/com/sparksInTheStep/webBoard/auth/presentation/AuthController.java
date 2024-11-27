@@ -1,8 +1,8 @@
 package com.sparksInTheStep.webBoard.auth.presentation;
 
-import com.sparksInTheStep.webBoard.auth.application.MemberService;
-import com.sparksInTheStep.webBoard.auth.application.dto.MemberCommand;
-import com.sparksInTheStep.webBoard.auth.presentation.dto.MemberRequest;
+import com.sparksInTheStep.webBoard.member.application.MemberService;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberCommand;
+import com.sparksInTheStep.webBoard.member.presentation.dto.MemberRequest;
 import com.sparksInTheStep.webBoard.auth.token.JwtTokenProvider;
 import com.sparksInTheStep.webBoard.auth.token.Token;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-public class MemberController {
+public class AuthController implements AuthApiSpec{
     private final MemberService memberService;
     private final JwtTokenProvider jwtTokenProvider;
 

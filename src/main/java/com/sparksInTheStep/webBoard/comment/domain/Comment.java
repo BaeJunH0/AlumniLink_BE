@@ -1,6 +1,6 @@
 package com.sparksInTheStep.webBoard.comment.domain;
 
-import com.sparksInTheStep.webBoard.auth.domain.Member;
+import com.sparksInTheStep.webBoard.member.domain.Member;
 import com.sparksInTheStep.webBoard.post.domain.Post;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

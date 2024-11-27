@@ -1,9 +1,9 @@
-package com.sparksInTheStep.webBoard.auth.application;
+package com.sparksInTheStep.webBoard.member.application;
 
-import com.sparksInTheStep.webBoard.auth.application.dto.MemberCommand;
-import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
-import com.sparksInTheStep.webBoard.auth.domain.Member;
-import com.sparksInTheStep.webBoard.auth.persistent.MemberRepository;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberCommand;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.member.domain.Member;
+import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
 import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.MemberErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

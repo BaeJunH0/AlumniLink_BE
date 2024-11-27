@@ -1,4 +1,4 @@
-package com.sparksInTheStep.webBoard.auth.domain;
+package com.sparksInTheStep.webBoard.member.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

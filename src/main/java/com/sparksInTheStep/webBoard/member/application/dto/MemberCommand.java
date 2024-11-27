@@ -1,6 +1,6 @@
-package com.sparksInTheStep.webBoard.auth.application.dto;
+package com.sparksInTheStep.webBoard.member.application.dto;
 
-import com.sparksInTheStep.webBoard.auth.presentation.dto.MemberRequest;
+import com.sparksInTheStep.webBoard.member.presentation.dto.MemberRequest;
 
 public record MemberCommand(String nickname, String password) {
     public static MemberCommand from(MemberRequest memberRequest){

@@ -1,8 +1,9 @@
 package com.sparksInTheStep.webBoard.auth.application;
 
-import com.sparksInTheStep.webBoard.auth.application.dto.MemberCommand;
-import com.sparksInTheStep.webBoard.auth.domain.Member;
-import com.sparksInTheStep.webBoard.auth.persistent.MemberRepository;
+import com.sparksInTheStep.webBoard.member.application.MemberService;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberCommand;
+import com.sparksInTheStep.webBoard.member.domain.Member;
+import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import com.sun.jdi.request.DuplicateRequestException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

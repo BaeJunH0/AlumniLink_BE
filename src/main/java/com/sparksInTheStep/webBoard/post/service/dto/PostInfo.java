@@ -1,6 +1,6 @@
 package com.sparksInTheStep.webBoard.post.service.dto;
 
-import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.post.domain.Post;
 import com.sparksInTheStep.webBoard.post.domain.PostType;
 

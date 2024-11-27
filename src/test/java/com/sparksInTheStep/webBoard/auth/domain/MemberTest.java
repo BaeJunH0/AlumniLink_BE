@@ -1,5 +1,6 @@
 package com.sparksInTheStep.webBoard.auth.domain;
 
+import com.sparksInTheStep.webBoard.member.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

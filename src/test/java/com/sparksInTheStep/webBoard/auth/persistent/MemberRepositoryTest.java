@@ -1,6 +1,7 @@
 package com.sparksInTheStep.webBoard.auth.persistent;
 
-import com.sparksInTheStep.webBoard.auth.domain.Member;
+import com.sparksInTheStep.webBoard.member.domain.Member;
+import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.assertj.core.api.Assertions;

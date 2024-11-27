@@ -1,6 +1,6 @@
-package com.sparksInTheStep.webBoard.auth.persistent;
+package com.sparksInTheStep.webBoard.member.persistent;
 
-import com.sparksInTheStep.webBoard.auth.domain.Member;
+import com.sparksInTheStep.webBoard.member.domain.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

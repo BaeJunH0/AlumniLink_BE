@@ -1,6 +1,6 @@
-package com.sparksInTheStep.webBoard.auth.presentation.dto;
+package com.sparksInTheStep.webBoard.member.presentation.dto;
 
-import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 
 public record MemberResponse() {
     public record Default(String nickname){

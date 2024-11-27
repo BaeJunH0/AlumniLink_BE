@@ -1,8 +1,8 @@
 package com.sparksInTheStep.webBoard.admin.presentation;
 
-import com.sparksInTheStep.webBoard.auth.application.MemberService;
-import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
-import com.sparksInTheStep.webBoard.auth.presentation.dto.MemberResponse;
+import com.sparksInTheStep.webBoard.member.application.MemberService;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.member.presentation.dto.MemberResponse;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/members")
-public class AdminApiController {
+public class AdminApiController implements AdminApiSpec{
     public final MemberService memberService;
 
     @GetMapping

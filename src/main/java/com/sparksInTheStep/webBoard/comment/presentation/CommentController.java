@@ -1,6 +1,6 @@
 package com.sparksInTheStep.webBoard.comment.presentation;
 
-import com.sparksInTheStep.webBoard.auth.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.comment.application.CommentService;
 import com.sparksInTheStep.webBoard.comment.application.dto.CommentCommand;
 import com.sparksInTheStep.webBoard.comment.presentation.dto.CommentRequest;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/comment")
-public class CommentController {
+public class CommentController implements CommentApiSpec{
     private final CommentService commentService;
 
     @GetMapping
@@ -49,7 +49,7 @@ public class CommentController {
     public ResponseEntity<?> deleteComment(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long commentId
-    ) throws AuthenticationException {
+    ) {
         commentService.deleteComment(memberInfo.nickname(), commentId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

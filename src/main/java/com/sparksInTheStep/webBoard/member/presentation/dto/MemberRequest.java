@@ -1,4 +1,12 @@
 package com.sparksInTheStep.webBoard.member.presentation.dto;
 
-public record MemberRequest(String nickname, String password) {
+import jakarta.validation.constraints.NotBlank;
+
+public record MemberRequest(
+        @NotBlank
+        String nickname,
+        @NotBlank
+        String password
+) {
+
 }

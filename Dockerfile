@@ -1,11 +1,14 @@
 # 베이스 이미지
 FROM amazoncorretto:17
 
-# 작업 디렉토리 설정
-WORKDIR /AlumniLink_BE
+# 인자 설정 - Jar_File
+ARG JAR_FILE=build/libs/*.jar
 
-# 애플리케이션 Jar 파일 복사
-COPY build/libs/webBoard-0.0.1-SNAPSHOT.jar app.jar
+# jar 파일 복제
+COPY ${JAR_FILE} app.jar
 
-# 컨테이너 실행 시 실행될 명령어
-CMD ["java", "-jar", "app.jar"]
+# 인자 설정 부분과 jar 파일 복제 부분 합쳐서 진행해도 무방
+#COPY build/libs/*.jar app.jar
+
+# 실행 명령어
+ENTRYPOINT ["java", "-jar", "app.jar"]

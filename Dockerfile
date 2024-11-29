@@ -1,5 +1,5 @@
 # 베이스 이미지
-FROM java-17-amazon-corretto-jdk
+FROM amazoncorretto:17
 
 # 작업 디렉토리 설정
 WORKDIR /AlumniLink_BE

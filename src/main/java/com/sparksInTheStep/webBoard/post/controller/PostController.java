@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts")
-public class PostController{
+public class PostController implements PostApiSpec{
     private final PostService postService;
 
     @PostMapping
@@ -42,7 +42,7 @@ public class PostController{
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping
+    @DeleteMapping()
     public ResponseEntity<String> deletePost(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @NotNull @RequestBody Long postId

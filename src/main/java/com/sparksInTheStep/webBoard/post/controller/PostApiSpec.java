@@ -26,8 +26,8 @@ public interface PostApiSpec {
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
     @ApiResponse(responseCode="500", description = "파라미터의 값이 유효하지 않습니다")
     public ResponseEntity<String> savePost(
+            @AuthorizedUser MemberInfo.Default memberInfo,
             @Parameter(description = "제목과 바디 및 태그를 파라미터로 받습니다")
-            @RequestBody @AuthorizedUser MemberInfo.Default memberInfo,
             @Valid @RequestBody PostRequest request
     );
 
@@ -35,8 +35,7 @@ public interface PostApiSpec {
     @ApiResponse(responseCode="200", description = "성공")
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
     public ResponseEntity<List<PostResponse>> getPostsByMember(
-            @Parameter(description = "Bearer 토큰을 받음")
-            @RequestBody MemberInfo.Default memberInfo
+            @AuthorizedUser MemberInfo.Default memberInfo
     );
 
     @Operation(summary = "게시글 삭제하기", description = "해당 게시글을 삭제합니다.")
@@ -44,8 +43,8 @@ public interface PostApiSpec {
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
     @ApiResponse(responseCode="500", description = "게시글 없거나 이미 게시글 번호 유효하지 않음")
     public ResponseEntity<String> deletePost(
+            @AuthorizedUser MemberInfo.Default memberInfo,
             @Parameter(description = "Bearer 토큰과 삭제할 게시글 Id를 받습니다")
-            @RequestBody @AuthorizedUser MemberInfo.Default memberInfo,
             @NotNull @RequestBody Long postId
     ) throws AuthenticationException;
 

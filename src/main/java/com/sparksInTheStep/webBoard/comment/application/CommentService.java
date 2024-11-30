@@ -26,15 +26,10 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public Page<CommentInfo> readCommentsByPostId(Long postId, Pageable pageable){
-        if(isExistId(postId)){
+        if(postRepository.existsById(postId)){
             return commentRepository.findAllByPostId(postId, pageable).map(CommentInfo::from);
         }
         throw CustomException.of(PostErrorCode.NOT_FOUND);
-    }
-
-    @Transactional(readOnly = true)
-    protected boolean isExistId(Long id){
-        return commentRepository.existsById(id);
     }
 
     @Transactional

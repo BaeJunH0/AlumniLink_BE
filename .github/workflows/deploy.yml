@@ -30,13 +30,20 @@ jobs:
           chmod +x ./gradlew
           ./gradlew clean build -x test
 
-      # dockerfile을 통해 이미지를 빌드하고, 이를 docker repo로 push 합니다.
-      # 이 때 사용되는 ${{ secrets.DOCKER_REPO }}/directors-dev 가 위에서 만든 도커 repository 입니다.
-      - name: Docker build & push to docker repo
-        run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          sudo docker build -t ${{ secrets.DOCKER_REPO }}/directors-dev:latest -f Dockerfile .
-          docker push ${{ secrets.DOCKER_REPO }}/directors-dev:latest
+      # Docker Login
+      - name: Docker Login Process
+        uses: docker/login-action@2.2.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Build and Push Docker Image
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@4.1.1
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/alumni_link
 
       # appleboy/ssh-action@master 액션을 사용하여 지정한 서버에 ssh로 접속하고, script를 실행합니다.
       # script의 내용은 도커의 기존 프로세스들을 제거하고, docker repo로부터 방금 위에서 push한 내용을 pull 받아 실행하는 것입니다.

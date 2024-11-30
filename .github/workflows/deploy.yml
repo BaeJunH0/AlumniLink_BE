@@ -50,6 +50,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             sudo docker rm -f $(docker ps -qa)
-            sudo docker pull ${{ secrets.DOCKER_REPO }}/directors-dev
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/directors-dev:latest
             docker-compose up -d
             docker image prune -f

@@ -56,7 +56,11 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            sudo docker rm -f $(docker ps -qa)
-            sudo docker pull ${{ secrets.DOCKER_REPO }}/directors-dev
+            # 기존 컨테이너들이 있으면 제거
+            CONTAINERS=$(docker ps -qa)
+            if [ -n "$CONTAINERS" ]; then
+            sudo docker rm -f $CONTAINERS
+            fi
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/alumni_link
             docker-compose up -d
             docker image prune -f

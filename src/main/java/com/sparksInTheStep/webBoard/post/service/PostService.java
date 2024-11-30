@@ -1,5 +1,7 @@
 package com.sparksInTheStep.webBoard.post.service;
 
+import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
+import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.PostErrorCode;
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.member.domain.Member;
 import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
@@ -42,6 +44,14 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostInfo> getAllPosts(){
         return postRepository.findAll().stream().map(PostInfo::from).toList();
+    }
+
+    // Post를 하나만 가져오기
+    @Transactional(readOnly = true)
+    public PostInfo getOnePost(Long id){
+        return PostInfo.from(postRepository.findById(id).orElseThrow(
+                ()-> CustomException.of(PostErrorCode.NOT_FOUND)
+        ));
     }
 
     @Transactional

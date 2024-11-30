@@ -52,8 +52,7 @@ public class PostController implements PostApiSpec{
         return ResponseEntity.ok("성공적으로 게시글이 삭제되었습니다.");
     }
 
-    // 포스트 전체 보기 ( 글 읽기는 로그인 필요 x )
-
+    // 포스트 보기 ( 글 읽기는 로그인 필요 x )
 
     @GetMapping
     public ResponseEntity<List<PostResponse>> getAllPosts(){
@@ -62,6 +61,14 @@ public class PostController implements PostApiSpec{
                 .stream()
                 .map(PostResponse::from)
                 .toList();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostResponse> getPost(
+            @PathVariable Long id
+    ){
+        PostResponse response = PostResponse.from(postService.getOnePost(id));
         return ResponseEntity.ok(response);
     }
 }

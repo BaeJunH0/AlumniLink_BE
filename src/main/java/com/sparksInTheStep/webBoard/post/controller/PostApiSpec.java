@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -52,4 +53,11 @@ public interface PostApiSpec {
     @Operation(summary = "모든 게시글 조회하기", description = "모든 게시글을 조회합니다")
     @ApiResponse(responseCode="200", description = "성공")
     public ResponseEntity<List<PostResponse>> getAllPosts();
+
+    @Operation(summary = "특정 게시글 조회하기", description = "특정 게시글을 조회합니다")
+    @ApiResponse(responseCode="200", description = "성공")
+    @ApiResponse(responseCode = "404", description = "id에 해당하는 게시글이 없습니다")
+    public ResponseEntity<PostResponse> getPost(
+            @PathVariable Long id
+    );
 }

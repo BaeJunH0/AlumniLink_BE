@@ -35,7 +35,7 @@ jobs:
       - name: Docker build & push to docker repo
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          sudo docker build -f Dockerfile ${{ secrets.DOCKER_REPO }}/directors-dev
+          docker build -t ${{ secrets.DOCKER_REPO }}/directors-dev:latest -f Dockerfile .
           docker push ${{ secrets.DOCKER_REPO }}/directors-dev:latest
 
       # appleboy/ssh-action@master 액션을 사용하여 지정한 서버에 ssh로 접속하고, script를 실행합니다.

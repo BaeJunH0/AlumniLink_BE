@@ -27,8 +27,8 @@ jobs:
       # gradle을 통해 소스를 빌드.
       - name: Build with Gradle
         run: |
-          chmod +x ./back/gradlew
-          ./back/gradlew clean build -x test
+          chmod +x ./gradlew
+          ./gradlew clean build -x test
 
       # Docker Login
       - name: Docker Login Process

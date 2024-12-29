@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01dace39-8a00-4deb-a297-1add57b15d4e" name="변경" comment="refactor : 프론트랑 같이하기 위한 통합" />
+    <list default="true" id="01dace39-8a00-4deb-a297-1add57b15d4e" name="변경" comment="fix : DB 설정 이전으로 롤백" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +51,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feat/#62-deployDB" />
+        <entry key="$PROJECT_DIR$" value="feat/#37-cicd" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -99,7 +99,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.WebBoardApplication.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "fix/backtononeDB",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/overset/Desktop/24년/2학기/데이타베이스/기말고사/과제/src",
@@ -118,6 +118,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\overset\SparksInTheStep\back" />
       <recent name="C:\Users\overset\SparksInTheStep\src\main\resources\static" />
       <recent name="C:\Users\overset\SparksInTheStep\src\main\resources\static\css" />
       <recent name="C:\Users\overset\SparksInTheStep\src\main\resources\templates" />
@@ -331,23 +332,7 @@
       <workItem from="1732968815003" duration="3039000" />
       <workItem from="1732976253828" duration="3387000" />
       <workItem from="1733120300391" duration="34000" />
-      <workItem from="1735470296720" duration="1403000" />
-    </task>
-    <task id="LOCAL-00042" summary="feat : member 엔티티에 어드민 필드 추가&#10;&#10;어드민인지 파악하고, 어드민으로 바꾸는 비즈니스 로직 추가">
-      <option name="closed" value="true" />
-      <created>1732441807014</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1732441807014</updated>
-    </task>
-    <task id="LOCAL-00043" summary="feat : admin 비즈니스 로직 추가">
-      <option name="closed" value="true" />
-      <created>1732441895379</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1732441895379</updated>
+      <workItem from="1735470296720" duration="1812000" />
     </task>
     <task id="LOCAL-00044" summary="feat : admin 검증에 대한 에러 코드 추가">
       <option name="closed" value="true" />
@@ -725,7 +710,23 @@
       <option name="project" value="LOCAL" />
       <updated>1735471695077</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="refactor : 프론트랑 같이하기 위한 통합">
+      <option name="closed" value="true" />
+      <created>1735471753623</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1735471753624</updated>
+    </task>
+    <task id="LOCAL-00092" summary="fix : DB 설정 이전으로 롤백">
+      <option name="closed" value="true" />
+      <created>1735472073453</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1735472073453</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -755,7 +756,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat : 어드민 페이지를 위해 필요한 기능과 api 구현" />
     <MESSAGE value="feat : 어드민 페이지 구현" />
     <MESSAGE value="chore : 검색 -&gt; 조회로 단어 변경" />
     <MESSAGE value="feat : 로그인 페이지에서 엔터를 눌러도 로그인 가능하도록 변경" />
@@ -780,6 +780,7 @@
     <MESSAGE value="fix : ?? 왜 이렇게 짰음?" />
     <MESSAGE value="feat : DB 배포 및 연결을 위한 설정" />
     <MESSAGE value="refactor : 프론트랑 같이하기 위한 통합" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor : 프론트랑 같이하기 위한 통합" />
+    <MESSAGE value="fix : DB 설정 이전으로 롤백" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix : DB 설정 이전으로 롤백" />
   </component>
 </project>

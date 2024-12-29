@@ -118,11 +118,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\overset\SparksInTheStep" />
       <recent name="C:\Users\overset\SparksInTheStep\back" />
       <recent name="C:\Users\overset\SparksInTheStep\src\main\resources\static" />
       <recent name="C:\Users\overset\SparksInTheStep\src\main\resources\static\css" />
       <recent name="C:\Users\overset\SparksInTheStep\src\main\resources\templates" />
-      <recent name="C:\Users\overset\SparksInTheStep\.github" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.WebBoardApplication">
@@ -332,15 +332,7 @@
       <workItem from="1732968815003" duration="3039000" />
       <workItem from="1732976253828" duration="3387000" />
       <workItem from="1733120300391" duration="34000" />
-      <workItem from="1735470296720" duration="1812000" />
-    </task>
-    <task id="LOCAL-00044" summary="feat : admin 검증에 대한 에러 코드 추가">
-      <option name="closed" value="true" />
-      <created>1732441914357</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1732441914357</updated>
+      <workItem from="1735470296720" duration="2160000" />
     </task>
     <task id="LOCAL-00045" summary="feat : admin 동작에 대한 controller 작성&#10;&#10;adminPage -&gt; 어드민 페이지 연결용, adminApi -&gt; 어드민 페이지에서 사용할 api용">
       <option name="closed" value="true" />
@@ -726,7 +718,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735472073453</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="fix : DB 설정 이전으로 롤백">
+      <option name="closed" value="true" />
+      <created>1735472395985</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1735472395985</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

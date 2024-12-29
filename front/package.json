@@ -2,6 +2,13 @@
   "name": "alumnilink",
   "version": "0.1.0",
   "private": true,
+  "contributors": [
+    {
+      "name": "sunwooAn",
+      "email": "sunjajp1472@gmail.com",
+      "url": "https://www.github.com/sunja1472"
+    }
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

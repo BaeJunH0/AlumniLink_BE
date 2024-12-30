@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01dace39-8a00-4deb-a297-1add57b15d4e" name="변경" comment="refactor : 관리자 관련 API 스펙은 공개 X">
+    <list default="true" id="01dace39-8a00-4deb-a297-1add57b15d4e" name="변경" comment="refactor : 필요없는 ExceptionHandler 삭제">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/admin/presentation/AdminApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/admin/presentation/AdminApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/auth/presentation/AuthApiSpec.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/auth/presentation/AuthApiSpec.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/auth/presentation/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/auth/presentation/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/member/application/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/member/application/MemberService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -340,31 +338,7 @@
       <workItem from="1733120300391" duration="34000" />
       <workItem from="1735470296720" duration="2662000" />
       <workItem from="1735533109919" duration="9124000" />
-      <workItem from="1735553491716" duration="1071000" />
-    </task>
-    <task id="LOCAL-00056" summary="chore : 사용하지 않는 import문 삭제">
-      <option name="closed" value="true" />
-      <created>1732670767801</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1732670767801</updated>
-    </task>
-    <task id="LOCAL-00057" summary="refactor : auth와 member 도메인 분리에 따른 경로 변경">
-      <option name="closed" value="true" />
-      <created>1732670882919</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1732670882919</updated>
-    </task>
-    <task id="LOCAL-00058" summary="build : swagger 사용을 위한 종속성 추가">
-      <option name="closed" value="true" />
-      <created>1732670905313</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1732670905313</updated>
+      <workItem from="1735553491716" duration="2177000" />
     </task>
     <task id="LOCAL-00059" summary="feat : Comment, Post 도메인에 대한 커스텀 에러 코드 작성">
       <option name="closed" value="true" />
@@ -734,7 +708,31 @@
       <option name="project" value="LOCAL" />
       <updated>1735554166301</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="refactor : 관리자 로그인 관리를 AdminApi로 이임">
+      <option name="closed" value="true" />
+      <created>1735554613506</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1735554613506</updated>
+    </task>
+    <task id="LOCAL-00106" summary="refactor : Comment 도메인 변경점 반영">
+      <option name="closed" value="true" />
+      <created>1735554888561</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1735554888561</updated>
+    </task>
+    <task id="LOCAL-00107" summary="refactor : 필요없는 ExceptionHandler 삭제">
+      <option name="closed" value="true" />
+      <created>1735555114881</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1735555114882</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -775,9 +773,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor : 매개변수에 존재하지만 실제로 받는 값은 아닌 유저 정보를 명세에서 삭제" />
-    <MESSAGE value="feat : API에 대한 명세 작성" />
-    <MESSAGE value="feat : CORS error 설정" />
     <MESSAGE value="feat : docker 파일 초안 작성" />
     <MESSAGE value="feat : CI/CD를 위한 git action 설정" />
     <MESSAGE value="fix : 버전을 찾지 못하는 부분 재설정" />
@@ -800,6 +795,9 @@
     <MESSAGE value="feat : 리프레시 토큰 기능 구현" />
     <MESSAGE value="refactor : TimeStamp를 공통으로 사용하기 위해 구조 변경" />
     <MESSAGE value="refactor : 관리자 관련 API 스펙은 공개 X" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor : 관리자 관련 API 스펙은 공개 X" />
+    <MESSAGE value="refactor : 관리자 로그인 관리를 AdminApi로 이임" />
+    <MESSAGE value="refactor : Comment 도메인 변경점 반영" />
+    <MESSAGE value="refactor : 필요없는 ExceptionHandler 삭제" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor : 필요없는 ExceptionHandler 삭제" />
   </component>
 </project>

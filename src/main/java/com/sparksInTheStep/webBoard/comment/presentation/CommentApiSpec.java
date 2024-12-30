@@ -42,6 +42,7 @@ public interface CommentApiSpec {
     @ApiResponse(responseCode = "404", description = "해당 댓글이 존재하지 않음 or 위조된 토큰 사용")
     public ResponseEntity<?> updateComment(
             @AuthorizedUser MemberInfo.Default memberInfo,
+            @Parameter(description = "댓글 수정을 위한 정보")
             @RequestBody CommentRequest.Create commentRequest,
             @PathVariable Long commentId
     );

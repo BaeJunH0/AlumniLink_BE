@@ -39,15 +39,4 @@ public class AuthController implements AuthApiSpec{
         String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.nickname());
         return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.CREATED);
     }
-
-    @PostMapping("/adminLogin")
-    public ResponseEntity<?> adminLogin(@RequestBody MemberRequest memberRequest){
-        if(!memberService.adminCheck(MemberCommand.from(memberRequest))){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
-        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.nickname());
-        return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.OK);
-    }
 }

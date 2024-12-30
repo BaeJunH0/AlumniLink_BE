@@ -26,13 +26,4 @@ public interface AuthApiSpec {
             @Parameter(description = "멤버의 아이디와 비밀번호")
             @RequestBody MemberRequest memberRequest
     );
-
-    @Operation(summary = "어드민 로그인", description = "아이디와 비밀번호를 사용하여 로그인합니다.")
-    @ApiResponse(responseCode = "200", description = "성공")
-    @ApiResponse(responseCode = "401", description = "어드민 권한이 없는 아이디 사용 or 비밀번호 틀림")
-    @ApiResponse(responseCode = "404", description = "존재하지 않는 아이디 사용")
-    public ResponseEntity<?> adminLogin(
-            @Parameter(description = "멤버의 아이디와 비밀번호")
-            @RequestBody MemberRequest memberRequest
-    );
 }

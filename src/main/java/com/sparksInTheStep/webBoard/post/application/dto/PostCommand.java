@@ -1,4 +1,4 @@
-package com.sparksInTheStep.webBoard.post.service.dto;
+package com.sparksInTheStep.webBoard.post.application.dto;
 
 import com.sparksInTheStep.webBoard.post.presentation.dto.PostRequest;
 

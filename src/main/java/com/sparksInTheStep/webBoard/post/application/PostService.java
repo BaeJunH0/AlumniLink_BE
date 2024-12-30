@@ -1,4 +1,4 @@
-package com.sparksInTheStep.webBoard.post.service;
+package com.sparksInTheStep.webBoard.post.application;
 
 import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
 import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.PostErrorCode;
@@ -7,10 +7,9 @@ import com.sparksInTheStep.webBoard.member.domain.Member;
 import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import com.sparksInTheStep.webBoard.post.domain.Post;
 import com.sparksInTheStep.webBoard.post.persistence.PostRepository;
-import com.sparksInTheStep.webBoard.post.service.dto.PostCommand;
-import com.sparksInTheStep.webBoard.post.service.dto.PostInfo;
+import com.sparksInTheStep.webBoard.post.application.dto.PostCommand;
+import com.sparksInTheStep.webBoard.post.application.dto.PostInfo;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

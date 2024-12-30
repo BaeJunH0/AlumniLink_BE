@@ -1,7 +1,11 @@
 package com.sparksInTheStep.webBoard.admin.presentation;
 
+import com.sparksInTheStep.webBoard.auth.token.JwtTokenProvider;
+import com.sparksInTheStep.webBoard.auth.token.Token;
 import com.sparksInTheStep.webBoard.member.application.MemberService;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberCommand;
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.member.presentation.dto.MemberRequest;
 import com.sparksInTheStep.webBoard.member.presentation.dto.MemberResponse;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/members")
-public class AdminApiController implements AdminApiSpec{
+public class AdminApiController {
     public final MemberService memberService;
+    public final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
     public ResponseEntity<?> readAllUsers(
@@ -27,6 +32,17 @@ public class AdminApiController implements AdminApiSpec{
                         .map(MemberResponse.Special::from),
                 HttpStatus.OK
         );
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> adminLogin(@RequestBody MemberRequest memberRequest){
+        if(!memberService.adminCheck(MemberCommand.from(memberRequest))){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
+        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.nickname());
+        return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.OK);
     }
 
     @PatchMapping("{userId}")

@@ -33,7 +33,7 @@ public class Member {
     }
 
     public void granting() {
-        this.admin = true;
+        this.admin = !this.admin;
     }
 
     public boolean passCheck(UUID password) {

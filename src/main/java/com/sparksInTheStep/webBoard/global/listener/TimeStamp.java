@@ -1,4 +1,4 @@
-package com.sparksInTheStep.webBoard.post.domain;
+package com.sparksInTheStep.webBoard.global.listener;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

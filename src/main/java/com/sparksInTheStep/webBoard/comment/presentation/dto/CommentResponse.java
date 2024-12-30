@@ -17,7 +17,7 @@ public record CommentResponse(
         return new CommentResponse(
                 commentInfo.id(),
                 commentInfo.body(),
-                commentInfo.createdAt(),
+                commentInfo.createdDate(),
                 MemberResponse.Default.from(commentInfo.memberInfo()),
                 PostResponse.from(commentInfo.postInfo())
         );

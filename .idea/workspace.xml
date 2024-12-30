@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01dace39-8a00-4deb-a297-1add57b15d4e" name="변경" comment="fix : DB 설정 이전으로 롤백">
+    <list default="true" id="01dace39-8a00-4deb-a297-1add57b15d4e" name="변경" comment="refactor : 관리자 관련 API 스펙은 공개 X">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/admin/presentation/AdminApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/admin/presentation/AdminApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/auth/presentation/AuthApiSpec.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/auth/presentation/AuthApiSpec.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/auth/presentation/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sparksInTheStep/webBoard/auth/presentation/AuthController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,12 +44,12 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Record" />
-        <option value="Class" />
         <option value="HTML File" />
         <option value="JavaScript File" />
         <option value="Interface" />
         <option value="Enum" />
         <option value="Dockerfile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -72,52 +75,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Gradle.MemberRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberRepositoryTest.test1.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberRepositoryTest.test2.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberRepositoryTest.test3.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberRepositoryTest.test4.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.test1.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.test2.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.test3.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.test4.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.test5.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.test6.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.test7.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.SparksInTheStep [dependencies].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.SparksInTheStep 빌드.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UserRepositoryTest.test1.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UserTest.test1.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UserTest.test2.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.WebBoardApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;fix/backtononeDB&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/overset/Desktop/24년/2학기/데이타베이스/기말고사/과제/src&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Gradle.MemberRepositoryTest.executor": "Run",
+    "Gradle.MemberRepositoryTest.test1.executor": "Run",
+    "Gradle.MemberRepositoryTest.test2.executor": "Run",
+    "Gradle.MemberRepositoryTest.test3.executor": "Run",
+    "Gradle.MemberRepositoryTest.test4.executor": "Run",
+    "Gradle.MemberServiceTest.executor": "Run",
+    "Gradle.MemberServiceTest.test1.executor": "Run",
+    "Gradle.MemberServiceTest.test2.executor": "Run",
+    "Gradle.MemberServiceTest.test3.executor": "Run",
+    "Gradle.MemberServiceTest.test4.executor": "Run",
+    "Gradle.MemberServiceTest.test5.executor": "Run",
+    "Gradle.MemberServiceTest.test6.executor": "Run",
+    "Gradle.MemberServiceTest.test7.executor": "Run",
+    "Gradle.MemberTest.executor": "Run",
+    "Gradle.SparksInTheStep [dependencies].executor": "Run",
+    "Gradle.SparksInTheStep 빌드.executor": "Run",
+    "Gradle.UserRepositoryTest.test1.executor": "Run",
+    "Gradle.UserTest.test1.executor": "Run",
+    "Gradle.UserTest.test2.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.WebBoardApplication.executor": "Run",
+    "git-widget-placeholder": "refactor/#70-codeRefactoring1",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/overset/Desktop/24년/2학기/데이타베이스/기말고사/과제/src",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;h2&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "h2"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\overset\SparksInTheStep" />
@@ -335,79 +339,8 @@
       <workItem from="1732976253828" duration="3387000" />
       <workItem from="1733120300391" duration="34000" />
       <workItem from="1735470296720" duration="2662000" />
-      <workItem from="1735533109919" duration="997000" />
-    </task>
-    <task id="LOCAL-00047" summary="docs : sql 파일 사용을 위한 설정 추가">
-      <option name="closed" value="true" />
-      <created>1732442025628</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1732442025628</updated>
-    </task>
-    <task id="LOCAL-00048" summary="refactor : 어드민 기능 사용을 위해 Member 반환 DTO를 두 가지 사용&#10;&#10;Default -&gt; 닉네임만 반환 ( 기존 ) / Special -&gt; 닉네임, id, admin 여부를 반환 ( 신규 )">
-      <option name="closed" value="true" />
-      <created>1732463346877</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1732463346877</updated>
-    </task>
-    <task id="LOCAL-00049" summary="feat : 어드민 페이지를 위해 필요한 기능과 api 구현">
-      <option name="closed" value="true" />
-      <created>1732463394784</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1732463394784</updated>
-    </task>
-    <task id="LOCAL-00050" summary="feat : 어드민 페이지 구현">
-      <option name="closed" value="true" />
-      <created>1732463405486</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1732463405486</updated>
-    </task>
-    <task id="LOCAL-00051" summary="chore : 검색 -&gt; 조회로 단어 변경">
-      <option name="closed" value="true" />
-      <created>1732464384886</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1732464384886</updated>
-    </task>
-    <task id="LOCAL-00052" summary="feat : 로그인 페이지에서 엔터를 눌러도 로그인 가능하도록 변경">
-      <option name="closed" value="true" />
-      <created>1732464405065</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1732464405065</updated>
-    </task>
-    <task id="LOCAL-00053" summary="refactor : 조회 결과 값을 페이지로 변경">
-      <option name="closed" value="true" />
-      <created>1732520256125</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1732520256126</updated>
-    </task>
-    <task id="LOCAL-00054" summary="refactor : auth와 member 도메인 분리">
-      <option name="closed" value="true" />
-      <created>1732670720521</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1732670720522</updated>
-    </task>
-    <task id="LOCAL-00055" summary="refactor : auth와 member 도메인 분리">
-      <option name="closed" value="true" />
-      <created>1732670737974</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1732670737974</updated>
+      <workItem from="1735533109919" duration="9124000" />
+      <workItem from="1735553491716" duration="1071000" />
     </task>
     <task id="LOCAL-00056" summary="chore : 사용하지 않는 import문 삭제">
       <option name="closed" value="true" />
@@ -729,11 +662,94 @@
       <option name="project" value="LOCAL" />
       <updated>1735472709495</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="refactor : 디렉토리명 변경 controller -&gt; presentation">
+      <option name="closed" value="true" />
+      <created>1735535396359</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1735535396360</updated>
+    </task>
+    <task id="LOCAL-00097" summary="refactor : post 도메인에 대한 리펙터링&#10;&#10;patch 기능 추가, delete path variable 방식으로 변경, 사용하지 않는 유효성 검증 생략">
+      <option name="closed" value="true" />
+      <created>1735537532434</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1735537532434</updated>
+    </task>
+    <task id="LOCAL-00098" summary="fix : 무시되어야 할 파일이 계속 커밋 목록에 뜸">
+      <option name="closed" value="true" />
+      <created>1735537596883</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1735537596884</updated>
+    </task>
+    <task id="LOCAL-00099" summary="refactor : comment 도메인에 대한 리펙터링&#10;&#10;patch 기능 추가">
+      <option name="closed" value="true" />
+      <created>1735538330172</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1735538330172</updated>
+    </task>
+    <task id="LOCAL-00100" summary="refactor : 사용하지 않는 유효성 검증 제외">
+      <option name="closed" value="true" />
+      <created>1735539632820</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1735539632820</updated>
+    </task>
+    <task id="LOCAL-00101" summary="refactor : 닉네임 반환을 위한 API 작성">
+      <option name="closed" value="true" />
+      <created>1735539644079</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1735539644079</updated>
+    </task>
+    <task id="LOCAL-00102" summary="feat : 리프레시 토큰 기능 구현">
+      <option name="closed" value="true" />
+      <created>1735542570304</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1735542570304</updated>
+    </task>
+    <task id="LOCAL-00103" summary="refactor : TimeStamp를 공통으로 사용하기 위해 구조 변경">
+      <option name="closed" value="true" />
+      <created>1735554021499</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1735554021500</updated>
+    </task>
+    <task id="LOCAL-00104" summary="refactor : 관리자 관련 API 스펙은 공개 X">
+      <option name="closed" value="true" />
+      <created>1735554166301</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1735554166301</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -759,15 +775,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat : 어드민 페이지 구현" />
-    <MESSAGE value="chore : 검색 -&gt; 조회로 단어 변경" />
-    <MESSAGE value="feat : 로그인 페이지에서 엔터를 눌러도 로그인 가능하도록 변경" />
-    <MESSAGE value="refactor : 조회 결과 값을 페이지로 변경" />
-    <MESSAGE value="refactor : auth와 member 도메인 분리" />
-    <MESSAGE value="chore : 사용하지 않는 import문 삭제" />
-    <MESSAGE value="refactor : auth와 member 도메인 분리에 따른 경로 변경" />
-    <MESSAGE value="build : swagger 사용을 위한 종속성 추가" />
-    <MESSAGE value="feat : Comment, Post 도메인에 대한 커스텀 에러 코드 작성" />
     <MESSAGE value="refactor : 매개변수에 존재하지만 실제로 받는 값은 아닌 유저 정보를 명세에서 삭제" />
     <MESSAGE value="feat : API에 대한 명세 작성" />
     <MESSAGE value="feat : CORS error 설정" />
@@ -784,6 +791,15 @@
     <MESSAGE value="feat : DB 배포 및 연결을 위한 설정" />
     <MESSAGE value="refactor : 프론트랑 같이하기 위한 통합" />
     <MESSAGE value="fix : DB 설정 이전으로 롤백" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix : DB 설정 이전으로 롤백" />
+    <MESSAGE value="refactor : 디렉토리명 변경 controller -&gt; presentation" />
+    <MESSAGE value="refactor : post 도메인에 대한 리펙터링&#10;&#10;patch 기능 추가, delete path variable 방식으로 변경, 사용하지 않는 유효성 검증 생략" />
+    <MESSAGE value="fix : 무시되어야 할 파일이 계속 커밋 목록에 뜸" />
+    <MESSAGE value="refactor : comment 도메인에 대한 리펙터링&#10;&#10;patch 기능 추가" />
+    <MESSAGE value="refactor : 사용하지 않는 유효성 검증 제외" />
+    <MESSAGE value="refactor : 닉네임 반환을 위한 API 작성" />
+    <MESSAGE value="feat : 리프레시 토큰 기능 구현" />
+    <MESSAGE value="refactor : TimeStamp를 공통으로 사용하기 위해 구조 변경" />
+    <MESSAGE value="refactor : 관리자 관련 API 스펙은 공개 X" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor : 관리자 관련 API 스펙은 공개 X" />
   </component>
 </project>

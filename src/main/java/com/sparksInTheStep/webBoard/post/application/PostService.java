@@ -10,6 +10,8 @@ import com.sparksInTheStep.webBoard.post.persistence.PostRepository;
 import com.sparksInTheStep.webBoard.post.application.dto.PostCommand;
 import com.sparksInTheStep.webBoard.post.application.dto.PostInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,19 +31,16 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostInfo> getPostsByMember(MemberInfo.Default memberInfo) {
+    public Page<PostInfo> getPostsByMember(MemberInfo.Default memberInfo, Pageable pageable) {
         Member member = memberRepository.findByNickname(memberInfo.nickname());
+        Page<Post> posts = postRepository.findByMember(member, pageable);
 
-        List<Post> posts = postRepository.findByMember(member);
-
-        return posts.stream()
-                .map(PostInfo::from)
-                .toList();
+        return posts.map(PostInfo::from);
     }
 
     @Transactional(readOnly = true)
-    public List<PostInfo> getAllPosts(){
-        return postRepository.findAll().stream().map(PostInfo::from).toList();
+    public Page<PostInfo> getAllPosts(Pageable pageable){
+        return postRepository.findAll(pageable).map(PostInfo::from);
     }
 
     @Transactional(readOnly = true)

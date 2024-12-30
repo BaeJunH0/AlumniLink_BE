@@ -27,7 +27,8 @@ public class AuthController implements AuthApiSpec{
         }
 
         String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
-        return new ResponseEntity<>(Token.of(accessToken), HttpStatus.OK);
+        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.nickname());
+        return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.OK);
     }
 
     @PostMapping("/register")
@@ -35,7 +36,8 @@ public class AuthController implements AuthApiSpec{
         memberService.makeNewUser(MemberCommand.from(memberRequest));
 
         String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
-        return new ResponseEntity<>(Token.of(accessToken), HttpStatus.CREATED);
+        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.nickname());
+        return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.CREATED);
     }
 
     @PostMapping("/adminLogin")
@@ -45,6 +47,7 @@ public class AuthController implements AuthApiSpec{
         }
 
         String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
-        return new ResponseEntity<>(Token.of(accessToken), HttpStatus.OK);
+        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.nickname());
+        return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.OK);
     }
 }

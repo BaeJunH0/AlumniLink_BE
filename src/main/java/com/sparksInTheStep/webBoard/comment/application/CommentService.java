@@ -49,6 +49,20 @@ public class CommentService {
     }
 
     @Transactional
+    public void updateComment(String nickname, Long id, CommentCommand commentCommand){
+        Member member = memberRepository.findByNickname(nickname);
+        Comment comment = commentRepository.findById(id).orElseThrow(
+                () -> CustomException.of(CommentErrorCode.NOT_FOUND)
+        );
+
+        if(comment.getMember() != member){
+            throw CustomException.of(CommentErrorCode.NOT_MY_COMMENT);
+        }
+
+        comment.update(commentCommand.Body());
+    }
+
+    @Transactional
     public void deleteComment(String nickname, Long id) {
         Member member = memberRepository.findByNickname(nickname);
         Comment comment = commentRepository.findById(id).orElseThrow(

@@ -23,7 +23,7 @@ public class Comment {
     @Column
     private String body;
     @CreatedDate
-    private LocalDateTime createdAt; // 생성 시간
+    private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
@@ -39,5 +39,9 @@ public class Comment {
 
     public static Comment of(String body, Member member, Post post){
         return new Comment(body, member, post);
+    }
+
+    public void update(String body){
+        this.body = body;
     }
 }

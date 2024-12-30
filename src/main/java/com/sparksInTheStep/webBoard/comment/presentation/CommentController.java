@@ -7,7 +7,6 @@ import com.sparksInTheStep.webBoard.comment.presentation.dto.CommentRequest;
 import com.sparksInTheStep.webBoard.comment.presentation.dto.CommentResponse;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -43,6 +42,21 @@ public class CommentController implements CommentApiSpec{
         );
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{commentId}")
+    public ResponseEntity<?> updateComment(
+            @AuthorizedUser MemberInfo.Default memberInfo,
+            @RequestBody CommentRequest.Create commentRequest,
+            @PathVariable Long commentId
+    ){
+        commentService.updateComment(
+                memberInfo.nickname(),
+                commentId,
+                CommentCommand.from(commentRequest)
+        );
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{commentId}")

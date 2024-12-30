@@ -1,4 +1,4 @@
-package com.sparksInTheStep.webBoard.post.controller.dto;
+package com.sparksInTheStep.webBoard.post.presentation.dto;
 
 
 import jakarta.validation.constraints.NotBlank;

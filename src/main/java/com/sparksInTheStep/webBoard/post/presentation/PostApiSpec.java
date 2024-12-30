@@ -1,14 +1,12 @@
-package com.sparksInTheStep.webBoard.post.controller;
+package com.sparksInTheStep.webBoard.post.presentation;
 
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
-import com.sparksInTheStep.webBoard.post.controller.dto.PostRequest;
-import com.sparksInTheStep.webBoard.post.controller.dto.PostResponse;
-import com.sparksInTheStep.webBoard.post.domain.Post;
+import com.sparksInTheStep.webBoard.post.presentation.dto.PostRequest;
+import com.sparksInTheStep.webBoard.post.presentation.dto.PostResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

@@ -2,7 +2,7 @@ package com.sparksInTheStep.webBoard.comment.presentation.dto;
 
 import com.sparksInTheStep.webBoard.member.presentation.dto.MemberResponse;
 import com.sparksInTheStep.webBoard.comment.application.dto.CommentInfo;
-import com.sparksInTheStep.webBoard.post.controller.dto.PostResponse;
+import com.sparksInTheStep.webBoard.post.presentation.dto.PostResponse;
 
 import java.time.LocalDateTime;
 

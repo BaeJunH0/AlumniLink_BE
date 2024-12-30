@@ -1,8 +1,8 @@
-package com.sparksInTheStep.webBoard.post.controller;
+package com.sparksInTheStep.webBoard.post.presentation;
 
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
-import com.sparksInTheStep.webBoard.post.controller.dto.PostRequest;
-import com.sparksInTheStep.webBoard.post.controller.dto.PostResponse;
+import com.sparksInTheStep.webBoard.post.presentation.dto.PostRequest;
+import com.sparksInTheStep.webBoard.post.presentation.dto.PostResponse;
 import com.sparksInTheStep.webBoard.post.service.PostService;
 import com.sparksInTheStep.webBoard.post.service.dto.PostCommand;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;

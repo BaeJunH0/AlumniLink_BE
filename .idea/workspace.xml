@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01dace39-8a00-4deb-a297-1add57b15d4e" name="변경" comment="fix : DB 설정 이전으로 롤백" />
+    <list default="true" id="01dace39-8a00-4deb-a297-1add57b15d4e" name="변경" comment="fix : DB 설정 이전으로 롤백">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,52 +72,52 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Gradle.MemberRepositoryTest.executor": "Run",
-    "Gradle.MemberRepositoryTest.test1.executor": "Run",
-    "Gradle.MemberRepositoryTest.test2.executor": "Run",
-    "Gradle.MemberRepositoryTest.test3.executor": "Run",
-    "Gradle.MemberRepositoryTest.test4.executor": "Run",
-    "Gradle.MemberServiceTest.executor": "Run",
-    "Gradle.MemberServiceTest.test1.executor": "Run",
-    "Gradle.MemberServiceTest.test2.executor": "Run",
-    "Gradle.MemberServiceTest.test3.executor": "Run",
-    "Gradle.MemberServiceTest.test4.executor": "Run",
-    "Gradle.MemberServiceTest.test5.executor": "Run",
-    "Gradle.MemberServiceTest.test6.executor": "Run",
-    "Gradle.MemberServiceTest.test7.executor": "Run",
-    "Gradle.MemberTest.executor": "Run",
-    "Gradle.SparksInTheStep [dependencies].executor": "Run",
-    "Gradle.SparksInTheStep 빌드.executor": "Run",
-    "Gradle.UserRepositoryTest.test1.executor": "Run",
-    "Gradle.UserTest.test1.executor": "Run",
-    "Gradle.UserTest.test2.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.WebBoardApplication.executor": "Run",
-    "git-widget-placeholder": "fix/backtononeDB",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/overset/Desktop/24년/2학기/데이타베이스/기말고사/과제/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Gradle.MemberRepositoryTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberRepositoryTest.test1.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberRepositoryTest.test2.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberRepositoryTest.test3.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberRepositoryTest.test4.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberServiceTest.test1.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberServiceTest.test2.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberServiceTest.test3.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberServiceTest.test4.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberServiceTest.test5.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberServiceTest.test6.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberServiceTest.test7.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.MemberTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.SparksInTheStep [dependencies].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.SparksInTheStep 빌드.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserRepositoryTest.test1.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserTest.test1.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserTest.test2.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.WebBoardApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;fix/backtononeDB&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/overset/Desktop/24년/2학기/데이타베이스/기말고사/과제/src&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "h2"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;h2&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\overset\SparksInTheStep" />
@@ -332,23 +334,8 @@
       <workItem from="1732968815003" duration="3039000" />
       <workItem from="1732976253828" duration="3387000" />
       <workItem from="1733120300391" duration="34000" />
-      <workItem from="1735470296720" duration="2160000" />
-    </task>
-    <task id="LOCAL-00045" summary="feat : admin 동작에 대한 controller 작성&#10;&#10;adminPage -&gt; 어드민 페이지 연결용, adminApi -&gt; 어드민 페이지에서 사용할 api용">
-      <option name="closed" value="true" />
-      <created>1732441964901</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1732441964901</updated>
-    </task>
-    <task id="LOCAL-00046" summary="feat : 임시 어드민 계정 생성 sql 작성&#10;&#10;nickname = admin, password = 1234!">
-      <option name="closed" value="true" />
-      <created>1732442001737</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1732442001737</updated>
+      <workItem from="1735470296720" duration="2662000" />
+      <workItem from="1735533109919" duration="997000" />
     </task>
     <task id="LOCAL-00047" summary="docs : sql 파일 사용을 위한 설정 추가">
       <option name="closed" value="true" />
@@ -726,7 +713,23 @@
       <option name="project" value="LOCAL" />
       <updated>1735472395985</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="fix : DB 설정 이전으로 롤백">
+      <option name="closed" value="true" />
+      <created>1735472518191</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1735472518191</updated>
+    </task>
+    <task id="LOCAL-00095" summary="fix : DB 설정 이전으로 롤백">
+      <option name="closed" value="true" />
+      <created>1735472709495</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1735472709495</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

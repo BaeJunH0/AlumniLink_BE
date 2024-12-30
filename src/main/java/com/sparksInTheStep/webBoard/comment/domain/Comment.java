@@ -1,29 +1,22 @@
 package com.sparksInTheStep.webBoard.comment.domain;
 
+import com.sparksInTheStep.webBoard.global.listener.TimeStamp;
 import com.sparksInTheStep.webBoard.member.domain.Member;
 import com.sparksInTheStep.webBoard.post.domain.Post;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "comment")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 @Getter
-@EntityListeners(AuditingEntityListener.class)
-public class Comment {
+public class Comment extends TimeStamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
     private String body;
-    @CreatedDate
-    private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;

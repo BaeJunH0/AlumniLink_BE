@@ -1,5 +1,6 @@
 package com.sparksInTheStep.webBoard.post.domain;
 
+import com.sparksInTheStep.webBoard.global.listener.TimeStamp;
 import com.sparksInTheStep.webBoard.member.domain.Member;
 import com.sparksInTheStep.webBoard.post.service.dto.PostCommand;
 import jakarta.persistence.*;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Post extends TimeStamp{
+public class Post extends TimeStamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

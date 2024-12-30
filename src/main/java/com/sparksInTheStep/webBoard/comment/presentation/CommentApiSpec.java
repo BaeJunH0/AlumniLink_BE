@@ -35,6 +35,17 @@ public interface CommentApiSpec {
             @RequestBody CommentRequest.Create commentRequest
     );
 
+    @Operation(summary = "댓글 수정하기", description = "특정 게시글의 댓글을 수정합니다.")
+    @ApiResponse(responseCode = "204", description = "성공")
+    @ApiResponse(responseCode = "400", description = "유효하지 않은 토큰")
+    @ApiResponse(responseCode = "403", description = "로그인 정보와 일치하지 않는 댓글을 수정 시도")
+    @ApiResponse(responseCode = "404", description = "해당 댓글이 존재하지 않음 or 위조된 토큰 사용")
+    public ResponseEntity<?> updateComment(
+            @AuthorizedUser MemberInfo.Default memberInfo,
+            @RequestBody CommentRequest.Create commentRequest,
+            @PathVariable Long commentId
+    );
+
     @Operation(summary = "댓글 삭제하기", description = "특정 게시글의 댓글을 삭제합니다.")
     @ApiResponse(responseCode = "204", description = "성공")
     @ApiResponse(responseCode = "400", description = "유효하지 않은 토큰")
@@ -42,7 +53,6 @@ public interface CommentApiSpec {
     @ApiResponse(responseCode = "404", description = "해당 댓글이 존재하지 않음 or 위조된 토큰 사용")
     public ResponseEntity<?> deleteComment(
             @AuthorizedUser MemberInfo.Default memberInfo,
-            @Parameter(description = "삭제할 댓글의 ID")
             @PathVariable Long commentId
     );
 }

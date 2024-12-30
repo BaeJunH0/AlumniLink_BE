@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Getter
 public enum PostErrorCode implements ErrorCode {
-    NOT_FOUND(HttpStatus.NOT_FOUND, "P000", "No such post");
+    NOT_FOUND(HttpStatus.NOT_FOUND, "P000", "No such post"),
+    NOT_MY_COMMENT(HttpStatus.FORBIDDEN, "P001", "You can delete only your post");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/members")
-public class AdminApiController implements AdminApiSpec{
+public class AdminApiController {
     public final MemberService memberService;
 
     @GetMapping

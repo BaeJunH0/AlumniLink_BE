@@ -18,14 +18,14 @@ public class Post extends TimeStamp{
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String body;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private PostType tag;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 
     public Post(PostCommand postCommand, Member member) {
@@ -33,6 +33,12 @@ public class Post extends TimeStamp{
         this.body = postCommand.body();
         this.tag = PostType.valueOf(postCommand.tag());
         this.member = member;
+    }
+
+    public void update(String title, String tag, String body){
+        this.title = title;
+        this.tag = PostType.valueOf(tag);
+        this.body = body;
     }
 }
 

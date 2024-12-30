@@ -21,6 +21,7 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+
     @Transactional
     public void createPost(String nickname, PostCommand postCommand) {
         Member member = memberRepository.findByNickname(nickname);
@@ -28,7 +29,6 @@ public class PostService {
         postRepository.save(new Post(postCommand, member));
     }
 
-    // DB 읽기 동작의 경우에는 readOnly로 할 것
     @Transactional(readOnly = true)
     public List<PostInfo> getPostsByMember(MemberInfo.Default memberInfo) {
         Member member = memberRepository.findByNickname(memberInfo.nickname());
@@ -40,13 +40,11 @@ public class PostService {
                 .toList();
     }
 
-    // Post를 전부 가져오기
     @Transactional(readOnly = true)
     public List<PostInfo> getAllPosts(){
         return postRepository.findAll().stream().map(PostInfo::from).toList();
     }
 
-    // Post를 하나만 가져오기
     @Transactional(readOnly = true)
     public PostInfo getOnePost(Long id){
         return PostInfo.from(postRepository.findById(id).orElseThrow(
@@ -55,16 +53,25 @@ public class PostService {
     }
 
     @Transactional
-    public void deletePost(MemberInfo.Default memberInfo, Long postId) throws AuthenticationException {
+    public void updatePost(MemberInfo.Default memberInfo, Long postId, PostCommand postCommand){
         Member member = memberRepository.findByNickname(memberInfo.nickname());
-        Post post = postRepository.findPostById(postId)
-                .orElseThrow(
-                        () -> new NoSuchFieldError("해당하는 게시글이 존재하지 않거나 이미 없어진 게시글입니다.")
-                );
+        Post post = postRepository.findPostById(postId).orElseThrow(
+                () -> CustomException.of(PostErrorCode.NOT_FOUND)
+        );
+
+        post.update(postCommand.title(), postCommand.tag(), postCommand.body());
+    }
+
+    @Transactional
+    public void deletePost(MemberInfo.Default memberInfo, Long postId) {
+        Member member = memberRepository.findByNickname(memberInfo.nickname());
+        Post post = postRepository.findPostById(postId).orElseThrow(
+                () -> CustomException.of(PostErrorCode.NOT_FOUND)
+        );
 
         // 게시물 작성자 체크
         if(post.getMember() != member){
-            throw new AuthenticationException("자신의 게시글만 삭제할 수 있습니다.");
+            throw CustomException.of(PostErrorCode.NOT_MY_COMMENT);
         }
 
         postRepository.delete(post);

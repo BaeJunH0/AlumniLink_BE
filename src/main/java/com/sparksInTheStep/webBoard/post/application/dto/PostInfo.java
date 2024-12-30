@@ -1,4 +1,4 @@
-package com.sparksInTheStep.webBoard.post.service.dto;
+package com.sparksInTheStep.webBoard.post.application.dto;
 
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.post.domain.Post;

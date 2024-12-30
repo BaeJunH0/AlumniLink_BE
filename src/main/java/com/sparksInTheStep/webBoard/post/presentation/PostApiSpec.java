@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,21 +18,24 @@ import java.util.List;
 
 @Tag(name="게시글 API", description = "게시글 기능을 담은 API")
 public interface PostApiSpec {
-    @Operation(summary = "모든 게시글 조회하기", description = "모든 게시글을 조회합니다")
-    @ApiResponse(responseCode="200", description = "성공")
-    public ResponseEntity<List<PostResponse>> getAllPosts();
-
     @Operation(summary = "특정 게시글 조회하기", description = "특정 게시글을 조회합니다")
     @ApiResponse(responseCode="200", description = "성공")
     @ApiResponse(responseCode = "404", description = "id에 해당하는 게시글이 없습니다")
-    public ResponseEntity<PostResponse> getPost(
+    public ResponseEntity<?> getPost(
             @PathVariable Long id
+    );
+
+    @Operation(summary = "모든 게시글 조회하기", description = "모든 게시글을 조회합니다")
+    @ApiResponse(responseCode="200", description = "성공")
+    public ResponseEntity<?> getAllPosts(
+            @PageableDefault Pageable pageable
     );
 
     @Operation(summary = "자기가 쓴 글 불러오기", description = "자기가 쓴 모든 글을 리스트로 반환합니다")
     @ApiResponse(responseCode="200", description = "성공")
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
-    public ResponseEntity<List<PostResponse>> getPostsByMember(
+    public ResponseEntity<?> getPostsByMember(
+            @PageableDefault Pageable pageable,
             @AuthorizedUser MemberInfo.Default memberInfo
     );
 
@@ -38,7 +43,7 @@ public interface PostApiSpec {
     @ApiResponse(responseCode="201", description = "성공")
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
     @ApiResponse(responseCode="500", description = "파라미터의 값이 유효하지 않습니다")
-    public ResponseEntity<Void> savePost(
+    public ResponseEntity<?> savePost(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @Parameter(description = "제목과 바디 및 태그를 파라미터로 받습니다")
             @RequestBody PostRequest request
@@ -48,7 +53,7 @@ public interface PostApiSpec {
     @ApiResponse(responseCode="200", description = "성공")
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
     @ApiResponse(responseCode="500", description = "게시글 없거나 이미 게시글 번호 유효하지 않음")
-    public ResponseEntity<Void> updatePost(
+    public ResponseEntity<?> updatePost(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @RequestBody PostRequest postRequest,
             @PathVariable Long postId
@@ -58,7 +63,7 @@ public interface PostApiSpec {
     @ApiResponse(responseCode="204", description = "성공")
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
     @ApiResponse(responseCode="500", description = "게시글 없거나 이미 게시글 번호 유효하지 않음")
-    public ResponseEntity<Void> deletePost(
+    public ResponseEntity<?> deletePost(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long postId
     );

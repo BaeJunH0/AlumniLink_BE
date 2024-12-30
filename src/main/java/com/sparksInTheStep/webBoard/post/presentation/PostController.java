@@ -7,6 +7,9 @@ import com.sparksInTheStep.webBoard.post.application.PostService;
 import com.sparksInTheStep.webBoard.post.application.dto.PostCommand;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,35 +22,31 @@ import java.util.List;
 public class PostController implements PostApiSpec{
     private final PostService postService;
 
-    @GetMapping
-    public ResponseEntity<List<PostResponse>> getAllPosts(){
-        List<PostResponse> response = postService
-                .getAllPosts()
-                .stream()
-                .map(PostResponse::from)
-                .toList();
-        return ResponseEntity.ok(response);
-    }
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> getPost(
+    public ResponseEntity<?> getPost(
             @PathVariable Long id
     ){
         PostResponse response = PostResponse.from(postService.getOnePost(id));
         return ResponseEntity.ok(response);
     }
+    @GetMapping
+    public ResponseEntity<?> getAllPosts(
+            @PageableDefault Pageable pageable
+    ){
+        Page<PostResponse> response = postService.getAllPosts(pageable).map(PostResponse::from);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @GetMapping("/my")
-    public ResponseEntity<List<PostResponse>> getPostsByMember(
+    public ResponseEntity<?> getPostsByMember(
+            @PageableDefault Pageable pageable,
             @AuthorizedUser MemberInfo.Default memberInfo
     ) {
-        List<PostResponse> response = postService
-                .getPostsByMember(memberInfo)
-                .stream()
-                .map(PostResponse::from)
-                .toList();
-        return ResponseEntity.ok(response);
+        Page<PostResponse> response = postService.getPostsByMember(memberInfo, pageable)
+                .map(PostResponse::from);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<Void> savePost(
+    public ResponseEntity<?> savePost(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @RequestBody PostRequest request
     ) {
@@ -55,7 +54,7 @@ public class PostController implements PostApiSpec{
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PatchMapping("/{postId}")
-    public ResponseEntity<Void> updatePost(
+    public ResponseEntity<?> updatePost(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @RequestBody PostRequest postRequest,
             @PathVariable Long postId
@@ -66,7 +65,7 @@ public class PostController implements PostApiSpec{
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePost(
+    public ResponseEntity<?> deletePost(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long postId
     ) {

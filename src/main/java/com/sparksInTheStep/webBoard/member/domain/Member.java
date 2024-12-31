@@ -1,5 +1,6 @@
 package com.sparksInTheStep.webBoard.member.domain;
 
+import com.sparksInTheStep.webBoard.project.doamin.Project;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,7 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "member")
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,9 @@ public class Member {
     private UUID password;
     @Column(nullable = false)
     private boolean admin;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Project project;
 
     private Member(String nickname, String password) {
         this.nickname = nickname;

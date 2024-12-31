@@ -3,9 +3,9 @@ package com.sparksInTheStep.webBoard.member.presentation.dto;
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 
 public record MemberResponse() {
-    public record Default(String nickname){
+    public record Default(String nickname, Boolean employed){
         public static MemberResponse.Default from(MemberInfo.Default memberInfo){
-            return new MemberResponse.Default(memberInfo.nickname());
+            return new MemberResponse.Default(memberInfo.nickname(), memberInfo.employed());
         }
     }
 

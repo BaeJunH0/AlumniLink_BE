@@ -16,7 +16,7 @@
 ## Github Repository
 > [**_BackEnd_**](https://github.com/BaeJunH0/AlumniLink_BE)
 >
-> [**_FrontEnd_**](https://github.com/neverx3gu/AlumniLink_FE)
+> [**_FrontEnd_**](https://github.com/BaeJunH0/AlumniLink_FE)
 
 ## 프로젝트 주요 기능
 **1. 로그인 및 회원가입 기능**
@@ -62,3 +62,10 @@
 
 ## 참조
 
+## 기여
+|                     BaeJunH0                       |
+| :------------------------------------------------: |
+| <img width="240px" src="https://avatars.githubusercontent.com/u/114082026?v=4" /> |
+|     [@BaeJunH0](https://github.com/BaeJunH0)       |
+|                 Birth - 2003.07.11                 |
+|          National - 🇰🇷 Republic Of Korea           |

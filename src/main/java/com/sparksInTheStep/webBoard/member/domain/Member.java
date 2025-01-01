@@ -1,5 +1,6 @@
 package com.sparksInTheStep.webBoard.member.domain;
 
+import com.sparksInTheStep.webBoard.project.doamin.Project;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,19 +22,26 @@ public class Member {
     private UUID password;
     @Column(nullable = false)
     private boolean admin;
+    @Column(nullable = false)
+    private boolean employed;
 
-    private Member(String nickname, String password) {
+    private Member(String nickname, String password, Boolean employed) {
         this.nickname = nickname;
         this.password = encodePassword(password);
+        this.employed = employed;
         this.admin = false;
     }
 
-    public static Member of(String nickname, String password) {
-        return new Member(nickname, password);
+    public static Member of(String nickname, String password, Boolean employed) {
+        return new Member(nickname, password, employed);
     }
 
     public void granting() {
         this.admin = !this.admin;
+    }
+
+    public void employing() {
+        this.employed = !this.employed;
     }
 
     public boolean passCheck(UUID password) {

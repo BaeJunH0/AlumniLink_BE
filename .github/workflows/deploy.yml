@@ -16,6 +16,8 @@ jobs:
       # 지정한 저장소(현재 REPO)에서 코드를 워크플로우 환경으로 가져오도록 하는 github action
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       # open jdk 17 버전 환경을 세팅
       - name: Set up JDK 17
@@ -64,6 +66,6 @@ jobs:
             if [ -n "$CONTAINERS" ]; then
             sudo docker rm -f $CONTAINERS
             fi
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/alumni_link
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/alumni_link:latest
             docker-compose up -d
             docker image prune -f

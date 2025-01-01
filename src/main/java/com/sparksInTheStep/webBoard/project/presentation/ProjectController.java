@@ -85,7 +85,7 @@ public class ProjectController implements ProjectApiSpec{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{projectId}")
+    @DeleteMapping("/my/{projectId}")
     public ResponseEntity<?> withdrawProject(
             @PathVariable Long projectId,
             @AuthorizedUser MemberInfo.Default memberInfo

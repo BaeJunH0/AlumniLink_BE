@@ -16,7 +16,7 @@ $(document).ready(function() {
 
         $.ajax({
             type : "POST",
-            url : "/auth/adminLogin",
+            url : "/members/login",
             contentType: "application/json",
             datatype : "json",
             data : JSON.stringify(user),

@@ -15,4 +15,10 @@ public interface MemberApiSpec {
     ResponseEntity<?> getNickname(
             @AuthorizedUser MemberInfo.Default memberInfo
     );
+
+    @Operation(summary = "유저 취업 여부 변경", description = "유저의 취업 유무를 변경합니다.")
+    @ApiResponse(responseCode="200", description = "성공")
+    ResponseEntity<?> updateEmployed(
+            @AuthorizedUser MemberInfo.Default memberInfo
+    );
 }

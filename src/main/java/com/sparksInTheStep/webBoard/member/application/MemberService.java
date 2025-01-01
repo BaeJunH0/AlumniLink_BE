@@ -22,7 +22,9 @@ public class MemberService {
     public boolean memberCheck(MemberCommand memberCommand){
         if(isExistMember(memberCommand.nickname())){
             Member savedMember = memberRepository.findByNickname(memberCommand.nickname());
-            Member checkMember = Member.of(memberCommand.nickname(), memberCommand.password());
+            Member checkMember = memberRepository.save(Member.of(
+                    memberCommand.nickname(), memberCommand.password(), memberCommand.employed()
+            ));
 
             return savedMember.passCheck(checkMember.getPassword());
         }
@@ -35,7 +37,19 @@ public class MemberService {
             throw CustomException.of(MemberErrorCode.DUPLICATED_NICKNAME);
         }
 
-        memberRepository.save(Member.of(memberCommand.nickname(), memberCommand.password()));
+        memberRepository.save(Member.of(
+                memberCommand.nickname(), memberCommand.password(), memberCommand.employed()
+        ));
+    }
+
+    @Transactional
+    public void updateEmployed(String nickname) {
+        if(!isExistMember(nickname)){
+            throw CustomException.of(MemberErrorCode.NOT_FOUND);
+        }
+
+        Member member = memberRepository.findByNickname(nickname);
+        member.employing();
     }
 
     // 관리자용
@@ -43,7 +57,9 @@ public class MemberService {
     public boolean adminCheck(MemberCommand memberCommand){
         if(!isNotAdminMember(memberCommand.nickname())){
             Member savedMember = memberRepository.findByNickname(memberCommand.nickname());
-            Member checkMember = Member.of(memberCommand.nickname(), memberCommand.password());
+            Member checkMember = memberRepository.save(Member.of(
+                    memberCommand.nickname(), memberCommand.password(), memberCommand.employed()
+            ));
 
             return savedMember.passCheck(checkMember.getPassword());
         }

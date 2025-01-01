@@ -66,4 +66,31 @@ public class ProjectController {
         projectService.deleteProject(projectId, memberInfo.nickname());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/my")
+    public ResponseEntity<?> readMyProject(
+            @PageableDefault Pageable pageable,
+            @AuthorizedUser MemberInfo.Default memberInfo
+    ) {
+        Page<ProjectInfo> projects = projectService.getMyProjects(pageable, memberInfo.nickname());
+        return new ResponseEntity<>(projects.map(ProjectResponse::of), HttpStatus.OK);
+    }
+
+    @PostMapping("/{projectId}")
+    public ResponseEntity<?> joinToProject(
+            @PathVariable Long projectId,
+            @AuthorizedUser MemberInfo.Default memberInfo
+    ) {
+        projectService.joinProject(projectId, memberInfo.nickname());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{projectId}")
+    public ResponseEntity<?> withdrawProject(
+            @PathVariable Long projectId,
+            @AuthorizedUser MemberInfo.Default memberInfo
+    ) {
+        projectService.withdrawProject(projectId, memberInfo.nickname());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

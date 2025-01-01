@@ -2,6 +2,10 @@ package com.sparksInTheStep.webBoard.project.application;
 
 import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
 import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.ProjectErrorCode;
+import com.sparksInTheStep.webBoard.project.doamin.JoinedProject;
+import com.sparksInTheStep.webBoard.project.persistent.JoinedProjectRepository;
+import com.sparksInTheStep.webBoard.member.domain.Member;
+import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectCommand;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectInfo;
 import com.sparksInTheStep.webBoard.project.doamin.Project;
@@ -16,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProjectService {
     private final ProjectRepository projectRepository;
+    private final MemberRepository memberRepository;
+    private final JoinedProjectRepository joinedProjectRepository;
 
     @Transactional(readOnly = true)
     public Page<ProjectInfo> getAllProjects(Pageable pageable){
@@ -28,6 +34,12 @@ public class ProjectService {
         );
         return ProjectInfo.of(project);
     }
+    @Transactional(readOnly = true)
+    public Page<ProjectInfo> getMyProjects(Pageable pageable, String nickname) {
+        Member member = memberRepository.findByNickname(nickname);
+        Page<JoinedProject> joinedProjects = joinedProjectRepository.findJoinedProjectsByMember(pageable, member);
+        return joinedProjects.map(JoinedProject::getProject).map(ProjectInfo::of);
+    }
     @Transactional
     public void makeProject(ProjectCommand projectCommand){
         if(projectRepository.existsByName(projectCommand.name())) {
@@ -35,6 +47,19 @@ public class ProjectService {
         }
         Project project = Project.of(projectCommand);
         projectRepository.save(project);
+    }
+    @Transactional
+    public void joinProject(Long id, String nickname) {
+        Project project = projectRepository.findById(id).orElseThrow(
+                () -> CustomException.of(ProjectErrorCode.NOT_FOUND)
+        );
+        Member member = memberRepository.findByNickname(nickname);
+
+        if(joinedProjectRepository.existsByMemberAndProject(member, project)){
+            throw CustomException.of(ProjectErrorCode.ALREADY_JOINED_PROJECT);
+        }
+        JoinedProject joinedProject = JoinedProject.from(member, project);
+        joinedProjectRepository.save(joinedProject);
     }
     @Transactional
     public void updateProject(Long id, ProjectCommand projectCommand){
@@ -61,5 +86,19 @@ public class ProjectService {
         }
 
         projectRepository.delete(project);
+    }
+
+    @Transactional
+    public void withdrawProject(Long id, String nickname) {
+        Project project = projectRepository.findById(id).orElseThrow(
+                () -> CustomException.of(ProjectErrorCode.NOT_FOUND)
+        );
+        Member member = memberRepository.findByNickname(nickname);
+
+        if(!joinedProjectRepository.existsByMemberAndProject(member, project)){
+            throw CustomException.of(ProjectErrorCode.NOT_FOUND);
+        }
+
+        joinedProjectRepository.deleteByMemberAndProject(member, project);
     }
 }

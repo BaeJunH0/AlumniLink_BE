@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 public enum ProjectErrorCode implements ErrorCode{
     NOT_FOUND(HttpStatus.NOT_FOUND, "Pr000", "No such project"),
     NOT_TEAM_LEADER(HttpStatus.FORBIDDEN, "Pr001", "Project can be deleted by only team leader"),
-    ALREADY_EXIST_NAME(HttpStatus.FORBIDDEN, "Pr002", "Project's name is already using");
+    ALREADY_EXIST_NAME(HttpStatus.FORBIDDEN, "Pr002", "Project's name is already using"),
+    ALREADY_JOINED_PROJECT(HttpStatus.FORBIDDEN, "Pr003", "Login user already in this project");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

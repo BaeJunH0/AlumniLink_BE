@@ -11,4 +11,6 @@ public interface JoinedProjectRepository extends JpaRepository<JoinedProject, Lo
     Page<JoinedProject> findJoinedProjectsByMember(Pageable pageable, Member member);
 
     Boolean existsByMemberAndProject(Member member, Project project);
+
+    void deleteByMemberAndProject(Member member, Project project);
 }

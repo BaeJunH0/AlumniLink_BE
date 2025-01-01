@@ -1,5 +1,6 @@
 package com.sparksInTheStep.webBoard.member.domain;
 
+import com.sparksInTheStep.webBoard.project.doamin.Project;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

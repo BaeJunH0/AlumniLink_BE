@@ -5,11 +5,13 @@ import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.project.presentation.dto.ProjectRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "프로젝트 API", description = "프로젝트 기능에 대한 API")
 public interface ProjectApiSpec {
     @Operation(summary = "모든 프로젝트 조회", description = "모든 프로젝트를 조회합니다")
     @ApiResponse(responseCode="200", description = "성공")

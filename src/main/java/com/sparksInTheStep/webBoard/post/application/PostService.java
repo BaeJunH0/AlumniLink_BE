@@ -27,7 +27,7 @@ public class PostService {
     public void createPost(String nickname, PostCommand postCommand) {
         Member member = memberRepository.findByNickname(nickname);
 
-        postRepository.save(new Post(postCommand, member));
+        postRepository.save(Post.from(postCommand, member));
     }
 
     @Transactional(readOnly = true)
@@ -57,7 +57,9 @@ public class PostService {
                 () -> CustomException.of(PostErrorCode.NOT_FOUND)
         );
 
-        post.update(postCommand.title(), postCommand.tag(), postCommand.body());
+        post.update(
+                postCommand.title(), postCommand.tag(), postCommand.body(), postCommand.description()
+        );
     }
 
     @Transactional

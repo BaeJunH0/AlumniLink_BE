@@ -26,8 +26,8 @@ public class AuthController implements AuthApiSpec{
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
-        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.nickname());
+        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.email());
+        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.email());
         return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.OK);
     }
 
@@ -35,8 +35,8 @@ public class AuthController implements AuthApiSpec{
     public ResponseEntity<?> register(@RequestBody MemberRequest memberRequest){
         memberService.makeNewUser(MemberCommand.from(memberRequest));
 
-        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
-        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.nickname());
+        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.email());
+        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.email());
         return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.CREATED);
     }
 }

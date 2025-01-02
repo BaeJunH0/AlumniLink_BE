@@ -56,6 +56,7 @@ function getMembers(page){
         },
         error: function(err) {
             alert("권한이 없습니다!");
+            localStorage.clear();
             window.location.href = '/admin/login';
         }
     });

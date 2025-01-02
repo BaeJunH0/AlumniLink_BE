@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 public enum MemberErrorCode implements ErrorCode{
     NOT_FOUND(HttpStatus.NOT_FOUND, "M000", "member finding fail"),
     DUPLICATED_NICKNAME(HttpStatus.BAD_REQUEST, "M001", "already exist nickname"),
-    NO_AUTHENTICATION(HttpStatus.FORBIDDEN, "M002", "you're not admin member");
+    DUPLICATED_EMAIL(HttpStatus.BAD_REQUEST, "M002", "already exist email"),
+    NO_AUTHENTICATION(HttpStatus.FORBIDDEN, "M003", "you're not admin member");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

@@ -6,6 +6,8 @@ import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
 import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.AuthErrorCode;
 import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.MemberErrorCode;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -21,7 +23,7 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor
 public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
-    private final MemberService memberService;
+    private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
@@ -45,8 +47,8 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         }
 
         token = token.substring(7); // "Bearer " 부분을 제거
-        String nickname = jwtTokenProvider.getNicknameFromToken(token);
-        if(!memberService.isExistMember(nickname)) {
+        String email = jwtTokenProvider.getEmailFromToken(token);
+        if(!memberRepository.existsByEmail(email)) {
             throw CustomException.of(MemberErrorCode.NOT_FOUND);
         }
 
@@ -54,7 +56,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         if(type.equals("refresh")) {
             HttpServletResponse response = (HttpServletResponse) webRequest.getNativeResponse();
 
-            String newAccessToken = jwtTokenProvider.makeAccessToken(nickname);
+            String newAccessToken = jwtTokenProvider.makeAccessToken(email);
             Objects.requireNonNull(response).setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().write("{\"accessToken\": \"" + newAccessToken + "\"}");
@@ -63,6 +65,6 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             mavContainer.setRequestHandled(true);
         }
 
-        return memberService.loginMember(nickname);
+        return MemberInfo.Default.from(memberRepository.findByEmail(email));
     }
 }

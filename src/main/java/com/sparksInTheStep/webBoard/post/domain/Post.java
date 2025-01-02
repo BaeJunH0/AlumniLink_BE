@@ -25,21 +25,30 @@ public class Post extends TimeStamp {
     @Enumerated(EnumType.STRING)
     private PostType tag;
 
+    @Column(nullable = false)
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public Post(PostCommand postCommand, Member member) {
+    private Post(PostCommand postCommand, Member member) {
         this.title = postCommand.title();
         this.body = postCommand.body();
         this.tag = PostType.valueOf(postCommand.tag());
+        this.description = postCommand.description();
         this.member = member;
     }
 
-    public void update(String title, String tag, String body){
+    public static Post from(PostCommand postCommand, Member member) {
+        return new Post(postCommand, member);
+    }
+
+    public void update(String title, String tag, String body, String description){
         this.title = title;
         this.tag = PostType.valueOf(tag);
         this.body = body;
+        this.description = description;
     }
 }
 

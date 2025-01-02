@@ -47,9 +47,16 @@ public class MemberService {
 
     // 회원 정보 수정
     @Transactional
-    public void updateEmployed(String nickname) {
-        Member member = memberRepository.findByNickname(nickname);
-        member.employing();
+    public void updateMember(String email, MemberCommand memberCommand) {
+        Member member = memberRepository.findByEmail(email);
+
+        member.update(
+                memberCommand.nickname(),
+                memberCommand.password(),
+                memberCommand.employed(),
+                memberCommand.gitLink(),
+                memberCommand.resumeLink()
+        );
     }
 
     // 관리자 로그인

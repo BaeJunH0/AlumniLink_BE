@@ -63,8 +63,14 @@ public class Member {
         this.admin = !this.admin;
     }
 
-    public void employing() {
-        this.employed = !this.employed;
+    public void update(
+            String nickname, String password, Boolean employed, String gitLink, String resumeLink
+    ) {
+        this.nickname = nickname;
+        this.password = encodePassword(password);
+        this.employed = employed;
+        this.gitLink = gitLink;
+        this.resumeLink = resumeLink;
     }
 
     public boolean passCheck(UUID password) {

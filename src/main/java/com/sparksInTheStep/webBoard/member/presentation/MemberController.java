@@ -2,12 +2,14 @@ package com.sparksInTheStep.webBoard.member.presentation;
 
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import com.sparksInTheStep.webBoard.member.application.MemberService;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberCommand;
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.member.presentation.dto.MemberRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/members")
@@ -15,18 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController implements MemberApiSpec {
     private final MemberService memberService;
 
-    @GetMapping("/my/nickname")
-    public ResponseEntity<?> getNickname(
-            @AuthorizedUser MemberInfo.Default memberInfo
+    @PutMapping("/my")
+    public ResponseEntity<?> updateMember(
+            @AuthorizedUser MemberInfo.Default memberInfo,
+            @RequestBody MemberRequest memberRequest
     ) {
-        return new ResponseEntity<>(memberInfo.nickname(), HttpStatus.OK);
-    }
-
-    @PatchMapping("/my/employed")
-    public ResponseEntity<?> updateEmployed(
-            @AuthorizedUser MemberInfo.Default memberInfo
-    ) {
-        memberService.updateEmployed(memberInfo.nickname());
+        memberService.updateMember(memberInfo.email(), MemberCommand.from(memberRequest));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

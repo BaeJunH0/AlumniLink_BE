@@ -10,12 +10,13 @@ $(document).ready(function() {
     $("#login").click(function(){
         var user = {
             nickname : $("#userId").val(),
-            password : $("#password").val()
+            password : $("#password").val(),
+            employed : false
         };
 
         $.ajax({
             type : "POST",
-            url : "/auth/adminLogin",
+            url : "/members/login",
             contentType: "application/json",
             datatype : "json",
             data : JSON.stringify(user),

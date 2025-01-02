@@ -22,9 +22,9 @@ public class MemberService {
     public boolean memberCheck(MemberCommand memberCommand){
         if(isExistMember(memberCommand.nickname())){
             Member savedMember = memberRepository.findByNickname(memberCommand.nickname());
-            Member checkMember = memberRepository.save(Member.of(
+            Member checkMember = Member.of(
                     memberCommand.nickname(), memberCommand.password(), memberCommand.employed()
-            ));
+            );
 
             return savedMember.passCheck(checkMember.getPassword());
         }
@@ -57,9 +57,9 @@ public class MemberService {
     public boolean adminCheck(MemberCommand memberCommand){
         if(!isNotAdminMember(memberCommand.nickname())){
             Member savedMember = memberRepository.findByNickname(memberCommand.nickname());
-            Member checkMember = memberRepository.save(Member.of(
+            Member checkMember = Member.of(
                     memberCommand.nickname(), memberCommand.password(), memberCommand.employed()
-            ));
+            );
 
             return savedMember.passCheck(checkMember.getPassword());
         }

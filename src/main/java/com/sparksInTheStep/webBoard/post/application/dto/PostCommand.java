@@ -5,9 +5,12 @@ import com.sparksInTheStep.webBoard.post.presentation.dto.PostRequest;
 public record PostCommand (
         String title,
         String body,
-        String tag
+        String tag,
+        String description
 ){
     public static PostCommand from(PostRequest postRequest) {
-        return new PostCommand(postRequest.title(), postRequest.body(), postRequest.tag());
+        return new PostCommand(
+                postRequest.title(), postRequest.body(), postRequest.tag(), postRequest.description()
+        );
     }
 }

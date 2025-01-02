@@ -10,6 +10,7 @@ public record PostResponse(
         String nickname,
         String title,
         String body,
+        String description,
         PostType tag,
         LocalDateTime startTime,
         LocalDateTime modifiedTime
@@ -20,6 +21,7 @@ public record PostResponse(
                 postInfo.memberInfo().nickname(),
                 postInfo.title(),
                 postInfo.body(),
+                postInfo.desscription(),
                 postInfo.tag(),
                 postInfo.startTime(),
                 postInfo.modifiedTime()

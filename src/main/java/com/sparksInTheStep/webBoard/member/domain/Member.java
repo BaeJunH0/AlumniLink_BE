@@ -1,6 +1,6 @@
 package com.sparksInTheStep.webBoard.member.domain;
 
-import com.sparksInTheStep.webBoard.project.doamin.Project;
+import com.sparksInTheStep.webBoard.member.application.dto.MemberCommand;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,6 +17,8 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, nullable = false)
+    private String email;
+    @Column(unique = true)
     private String nickname;
     @Column(nullable = false)
     private UUID password;
@@ -24,24 +26,51 @@ public class Member {
     private boolean admin;
     @Column(nullable = false)
     private boolean employed;
+    @Column
+    private String gitLink;
+    @Column
+    private String resumeLink;
 
-    private Member(String nickname, String password, Boolean employed) {
+    private Member(
+            String email,
+            String nickname,
+            String password,
+            Boolean employed,
+            String gitLink,
+            String resumeLink
+    ) {
+        this.email = email;
         this.nickname = nickname;
         this.password = encodePassword(password);
         this.employed = employed;
         this.admin = false;
+        this.gitLink = gitLink;
+        this.resumeLink = resumeLink;
     }
 
-    public static Member of(String nickname, String password, Boolean employed) {
-        return new Member(nickname, password, employed);
+    public static Member of(MemberCommand memberCommand) {
+        return new Member(
+                memberCommand.email(),
+                memberCommand.nickname(),
+                memberCommand.password(),
+                memberCommand.employed(),
+                memberCommand.gitLink(),
+                memberCommand.resumeLink()
+        );
     }
 
     public void granting() {
         this.admin = !this.admin;
     }
 
-    public void employing() {
-        this.employed = !this.employed;
+    public void update(
+            String nickname, String password, Boolean employed, String gitLink, String resumeLink
+    ) {
+        this.nickname = nickname;
+        this.password = encodePassword(password);
+        this.employed = employed;
+        this.gitLink = gitLink;
+        this.resumeLink = resumeLink;
     }
 
     public boolean passCheck(UUID password) {

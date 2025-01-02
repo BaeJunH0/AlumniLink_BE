@@ -17,102 +17,85 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    // 일반 사용자용
+    // 로그인
     @Transactional(readOnly = true)
     public boolean memberCheck(MemberCommand memberCommand){
-        if(isExistMember(memberCommand.nickname())){
-            Member savedMember = memberRepository.findByNickname(memberCommand.nickname());
-            Member checkMember = Member.of(
-                    memberCommand.nickname(), memberCommand.password(), memberCommand.employed()
-            );
-
+        // 아이디 ( 이메일 ) 검증
+        if(memberRepository.existsByEmail(memberCommand.email())){
+            // 비밀번호 검증
+            Member savedMember = memberRepository.findByEmail(memberCommand.email());
+            Member checkMember = Member.of(memberCommand);
             return savedMember.passCheck(checkMember.getPassword());
         }
         return false;
     }
 
+    // 회원가입
     @Transactional
     public void makeNewUser(MemberCommand memberCommand){
-        if(isExistMember(memberCommand.nickname())){
+        // 이메일 중복 검사
+        if(memberRepository.existsByEmail(memberCommand.email())) {
+            throw CustomException.of(MemberErrorCode.DUPLICATED_EMAIL);
+        }
+        // 닉네임 중복 검사
+        if(memberRepository.existsByNickname(memberCommand.nickname())) {
             throw CustomException.of(MemberErrorCode.DUPLICATED_NICKNAME);
         }
 
-        memberRepository.save(Member.of(
-                memberCommand.nickname(), memberCommand.password(), memberCommand.employed()
-        ));
+        memberRepository.save(Member.of(memberCommand));
     }
 
+    // 회원 정보 수정
     @Transactional
-    public void updateEmployed(String nickname) {
-        if(!isExistMember(nickname)){
-            throw CustomException.of(MemberErrorCode.NOT_FOUND);
-        }
+    public void updateMember(String email, MemberCommand memberCommand) {
+        Member member = memberRepository.findByEmail(email);
 
-        Member member = memberRepository.findByNickname(nickname);
-        member.employing();
+        member.update(
+                memberCommand.nickname(),
+                memberCommand.password(),
+                memberCommand.employed(),
+                memberCommand.gitLink(),
+                memberCommand.resumeLink()
+        );
     }
 
-    // 관리자용
+    // 관리자 로그인
     @Transactional(readOnly = true)
     public boolean adminCheck(MemberCommand memberCommand){
-        if(!isNotAdminMember(memberCommand.nickname())){
-            Member savedMember = memberRepository.findByNickname(memberCommand.nickname());
-            Member checkMember = Member.of(
-                    memberCommand.nickname(), memberCommand.password(), memberCommand.employed()
+        return memberCheck(memberCommand) && isAdminMember(memberCommand.email());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<MemberInfo.Special> readAllMembers(String email, Pageable pageable){
+        if(isAdminMember(email)){
+            return memberRepository.findAll(pageable).map(MemberInfo.Special::from);
+        }
+        throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
+    }
+
+    @Transactional
+    public void grantingMember(String email, Long memberId) {
+        if(isAdminMember(email)){
+            Member savedMember = memberRepository.findById(memberId).orElseThrow(
+                    () -> CustomException.of(MemberErrorCode.NOT_FOUND)
             );
-
-            return savedMember.passCheck(checkMember.getPassword());
-        }
-        return false;
-    }
-
-    @Transactional(readOnly = true)
-    public Page<MemberInfo.Special> readAllMembers(String nickname, Pageable pageable){
-        if(isNotAdminMember(nickname)){
-            throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
+            savedMember.granting();
         }
 
-        return memberRepository.findAll(pageable).map(MemberInfo.Special::from);
+        throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
     }
 
     @Transactional
-    public void grantingMember(String adminNickname, Long memberId) {
-        if(isNotAdminMember(adminNickname)){
-            throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
+    public void deleteMember(String email, Long memberId) {
+        if(isAdminMember(email)){
+            memberRepository.deleteById(memberId);
         }
 
-        Member savedMember = memberRepository.findById(memberId).orElseThrow(
-                () -> CustomException.of(MemberErrorCode.NOT_FOUND)
-        );
-        savedMember.granting();
-    }
-
-    @Transactional
-    public void deleteMember(String adminNickname, Long memberId) {
-        if(isNotAdminMember(adminNickname)){
-            throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
-        }
-
-        memberRepository.deleteById(memberId);
-    }
-
-    // 필터 사용
-    @Transactional(readOnly = true)
-    public MemberInfo.Default loginMember(String nickname){
-        return MemberInfo.Default.from(memberRepository.findByNickname(nickname));
+        throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
     }
 
     @Transactional(readOnly = true)
-    public boolean isExistMember(String nickname){
-        return memberRepository.existsByNickname(nickname);
-    }
-
-    @Transactional(readOnly = true)
-    public boolean isNotAdminMember(String nickname){
-        if(!isExistMember(nickname)){
-            throw CustomException.of(MemberErrorCode.NOT_FOUND);
-        }
-
-        return !memberRepository.findByNickname(nickname).adminCheck();
+    public boolean isAdminMember(String email){
+        return memberRepository.findByEmail(email).adminCheck();
     }
 }

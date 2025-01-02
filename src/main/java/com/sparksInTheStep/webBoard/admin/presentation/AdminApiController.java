@@ -28,7 +28,7 @@ public class AdminApiController {
             @PageableDefault Pageable pageable
     ) {
         return new ResponseEntity<>(
-                memberService.readAllMembers(memberInfo.nickname(),pageable)
+                memberService.readAllMembers(memberInfo.email(),pageable)
                         .map(MemberResponse.Special::from),
                 HttpStatus.OK
         );
@@ -40,8 +40,8 @@ public class AdminApiController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.nickname());
-        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.nickname());
+        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.email());
+        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.email());
         return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.OK);
     }
 
@@ -50,7 +50,7 @@ public class AdminApiController {
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long userId
     ) {
-        memberService.grantingMember(memberInfo.nickname(), userId);
+        memberService.grantingMember(memberInfo.email(), userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -59,7 +59,7 @@ public class AdminApiController {
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long userId
     ) {
-        memberService.deleteMember(memberInfo.nickname(), userId);
+        memberService.deleteMember(memberInfo.email(), userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

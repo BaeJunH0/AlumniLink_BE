@@ -9,7 +9,7 @@ $(document).ready(function() {
     // 로그인 버튼 클릭 시 동작
     $("#login").click(function(){
         var user = {
-            nickname : $("#userId").val(),
+            email: $("#userId").val(),
             password : $("#password").val(),
             employed : false
         };

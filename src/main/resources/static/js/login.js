@@ -10,8 +10,7 @@ $(document).ready(function() {
     $("#login").click(function(){
         var user = {
             email: $("#userId").val(),
-            password : $("#password").val(),
-            employed : false
+            password : $("#password").val()
         };
 
         $.ajax({

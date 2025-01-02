@@ -3,10 +3,19 @@ package com.sparksInTheStep.webBoard.member.presentation.dto;
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 
 public record MemberResponse() {
-    public record Default(String email, String nickname, Boolean employed){
+    public record Default(
+            String email,
+            String nickname,
+            Boolean employed,
+            String gitLink,
+            String resumeLink){
         public static MemberResponse.Default from(MemberInfo.Default memberInfo){
             return new MemberResponse.Default(
-                    memberInfo.email(), memberInfo.nickname(), memberInfo.employed()
+                    memberInfo.email(),
+                    memberInfo.nickname(),
+                    memberInfo.employed(),
+                    memberInfo.gitLink(),
+                    memberInfo.resumeLink()
             );
         }
     }

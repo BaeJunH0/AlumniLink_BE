@@ -4,7 +4,9 @@ public record MemberRequest(
         String email,
         String nickname,
         String password,
-        Boolean employed
+        Boolean employed,
+        String gitLink,
+        String resumeLink
 ) {
 
 }

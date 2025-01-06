@@ -68,5 +68,6 @@ jobs:
             sudo docker rm -f $CONTAINERS
             fi
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/alumni_link:latest
+            sudo docker pull mysql:8.0.33
             docker-compose up -d
             docker image prune -f

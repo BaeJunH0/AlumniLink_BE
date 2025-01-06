@@ -62,12 +62,15 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # 기존 컨테이너들이 있으면 제거
-            CONTAINERS=$(docker ps -qa)
-            if [ -n "$CONTAINERS" ]; then
-            sudo docker rm -f $CONTAINERS
+            CONTAINER_NAME="web"
+            CONTAINER_ID=$(docker ps -qf "name=$CONTAINER_NAME")
+            
+            if [ -n "$CONTAINER_ID" ]; then
+            docker rm -f $CONTAINER_ID
+            else
+            echo "컨테이너 $CONTAINER_NAME를 찾을 수 없습니다."
             fi
+            
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/alumni_link:latest
-            sudo docker pull mysql:8.0.33
             docker-compose up -d
             docker image prune -f

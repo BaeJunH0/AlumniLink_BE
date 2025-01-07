@@ -75,5 +75,11 @@ jobs:
             fi
             
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/alumni_link:latest
-            docker-compose up -d
+            
+            docker run -p 8080:8080 --name web --net alumni_link \
+            -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }} \
+            -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
+            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
+            -d ${{ secrets.DOCKER_USERNAME }}/alumni_link
+            
             docker image prune -f

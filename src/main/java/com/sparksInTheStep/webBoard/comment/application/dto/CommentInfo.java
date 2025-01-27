@@ -16,7 +16,7 @@ public record CommentInfo(
         return new CommentInfo(
                 comment.getId(),
                 comment.getBody(),
-                comment.getCreatedDate(),
+                comment.getAtCreated(),
                 MemberInfo.Default.from(comment.getMember()),
                 PostInfo.from(comment.getPost())
         );

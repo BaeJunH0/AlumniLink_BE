@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class TimeStamp {
     @CreatedDate
-    private LocalDateTime createdDate;
+    private LocalDateTime atCreated;
 
     @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    private LocalDateTime atModified;
 }

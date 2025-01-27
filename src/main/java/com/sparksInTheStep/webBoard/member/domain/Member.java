@@ -23,7 +23,7 @@ public class Member {
     @Column(nullable = false)
     private UUID password;
     @Column(nullable = false)
-    private boolean admin;
+    private boolean admin = false;
     @Column(nullable = false)
     private boolean employed;
     @Column
@@ -42,8 +42,7 @@ public class Member {
         this.email = email;
         this.nickname = nickname;
         this.password = encodePassword(password);
-        this.employed = employed;
-        this.admin = false;
+        this.employed = null != employed && employed;
         this.gitLink = gitLink;
         this.resumeLink = resumeLink;
     }

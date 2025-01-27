@@ -40,8 +40,8 @@ public class AdminApiController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.email());
-        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.email());
+        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.email(), memberRequest.nickname());
+        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.email(), memberRequest.nickname());
         return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.OK);
     }
 

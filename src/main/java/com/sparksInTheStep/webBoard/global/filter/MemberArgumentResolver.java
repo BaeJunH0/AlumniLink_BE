@@ -1,6 +1,5 @@
 package com.sparksInTheStep.webBoard.global.filter;
 
-import com.sparksInTheStep.webBoard.member.application.MemberService;
 import com.sparksInTheStep.webBoard.auth.token.JwtTokenProvider;
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
@@ -48,6 +47,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
         token = token.substring(7); // "Bearer " 부분을 제거
         String email = jwtTokenProvider.getEmailFromToken(token);
+        String nickname = jwtTokenProvider.getNicknameFromToken(token);
         if(!memberRepository.existsByEmail(email)) {
             throw CustomException.of(MemberErrorCode.NOT_FOUND);
         }
@@ -56,7 +56,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         if(type.equals("refresh")) {
             HttpServletResponse response = (HttpServletResponse) webRequest.getNativeResponse();
 
-            String newAccessToken = jwtTokenProvider.makeAccessToken(email);
+            String newAccessToken = jwtTokenProvider.makeAccessToken(email, nickname);
             Objects.requireNonNull(response).setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().write("{\"accessToken\": \"" + newAccessToken + "\"}");

@@ -50,6 +50,9 @@ jobs:
           build-args: |
             KEY=${{ secrets.KEY }}
             TOKEN_EXPIRE_LENGTH=${{ secrets.TOKEN_EXPIRE_LENGTH }}
+            SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
+            SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
+            SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
           no-cache: true
       # appleboy/ssh-action@master 액션을 사용하여 지정한 서버에 ssh로 접속하고, script를 실행합니다.
       # script의 내용은 도커의 기존 프로세스들을 제거하고, docker repo로부터 방금 위에서 push한 내용을 pull 받아 실행하는 것입니다.
@@ -62,11 +65,21 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # 기존 컨테이너들이 있으면 제거
-            CONTAINERS=$(docker ps -qa)
-            if [ -n "$CONTAINERS" ]; then
-            sudo docker rm -f $CONTAINERS
+            CONTAINER_NAME="web"
+            CONTAINER_ID=$(docker ps -qf "name=$CONTAINER_NAME")
+            
+            if [ -n "$CONTAINER_ID" ]; then
+            docker rm -f $CONTAINER_ID
+            else
+            echo "컨테이너 $CONTAINER_NAME를 찾을 수 없습니다."
             fi
+            
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/alumni_link:latest
-            docker-compose up -d
+            
+            docker run -p 8080:8080 --name web --net alumni_link \
+            -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }} \
+            -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
+            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
+            -d ${{ secrets.DOCKER_USERNAME }}/alumni_link
+            
             docker image prune -f

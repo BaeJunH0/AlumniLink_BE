@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Post extends TimeStamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

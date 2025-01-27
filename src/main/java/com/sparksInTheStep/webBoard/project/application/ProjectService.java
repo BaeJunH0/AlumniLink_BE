@@ -45,6 +45,11 @@ public class ProjectService {
         if(projectRepository.existsByName(projectCommand.name())) {
             throw CustomException.of(ProjectErrorCode.ALREADY_EXIST_NAME);
         }
+
+        if(projectCommand.maxCount() <= 0) {
+            throw CustomException.of(ProjectErrorCode.LOGICAL_TEAM_SIZE_ERROR);
+        }
+
         Project project = Project.of(projectCommand);
         projectRepository.save(project);
     }
@@ -55,9 +60,14 @@ public class ProjectService {
         );
         Member member = memberRepository.findByNickname(nickname);
 
+        if(project.getNowCount() == project.getMaxCount()) {
+            throw CustomException.of(ProjectErrorCode.OVER_TEAM_SIZE);
+        }
         if(joinedProjectRepository.existsByMemberAndProject(member, project)){
             throw CustomException.of(ProjectErrorCode.ALREADY_JOINED_PROJECT);
         }
+
+        project.join();
         JoinedProject joinedProject = JoinedProject.from(member, project);
         joinedProjectRepository.save(joinedProject);
     }
@@ -73,7 +83,15 @@ public class ProjectService {
             throw CustomException.of(ProjectErrorCode.NOT_TEAM_LEADER);
         }
 
-        project.update(projectCommand.name(), projectCommand.info(), projectCommand.gitLink());
+        if(projectCommand.maxCount() <= 0) {
+            throw CustomException.of(ProjectErrorCode.LOGICAL_TEAM_SIZE_ERROR);
+        }
+        project.update(
+                projectCommand.name(),
+                projectCommand.info(),
+                projectCommand.gitLink(),
+                projectCommand.maxCount()
+        );
     }
 
     @Transactional
@@ -99,6 +117,10 @@ public class ProjectService {
             throw CustomException.of(ProjectErrorCode.NOT_FOUND);
         }
 
+        project.withdraw();
+        if(project.getNowCount() == 0) {
+            projectRepository.delete(project);
+        }
         joinedProjectRepository.deleteByMemberAndProject(member, project);
     }
 }

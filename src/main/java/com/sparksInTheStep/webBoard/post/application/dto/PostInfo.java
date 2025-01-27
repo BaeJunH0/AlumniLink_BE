@@ -25,8 +25,8 @@ public record PostInfo(
                post.getDescription(),
                post.getTag(),
                MemberInfo.Default.from(post.getMember()),
-               post.getCreatedDate(),
-               post.getLastModifiedDate()
+               post.getAtCreated(),
+               post.getAtModified()
        );
     }
 }

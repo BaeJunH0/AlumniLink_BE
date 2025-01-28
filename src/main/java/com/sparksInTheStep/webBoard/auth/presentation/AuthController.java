@@ -26,7 +26,8 @@ public class AuthController implements AuthApiSpec{
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.email(), memberRequest.nickname());
+        String nickname = memberService.getMemberName(memberRequest.email());
+        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.email(), nickname);
         String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.email(), memberRequest.nickname());
         return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.OK);
     }

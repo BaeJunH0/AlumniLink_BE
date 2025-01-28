@@ -95,6 +95,13 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
+    public String getMemberName(String email) {
+        Member member = memberRepository.findByEmail(email);
+
+        return member.getNickname();
+    }
+
+    @Transactional(readOnly = true)
     public boolean isAdminMember(String email){
         return memberRepository.findByEmail(email).adminCheck();
     }

@@ -45,7 +45,7 @@ public class Project {
         return new Project(
                 projectCommand.name(),
                 projectCommand.info(),
-                projectCommand.gitLink(),
+                projectCommand.link(),
                 projectCommand.name(),
                 projectCommand.maxCount()
         );

@@ -16,6 +16,9 @@ public class JwtTokenProvider {
     @Value("${token-expire-length}")
     private long validTime;
 
+    /*
+     * 액세스 토큰 생성 : Claim => email, nickname, "refresh"
+     */
     public String makeAccessToken(String email, String nickname) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(System.currentTimeMillis());
@@ -31,7 +34,7 @@ public class JwtTokenProvider {
     }
 
     /*
-     * 리프레시 토큰 생성 : Claim => nickname, "refresh"
+     * 리프레시 토큰 생성 : Claim => email, nickname, "refresh"
      */
     public String makeRefreshToken(String email, String nickname) {
         long nowMillis = System.currentTimeMillis();
@@ -80,7 +83,7 @@ public class JwtTokenProvider {
     }
 
     /*
-     *  토큰에서 클레임 ( type ) 추출
+     *  토큰에서 클레임 ( Type ) 추출
      */
     public String getTypeFromToken(String token) {
         try {

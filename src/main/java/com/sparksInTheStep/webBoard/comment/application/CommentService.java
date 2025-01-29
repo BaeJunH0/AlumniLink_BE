@@ -24,19 +24,17 @@ public class CommentService {
     public final PostRepository postRepository;
     public final MemberRepository memberRepository;
 
+    // 특정 게시물의 댓글 조회
     @Transactional(readOnly = true)
     public Page<CommentInfo> readCommentsByPostId(Long postId, Pageable pageable){
-        if(isExistId(postId)){
-            return commentRepository.findAllByPostId(postId, pageable).map(CommentInfo::from);
+        if(!commentRepository.existsById(postId)) {
+            throw CustomException.of(PostErrorCode.NOT_FOUND);
         }
-        throw CustomException.of(PostErrorCode.NOT_FOUND);
+
+        return commentRepository.findAllByPostId(postId, pageable).map(CommentInfo::from);
     }
 
-    @Transactional(readOnly = true)
-    protected boolean isExistId(Long id){
-        return commentRepository.existsById(id);
-    }
-
+    // 댓글 작성
     @Transactional
     public void makeNewComment(CommentCommand commentCommand, String nickname){
         commentRepository.save(Comment.of(
@@ -48,6 +46,7 @@ public class CommentService {
         ));
     }
 
+    // 댓글 수정
     @Transactional
     public void updateComment(String nickname, Long id, CommentCommand commentCommand){
         Member member = memberRepository.findByNickname(nickname);
@@ -62,6 +61,7 @@ public class CommentService {
         comment.update(commentCommand.Body());
     }
 
+    // 댓글 삭제
     @Transactional
     public void deleteComment(String nickname, Long id) {
         Member member = memberRepository.findByNickname(nickname);
@@ -72,6 +72,7 @@ public class CommentService {
         if(comment.getMember() != member){
             throw CustomException.of(CommentErrorCode.NOT_MY_COMMENT);
         }
+
         commentRepository.deleteById(id);
     }
 }

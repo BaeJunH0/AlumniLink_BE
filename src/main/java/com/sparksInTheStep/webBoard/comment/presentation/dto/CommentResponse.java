@@ -10,7 +10,7 @@ public record CommentResponse(
         Long id,
         String body,
         LocalDateTime createdAt,
-        MemberResponse.Default memberResponse,
+        String author,
         PostResponse postResponse
 ) {
     public static CommentResponse from(CommentInfo commentInfo){
@@ -18,7 +18,7 @@ public record CommentResponse(
                 commentInfo.id(),
                 commentInfo.body(),
                 commentInfo.createdDate(),
-                MemberResponse.Default.from(commentInfo.memberInfo()),
+                commentInfo.author(),
                 PostResponse.from(commentInfo.postInfo())
         );
     }

@@ -65,6 +65,7 @@ public class MemberService {
         return memberCheck(memberCommand) && isAdminMember(memberCommand.email());
     }
 
+    // 회원 정보 조회
     @Transactional(readOnly = true)
     public Page<MemberInfo.Special> readAllMembers(String email, Pageable pageable){
         if(isAdminMember(email)){
@@ -73,6 +74,7 @@ public class MemberService {
         throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
     }
 
+    // 관리자 권한 부여 / 해제
     @Transactional
     public void grantingMember(String email, Long memberId) {
         if(isAdminMember(email)){
@@ -85,6 +87,7 @@ public class MemberService {
         throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
     }
 
+    // 회원 삭제
     @Transactional
     public void deleteMember(String email, Long memberId) {
         if(isAdminMember(email)){
@@ -94,6 +97,7 @@ public class MemberService {
         throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
     }
 
+    // 이메일로 회원 이름 조회
     @Transactional(readOnly = true)
     public String getMemberName(String email) {
         Member member = memberRepository.findByEmail(email);
@@ -101,6 +105,7 @@ public class MemberService {
         return member.getNickname();
     }
 
+    // 어드민 유저 검증
     @Transactional(readOnly = true)
     public boolean isAdminMember(String email){
         return memberRepository.findByEmail(email).adminCheck();

@@ -23,7 +23,7 @@ public class AdminApiController {
     public final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
-    public ResponseEntity<?> readAllUsers(
+    public ResponseEntity<?> readAllMembers(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PageableDefault Pageable pageable
     ) {
@@ -46,7 +46,7 @@ public class AdminApiController {
     }
 
     @PatchMapping("{userId}")
-    public ResponseEntity<?> makeUserAdmin(
+    public ResponseEntity<?> makeMemberAdmin(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long userId
     ) {
@@ -55,7 +55,7 @@ public class AdminApiController {
     }
 
     @DeleteMapping("{userId}")
-    public ResponseEntity<?> deleteUser(
+    public ResponseEntity<?> deleteMember(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long userId
     ) {

@@ -29,6 +29,7 @@ public class PostController implements PostApiSpec{
         PostResponse response = PostResponse.from(postService.getOnePost(id));
         return ResponseEntity.ok(response);
     }
+
     @GetMapping
     public ResponseEntity<?> getAllPosts(
             @PageableDefault Pageable pageable
@@ -36,15 +37,17 @@ public class PostController implements PostApiSpec{
         Page<PostResponse> response = postService.getAllPosts(pageable).map(PostResponse::from);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @GetMapping("/my")
     public ResponseEntity<?> getPostsByMember(
             @PageableDefault Pageable pageable,
             @AuthorizedUser MemberInfo.Default memberInfo
     ) {
-        Page<PostResponse> response = postService.getPostsByMember(memberInfo, pageable)
+        Page<PostResponse> response = postService.getPostsByMember(memberInfo.nickname(), pageable)
                 .map(PostResponse::from);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @PostMapping
     public ResponseEntity<?> savePost(
             @AuthorizedUser MemberInfo.Default memberInfo,
@@ -53,13 +56,14 @@ public class PostController implements PostApiSpec{
         postService.createPost(memberInfo.nickname(), PostCommand.from(request));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @PatchMapping("/{postId}")
     public ResponseEntity<?> updatePost(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @RequestBody PostRequest postRequest,
             @PathVariable Long postId
     ){
-        postService.updatePost(memberInfo, postId, PostCommand.from(postRequest));
+        postService.updatePost(memberInfo.nickname(), postId, PostCommand.from(postRequest));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -69,7 +73,7 @@ public class PostController implements PostApiSpec{
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long postId
     ) {
-        postService.deletePost(memberInfo, postId);
+        postService.deletePost(memberInfo.nickname(), postId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

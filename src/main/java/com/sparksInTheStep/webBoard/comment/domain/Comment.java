@@ -1,6 +1,6 @@
 package com.sparksInTheStep.webBoard.comment.domain;
 
-import com.sparksInTheStep.webBoard.global.listener.TimeStamp;
+import com.sparksInTheStep.webBoard.global.baseEntity.TimeStamp;
 import com.sparksInTheStep.webBoard.member.domain.Member;
 import com.sparksInTheStep.webBoard.post.domain.Post;
 import jakarta.persistence.*;

@@ -27,6 +27,7 @@ public class ProjectService {
     public Page<ProjectInfo> getAllProjects(Pageable pageable){
         return projectRepository.findAll(pageable).map(ProjectInfo::of);
     }
+
     @Transactional(readOnly = true)
     public ProjectInfo getProject(Long id){
         Project project = projectRepository.findById(id).orElseThrow(
@@ -34,12 +35,14 @@ public class ProjectService {
         );
         return ProjectInfo.of(project);
     }
+
     @Transactional(readOnly = true)
     public Page<ProjectInfo> getMyProjects(Pageable pageable, String nickname) {
         Member member = memberRepository.findByNickname(nickname);
         Page<JoinedProject> joinedProjects = joinedProjectRepository.findJoinedProjectsByMember(pageable, member);
         return joinedProjects.map(JoinedProject::getProject).map(ProjectInfo::of);
     }
+
     @Transactional
     public void makeProject(ProjectCommand projectCommand){
         if(projectRepository.existsByName(projectCommand.name())) {
@@ -53,6 +56,7 @@ public class ProjectService {
         Project project = Project.of(projectCommand);
         projectRepository.save(project);
     }
+
     @Transactional
     public void joinProject(Long id, String nickname) {
         Project project = projectRepository.findById(id).orElseThrow(
@@ -71,6 +75,7 @@ public class ProjectService {
         JoinedProject joinedProject = JoinedProject.from(member, project);
         joinedProjectRepository.save(joinedProject);
     }
+
     @Transactional
     public void updateProject(Long id, ProjectCommand projectCommand){
         Project project = projectRepository.findById(id).orElseThrow(
@@ -89,7 +94,7 @@ public class ProjectService {
         project.update(
                 projectCommand.name(),
                 projectCommand.info(),
-                projectCommand.gitLink(),
+                projectCommand.link(),
                 projectCommand.maxCount()
         );
     }

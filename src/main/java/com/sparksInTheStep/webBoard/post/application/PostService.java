@@ -2,7 +2,6 @@ package com.sparksInTheStep.webBoard.post.application;
 
 import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
 import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.PostErrorCode;
-import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.member.domain.Member;
 import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import com.sparksInTheStep.webBoard.post.domain.Post;
@@ -14,8 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +28,8 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PostInfo> getPostsByMember(MemberInfo.Default memberInfo, Pageable pageable) {
-        Member member = memberRepository.findByNickname(memberInfo.nickname());
+    public Page<PostInfo> getPostsByMember(String nickname, Pageable pageable) {
+        Member member = memberRepository.findByNickname(nickname);
         Page<Post> posts = postRepository.findByMember(member, pageable);
 
         return posts.map(PostInfo::from);
@@ -51,11 +48,15 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(MemberInfo.Default memberInfo, Long postId, PostCommand postCommand){
-        Member member = memberRepository.findByNickname(memberInfo.nickname());
+    public void updatePost(String nickname, Long postId, PostCommand postCommand){
         Post post = postRepository.findPostById(postId).orElseThrow(
                 () -> CustomException.of(PostErrorCode.NOT_FOUND)
         );
+
+        // 게시물 작성자 체크
+        if(!post.getMember().getNickname().equals(nickname)){
+            throw CustomException.of(PostErrorCode.NOT_MY_COMMENT);
+        }
 
         post.update(
                 postCommand.title(), postCommand.tag(), postCommand.body(), postCommand.description()
@@ -63,14 +64,13 @@ public class PostService {
     }
 
     @Transactional
-    public void deletePost(MemberInfo.Default memberInfo, Long postId) {
-        Member member = memberRepository.findByNickname(memberInfo.nickname());
+    public void deletePost(String nickname, Long postId) {
         Post post = postRepository.findPostById(postId).orElseThrow(
                 () -> CustomException.of(PostErrorCode.NOT_FOUND)
         );
 
         // 게시물 작성자 체크
-        if(post.getMember() != member){
+        if(!post.getMember().getNickname().equals(nickname)){
             throw CustomException.of(PostErrorCode.NOT_MY_COMMENT);
         }
 

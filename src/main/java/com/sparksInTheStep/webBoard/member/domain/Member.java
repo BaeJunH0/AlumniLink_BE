@@ -52,7 +52,7 @@ public class Member {
                 memberCommand.email(),
                 memberCommand.nickname(),
                 memberCommand.password(),
-                memberCommand.employed(),
+                memberCommand.employed() != null && memberCommand.employed(),
                 memberCommand.gitLink(),
                 memberCommand.resumeLink()
         );

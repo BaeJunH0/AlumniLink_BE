@@ -2,6 +2,7 @@ package com.sparksInTheStep.webBoard.project.presentation;
 
 import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.project.presentation.dto.Choice;
 import com.sparksInTheStep.webBoard.project.presentation.dto.ProjectRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -48,7 +49,7 @@ public interface ProjectApiSpec {
             @PageableDefault Pageable pageable,
             @AuthorizedUser MemberInfo.Default memberInfo
     );
-    @Operation(summary = "프로젝트 가입", description = "프로젝트에 가입합니다")
+    @Operation(summary = "프로젝트 가입요청", description = "프로젝트에 가입을 요청합니다")
     @ApiResponse(responseCode="200", description = "성공")
     ResponseEntity<?> joinToProject(
             @PathVariable Long projectId,
@@ -59,5 +60,17 @@ public interface ProjectApiSpec {
     ResponseEntity<?> withdrawProject(
             @PathVariable Long projectId,
             @AuthorizedUser MemberInfo.Default memberInfo
+    );
+    @Operation(summary = "프로젝트 가입 요청 조회", description = "내가 리더인 프로젝트에 대한 요청을 조회합니다")
+    @ApiResponse(responseCode="200", description = "성공")
+    ResponseEntity<?> readMyProjectRequest(
+            @AuthorizedUser MemberInfo.Default memberInfo
+    );
+    @Operation(summary = "프로젝트 가입 결정", description = "내가 리더인 프로젝트에 대한 요청을 승인 혹은 거절합니다")
+    @ApiResponse(responseCode="200", description = "성공")
+    ResponseEntity<?> choiceRequest(
+            @AuthorizedUser MemberInfo.Default memberInfo,
+            @RequestBody Choice tf,
+            @PathVariable Long requestId
     );
 }

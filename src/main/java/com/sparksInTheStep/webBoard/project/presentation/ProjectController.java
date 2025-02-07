@@ -5,6 +5,9 @@ import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.project.application.ProjectService;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectCommand;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectInfo;
+import com.sparksInTheStep.webBoard.project.application.dto.ProjectMemberRequestInfo;
+import com.sparksInTheStep.webBoard.project.presentation.dto.Choice;
+import com.sparksInTheStep.webBoard.project.presentation.dto.ProjectMemberRequestResponse;
 import com.sparksInTheStep.webBoard.project.presentation.dto.ProjectRequest;
 import com.sparksInTheStep.webBoard.project.presentation.dto.ProjectResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -76,6 +81,15 @@ public class ProjectController implements ProjectApiSpec{
         return new ResponseEntity<>(projects.map(ProjectResponse::of), HttpStatus.OK);
     }
 
+    @DeleteMapping("/my/{projectId}")
+    public ResponseEntity<?> withdrawProject(
+            @PathVariable Long projectId,
+            @AuthorizedUser MemberInfo.Default memberInfo
+    ) {
+        projectService.withdrawProject(projectId, memberInfo.nickname());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @PostMapping("/{projectId}")
     public ResponseEntity<?> joinToProject(
             @PathVariable Long projectId,
@@ -85,12 +99,27 @@ public class ProjectController implements ProjectApiSpec{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/my/{projectId}")
-    public ResponseEntity<?> withdrawProject(
-            @PathVariable Long projectId,
+    @GetMapping("/requests")
+    public ResponseEntity<?> readMyProjectRequest(
             @AuthorizedUser MemberInfo.Default memberInfo
     ) {
-        projectService.withdrawProject(projectId, memberInfo.nickname());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        List<ProjectMemberRequestInfo> requests =
+                projectService.readProjectJoinRequest(memberInfo.nickname());
+
+        return new ResponseEntity<>(
+                requests.stream().map(ProjectMemberRequestResponse::of).toList(),
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/requests/{requestId}")
+    public ResponseEntity<?> choiceRequest(
+            @AuthorizedUser MemberInfo.Default memberInfo,
+            @RequestBody Choice tf,
+            @PathVariable Long requestId
+    ) {
+        projectService.choice(memberInfo.nickname(), requestId, tf.tf());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

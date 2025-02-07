@@ -21,23 +21,36 @@ public class AuthController implements AuthApiSpec{
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody MemberRequest memberRequest){
+    public ResponseEntity<?> login(@RequestBody MemberRequest.Login memberRequest){
         if(!memberService.memberCheck(MemberCommand.from(memberRequest))){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String nickname = memberService.getMemberName(memberRequest.email());
-        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.email(), nickname);
-        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.email(), memberRequest.nickname());
+        String accessToken = jwtTokenProvider.makeAccessToken(
+                memberRequest.email(),
+                memberService.getMemberName(memberRequest.email())
+        );
+        String refreshToken = jwtTokenProvider.makeRefreshToken(
+                memberRequest.email(),
+                memberService.getMemberName(memberRequest.email())
+        );
+
         return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody MemberRequest memberRequest){
+    public ResponseEntity<?> register(@RequestBody MemberRequest.Register memberRequest){
         memberService.makeNewUser(MemberCommand.from(memberRequest));
 
-        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.email(), memberRequest.nickname());
-        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.email(), memberRequest.nickname());
+        String accessToken = jwtTokenProvider.makeAccessToken(
+                memberRequest.email(),
+                memberRequest.nickname()
+        );
+        String refreshToken = jwtTokenProvider.makeRefreshToken(
+                memberRequest.email(),
+                memberRequest.nickname()
+        );
+
         return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.CREATED);
     }
 }

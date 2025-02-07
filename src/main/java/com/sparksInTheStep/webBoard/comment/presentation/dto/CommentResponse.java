@@ -10,16 +10,14 @@ public record CommentResponse(
         Long id,
         String body,
         LocalDateTime createdAt,
-        String author,
-        PostResponse postResponse
+        String author
 ) {
     public static CommentResponse from(CommentInfo commentInfo){
         return new CommentResponse(
                 commentInfo.id(),
                 commentInfo.body(),
                 commentInfo.createdDate(),
-                commentInfo.author(),
-                PostResponse.from(commentInfo.postInfo())
+                commentInfo.author()
         );
     }
 }

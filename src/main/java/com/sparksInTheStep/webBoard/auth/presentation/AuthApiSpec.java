@@ -16,7 +16,7 @@ public interface AuthApiSpec {
     @ApiResponse(responseCode = "404", description = "존재하지 않는 아이디 사용")
     public ResponseEntity<?> login(
             @Parameter(description = "멤버의 아이디와 비밀번호")
-            @RequestBody MemberRequest memberRequest
+            @RequestBody MemberRequest.Login memberRequest
     );
 
     @Operation(summary = "회원 가입", description = "아이디와 비밀번호를 사용하여 회원가입합니다.")
@@ -24,6 +24,6 @@ public interface AuthApiSpec {
     @ApiResponse(responseCode = "400", description = "중복 닉네임 사용")
     public ResponseEntity<?> register(
             @Parameter(description = "멤버의 아이디와 비밀번호")
-            @RequestBody MemberRequest memberRequest
+            @RequestBody MemberRequest.Register memberRequest
     );
 }

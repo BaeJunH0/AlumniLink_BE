@@ -10,15 +10,14 @@ public record CommentInfo(
         Long id,
         String body,
         LocalDateTime createdDate,
-        MemberInfo.Default memberInfo,
-        PostInfo postInfo) {
+        String author
+) {
     public static CommentInfo from(Comment comment){
         return new CommentInfo(
                 comment.getId(),
                 comment.getBody(),
                 comment.getAtCreated(),
-                MemberInfo.Default.from(comment.getMember()),
-                PostInfo.from(comment.getPost())
+                comment.getMember().getNickname()
         );
     }
 }

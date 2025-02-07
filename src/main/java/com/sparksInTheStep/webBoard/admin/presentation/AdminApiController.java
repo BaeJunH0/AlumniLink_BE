@@ -23,7 +23,7 @@ public class AdminApiController {
     public final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
-    public ResponseEntity<?> readAllUsers(
+    public ResponseEntity<?> readAllMembers(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PageableDefault Pageable pageable
     ) {
@@ -35,18 +35,25 @@ public class AdminApiController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> adminLogin(@RequestBody MemberRequest memberRequest){
+    public ResponseEntity<?> adminLogin(@RequestBody MemberRequest.Login memberRequest){
         if(!memberService.adminCheck(MemberCommand.from(memberRequest))){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String accessToken = jwtTokenProvider.makeAccessToken(memberRequest.email(), memberRequest.nickname());
-        String refreshToken = jwtTokenProvider.makeRefreshToken(memberRequest.email(), memberRequest.nickname());
+        String accessToken = jwtTokenProvider.makeAccessToken(
+                memberRequest.email(),
+                memberService.getMemberName(memberRequest.email())
+        );
+        String refreshToken = jwtTokenProvider.makeRefreshToken(
+                memberRequest.email(),
+                memberService.getMemberName(memberRequest.email())
+        );
+
         return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.OK);
     }
 
-    @PatchMapping("{userId}")
-    public ResponseEntity<?> makeUserAdmin(
+    @PatchMapping("/{userId}")
+    public ResponseEntity<?> makeMemberAdmin(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long userId
     ) {
@@ -54,8 +61,8 @@ public class AdminApiController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("{userId}")
-    public ResponseEntity<?> deleteUser(
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteMember(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long userId
     ) {

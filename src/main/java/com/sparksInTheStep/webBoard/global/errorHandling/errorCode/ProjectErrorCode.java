@@ -12,7 +12,8 @@ public enum ProjectErrorCode implements ErrorCode{
     ALREADY_EXIST_NAME(HttpStatus.FORBIDDEN, "Pr002", "Project's name is already using"),
     ALREADY_JOINED_PROJECT(HttpStatus.FORBIDDEN, "Pr003", "Login user already in this project"),
     OVER_TEAM_SIZE(HttpStatus.FORBIDDEN, "Pr004", "Team is full, check team size"),
-    LOGICAL_TEAM_SIZE_ERROR(HttpStatus.FORBIDDEN, "Pr005", "Team member size only can positive integer value");
+    LOGICAL_TEAM_SIZE_ERROR(HttpStatus.FORBIDDEN, "Pr005", "Team member size only can positive integer value"),
+    NO_SUCH_REQUEST(HttpStatus.NOT_FOUND, "Pr006", "No request Found");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

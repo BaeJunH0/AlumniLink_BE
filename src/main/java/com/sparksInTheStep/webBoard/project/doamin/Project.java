@@ -6,6 +6,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
@@ -32,22 +34,27 @@ public class Project {
     @Column(nullable = false)
     private int nowCount;
 
-    private Project(String name, String info, String link, String leaderName, int maxCount){
+    @Column(nullable = false)
+    private Date deadline;
+
+    private Project(String name, String info, String link, String leaderName, int maxCount, Date deadline){
         this.name = name;
         this.info = info;
         this.link = link;
         this.leaderName = leaderName;
         this.maxCount = maxCount;
         this.nowCount = 1;
+        this.deadline = deadline;
     }
 
     public static Project of(ProjectCommand projectCommand){
         return new Project(
                 projectCommand.name(),
                 projectCommand.info(),
-                projectCommand.gitLink(),
+                projectCommand.link(),
                 projectCommand.name(),
-                projectCommand.maxCount()
+                projectCommand.maxCount(),
+                projectCommand.deadline()
         );
     }
 

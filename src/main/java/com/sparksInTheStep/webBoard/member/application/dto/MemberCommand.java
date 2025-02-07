@@ -9,7 +9,7 @@ public record MemberCommand(
         Boolean employed,
         String gitLink,
         String resumeLink) {
-    public static MemberCommand from(MemberRequest memberRequest){
+    public static MemberCommand from(MemberRequest.Register memberRequest){
         return new MemberCommand(
                 memberRequest.email(),
                 memberRequest.nickname(),
@@ -17,6 +17,17 @@ public record MemberCommand(
                 memberRequest.employed(),
                 memberRequest.gitLink(),
                 memberRequest.resumeLink()
+        );
+    }
+
+    public static MemberCommand from(MemberRequest.Login memberRequest){
+        return new MemberCommand(
+                memberRequest.email(),
+                null,
+                memberRequest.password(),
+                null,
+                null,
+                null
         );
     }
 }

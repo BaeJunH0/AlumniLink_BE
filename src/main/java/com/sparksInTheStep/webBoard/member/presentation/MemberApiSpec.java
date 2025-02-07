@@ -16,6 +16,6 @@ public interface MemberApiSpec {
     @ApiResponse(responseCode="200", description = "성공")
     ResponseEntity<?> updateMember(
             @AuthorizedUser MemberInfo.Default memberInfo,
-            @RequestBody MemberRequest memberRequest
+            @RequestBody MemberRequest.Register memberRequest
     );
 }

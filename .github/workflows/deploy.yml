@@ -20,8 +20,10 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Build the project with Gradle
-        run: ./gradlew clean build -x test
+      - name: Build with Gradle
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean build -x test 
 
       - name: Set up Fly.io
         uses: superfly/flyctl-actions/setup-flyctl@master

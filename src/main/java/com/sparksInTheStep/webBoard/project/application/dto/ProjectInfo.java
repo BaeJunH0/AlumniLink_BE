@@ -5,6 +5,7 @@ import com.sparksInTheStep.webBoard.project.doamin.Project;
 import java.util.Date;
 
 public record ProjectInfo(
+        Long id,
         String name,
         String info,
         String link,
@@ -15,6 +16,7 @@ public record ProjectInfo(
 ) {
     public static ProjectInfo of(Project project){
         return new ProjectInfo(
+                project.getId(),
                 project.getName(),
                 project.getInfo(),
                 project.getLink(),

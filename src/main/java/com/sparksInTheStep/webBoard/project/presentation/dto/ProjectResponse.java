@@ -5,6 +5,7 @@ import com.sparksInTheStep.webBoard.project.application.dto.ProjectInfo;
 import java.util.Date;
 
 public record ProjectResponse(
+        Long id,
         String name,
         String info,
         String gitLink,
@@ -15,6 +16,7 @@ public record ProjectResponse(
 ) {
     public static ProjectResponse of(ProjectInfo projectInfo) {
         return new ProjectResponse(
+                projectInfo.id(),
                 projectInfo.name(),
                 projectInfo.info(),
                 projectInfo.link(),

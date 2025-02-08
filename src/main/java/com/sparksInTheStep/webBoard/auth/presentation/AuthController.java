@@ -8,10 +8,7 @@ import com.sparksInTheStep.webBoard.auth.token.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,5 +49,14 @@ public class AuthController implements AuthApiSpec{
         );
 
         return new ResponseEntity<>(Token.of(accessToken, refreshToken), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(
+            @RequestParam String refreshToken
+    ) {
+        String accessToken = memberService.refreshTokenAction(refreshToken);
+
+        return new ResponseEntity<>(accessToken, HttpStatus.CREATED);
     }
 }

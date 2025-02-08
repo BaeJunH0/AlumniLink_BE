@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "인증 API", description = "로그인 및 회원가입 기능을 담은 API")
 public interface AuthApiSpec {
@@ -25,5 +26,11 @@ public interface AuthApiSpec {
     public ResponseEntity<?> register(
             @Parameter(description = "멤버의 아이디와 비밀번호")
             @RequestBody MemberRequest.Register memberRequest
+    );
+
+    @Operation(summary = "토큰 리프레시", description = "리프레시 토큰을 이용해서 액세스 토큰을 발급합니다")
+    @ApiResponse(responseCode = "201", description = "성공")
+    public ResponseEntity<?> refresh(
+            @RequestParam String refreshToken
     );
 }

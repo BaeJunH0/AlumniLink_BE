@@ -54,6 +54,11 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         String email = jwtTokenProvider.getEmailFromToken(token);
         String nickname = jwtTokenProvider.getNicknameFromToken(token);
 
+        // 유효 시간을 지났는지 검사
+        if(jwtTokenProvider.isTokenExpired(token)) {
+            throw CustomException.of(AuthErrorCode.TOKEN_TIMEOUT);
+        }
+
         // 존재하는 email 인지 검사
         if(!memberRepository.existsByEmail(email)) {
             throw CustomException.of(MemberErrorCode.NOT_FOUND);
@@ -64,21 +69,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             throw CustomException.of(MemberErrorCode.NOT_FOUND);
         }
 
-        // 토큰 타입에 따른 동작
-        String type = jwtTokenProvider.getTypeFromToken(token);
-        // 리프레시 동작
-        if(type.equals("refresh")) {
-            HttpServletResponse response = (HttpServletResponse) webRequest.getNativeResponse();
-
-            String newAccessToken = jwtTokenProvider.makeAccessToken(email, nickname);
-            Objects.requireNonNull(response).setContentType("application/json");
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write("{\"accessToken\": \"" + newAccessToken + "\"}");
-            response.getWriter().flush();
-
-            mavContainer.setRequestHandled(true);
-        }
-        // 액세스 동작
+        // 동작
         return MemberInfo.Default.from(memberRepository.findByEmail(email));
     }
 }

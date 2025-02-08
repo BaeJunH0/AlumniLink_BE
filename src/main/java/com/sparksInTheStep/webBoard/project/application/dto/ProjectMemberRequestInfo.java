@@ -5,6 +5,7 @@ import com.sparksInTheStep.webBoard.project.doamin.ProjectMemberRequest;
 import java.util.Date;
 
 public record ProjectMemberRequestInfo(
+        Long id,
         String projectName,
         String requestMemberName,
         int maxCount,
@@ -13,6 +14,7 @@ public record ProjectMemberRequestInfo(
 ) {
     public static ProjectMemberRequestInfo of(ProjectMemberRequest projectMemberRequest) {
         return new ProjectMemberRequestInfo(
+                projectMemberRequest.getId(),
                 projectMemberRequest.getProject().getName(),
                 projectMemberRequest.getMember().getNickname(),
                 projectMemberRequest.getProject().getMaxCount(),

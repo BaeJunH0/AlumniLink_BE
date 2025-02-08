@@ -5,6 +5,7 @@ import com.sparksInTheStep.webBoard.project.application.dto.ProjectMemberRequest
 import java.util.Date;
 
 public record ProjectMemberRequestResponse(
+        Long id,
         String projectName,
         String requestMemberName,
         int maxCount,
@@ -13,11 +14,12 @@ public record ProjectMemberRequestResponse(
 ) {
     public static ProjectMemberRequestResponse of(ProjectMemberRequestInfo requestInfo) {
         return new ProjectMemberRequestResponse(
-            requestInfo.projectName(),
-            requestInfo.requestMemberName(),
-            requestInfo.maxCount(),
-            requestInfo.nowCount(),
-            requestInfo.deadline()
+                requestInfo.id(),
+                requestInfo.projectName(),
+                requestInfo.requestMemberName(),
+                requestInfo.maxCount(),
+                requestInfo.nowCount(),
+                requestInfo.deadline()
         );
     };
 }

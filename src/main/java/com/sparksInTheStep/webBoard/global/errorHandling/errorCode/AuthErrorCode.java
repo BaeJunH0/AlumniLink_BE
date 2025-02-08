@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 public enum AuthErrorCode implements ErrorCode{
     NOT_AUTHORIZED(HttpStatus.UNAUTHORIZED, "A000", "Authorization Fail"),
     TOKEN_IS_EMPTY(HttpStatus.BAD_REQUEST, "A001", "not include token"),
-    TOKEN_IS_INVALID(HttpStatus.BAD_REQUEST, "A002", "is not valid auth method (maybe not bearer)");
+    TOKEN_IS_INVALID(HttpStatus.BAD_REQUEST, "A002", "is not valid auth method (maybe not bearer)"),
+    TOKEN_TIMEOUT(HttpStatus.BAD_REQUEST, "A003", "token's valid time over!");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

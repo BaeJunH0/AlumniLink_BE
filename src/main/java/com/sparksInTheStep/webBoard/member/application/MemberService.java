@@ -1,5 +1,7 @@
 package com.sparksInTheStep.webBoard.member.application;
 
+import com.sparksInTheStep.webBoard.auth.token.JwtTokenProvider;
+import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.AuthErrorCode;
 import com.sparksInTheStep.webBoard.member.application.dto.MemberCommand;
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.member.domain.Member;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     // 로그인
     @Transactional(readOnly = true)
@@ -109,5 +112,26 @@ public class MemberService {
     @Transactional(readOnly = true)
     public boolean isAdminMember(String email){
         return memberRepository.findByEmail(email).adminCheck();
+    }
+
+    // RTR 동작
+    @Transactional(readOnly = true)
+    public String refreshTokenAction(String refreshToken) {
+        if(jwtTokenProvider.isTokenExpired(refreshToken)) {
+            throw CustomException.of(AuthErrorCode.TOKEN_TIMEOUT);
+        }
+
+        String email = jwtTokenProvider.getEmailFromToken(refreshToken);
+        String nickname = jwtTokenProvider.getNicknameFromToken(refreshToken);
+
+        if(!memberRepository.existsByEmail(email)) {
+            throw CustomException.of(MemberErrorCode.NOT_FOUND);
+        }
+
+        if(!memberRepository.existsByNickname(nickname)) {
+            throw CustomException.of(MemberErrorCode.NOT_FOUND);
+        }
+
+        return jwtTokenProvider.makeAccessToken(email, nickname);
     }
 }

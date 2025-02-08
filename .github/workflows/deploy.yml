@@ -1,78 +1,18 @@
-name: Deploy on Merge
+# See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
 
+name: Fly Deploy
 on:
   push:
     branches:
       - main
-
-permissions:
-  contents: read
-
 jobs:
-  build-and-deploy:
+  deploy:
+    name: Deploy app
     runs-on: ubuntu-latest
-
+    concurrency: deploy-group    # optional: ensure only one action runs at a time
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: main
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-
-      - name: Build with Gradle
-        run: |
-          chmod +x ./gradlew
-          ./gradlew clean build -x test
-
-      - name: Docker Login Process
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/alumni_link
-          build-args: |
-            KEY=${{ secrets.KEY }}
-            TOKEN_EXPIRE_LENGTH=${{ secrets.TOKEN_EXPIRE_LENGTH }}
-            SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
-            SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
-            SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-          no-cache: true
-
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        id: deploy
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ubuntu
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            CONTAINER_NAME="web"
-            CONTAINER_ID=$(docker ps -qf "name=$CONTAINER_NAME")
-            
-            if [ -n "$CONTAINER_ID" ]; then
-            docker rm -f $CONTAINER_ID
-            else
-            echo "컨테이너 $CONTAINER_NAME를 찾을 수 없습니다."
-            fi
-            
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/alumni_link:latest
-            
-            docker run -p 8080:8080 --name web \
-            -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }} \
-            -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
-            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
-            -d ${{ secrets.DOCKER_USERNAME }}/alumni_link
-            
-            docker image prune -f
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

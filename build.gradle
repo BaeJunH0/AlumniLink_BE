@@ -29,6 +29,7 @@ dependencies {
 	implementation 'com.mysql:mysql-connector-j:8.2.0'
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.2' // 추가
 	runtimeOnly 'org.postgresql:postgresql' // 추가
+	testImplementation("com.h2database:h2")
 
 	// Web
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

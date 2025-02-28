@@ -81,9 +81,9 @@ public class ProjectService {
         Member member = memberRepository.findByNickname(projectCommand.nickname());
 
         // 주인을 프로젝트의 첫 번째 멤버로 가입
+        project.join();
         JoinedProject joinedProject = JoinedProject.from(member, project);
         joinedProjectRepository.save(joinedProject);
-        project.join();
     }
 
     @Transactional

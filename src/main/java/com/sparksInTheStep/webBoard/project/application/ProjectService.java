@@ -15,10 +15,14 @@ import com.sparksInTheStep.webBoard.project.persistent.ProjectMemberRequestRepos
 import com.sparksInTheStep.webBoard.project.persistent.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +36,16 @@ public class ProjectService {
 
     @Transactional(readOnly = true)
     public Page<ProjectInfo> getAllProjects(Pageable pageable){
-        return projectRepository.findAll(pageable).map(ProjectInfo::of);
+        LocalDate today = LocalDate.now();
+        List<Project> projects = projectRepository.findAll(pageable).stream()
+                .filter(project -> {
+                    LocalDate deadLine = Instant.ofEpochMilli(project.getDeadline().getTime())
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
+                    return !deadLine.isAfter(today);
+                })
+                .toList();
+        return new PageImpl<>(projects, pageable, projects.size()).map(ProjectInfo::of);
     }
 
     @Transactional(readOnly = true)

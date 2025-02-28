@@ -15,10 +15,14 @@ import com.sparksInTheStep.webBoard.project.persistent.ProjectMemberRequestRepos
 import com.sparksInTheStep.webBoard.project.persistent.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +36,16 @@ public class ProjectService {
 
     @Transactional(readOnly = true)
     public Page<ProjectInfo> getAllProjects(Pageable pageable){
-        return projectRepository.findAll(pageable).map(ProjectInfo::of);
+        LocalDate today = LocalDate.now();
+        List<Project> projects = projectRepository.findAll(pageable).stream()
+                .filter(project -> {
+                    LocalDate deadLine = Instant.ofEpochMilli(project.getDeadline().getTime())
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
+                    return !deadLine.isAfter(today);
+                })
+                .toList();
+        return new PageImpl<>(projects, pageable, projects.size()).map(ProjectInfo::of);
     }
 
     @Transactional(readOnly = true)
@@ -60,8 +73,17 @@ public class ProjectService {
             throw CustomException.of(ProjectErrorCode.LOGICAL_TEAM_SIZE_ERROR);
         }
 
+        // 프로젝트 생성
         Project project = Project.of(projectCommand);
         projectRepository.save(project);
+
+        // 프로젝트 주인 조회
+        Member member = memberRepository.findByNickname(projectCommand.nickname());
+
+        // 주인을 프로젝트의 첫 번째 멤버로 가입
+        project.join();
+        JoinedProject joinedProject = JoinedProject.from(member, project);
+        joinedProjectRepository.save(joinedProject);
     }
 
     @Transactional
@@ -114,6 +136,7 @@ public class ProjectService {
         if(project.getNowCount() == 0) {
             projectRepository.delete(project);
         }
+
         joinedProjectRepository.deleteByMemberAndProject(member, project);
     }
 

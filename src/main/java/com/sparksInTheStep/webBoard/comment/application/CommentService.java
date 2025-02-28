@@ -75,4 +75,9 @@ public class CommentService {
 
         commentRepository.deleteById(id);
     }
+
+    @Transactional
+    public void deletePostComment(Long postId) {
+        commentRepository.deleteAllByPostId(postId);
+    }
 }

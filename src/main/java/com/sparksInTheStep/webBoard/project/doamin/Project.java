@@ -1,5 +1,6 @@
 package com.sparksInTheStep.webBoard.project.doamin;
 
+import com.sparksInTheStep.webBoard.global.baseEntity.TimeStamp;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectCommand;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -11,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-public class Project {
+public class Project extends TimeStamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,7 +44,7 @@ public class Project {
         this.link = link;
         this.leaderName = leaderName;
         this.maxCount = maxCount;
-        this.nowCount = 1;
+        this.nowCount = 0;
         this.deadline = deadline;
     }
 

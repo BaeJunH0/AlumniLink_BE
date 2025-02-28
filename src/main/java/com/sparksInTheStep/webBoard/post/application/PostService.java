@@ -53,27 +53,28 @@ public class PostService {
                 () -> CustomException.of(PostErrorCode.NOT_FOUND)
         );
 
-        // 게시물 작성자 체크
-        if(!post.getMember().getNickname().equals(nickname)){
-            throw CustomException.of(PostErrorCode.NOT_MY_COMMENT);
-        }
-
+        isOwner(nickname, postId);
         post.update(
                 postCommand.title(), postCommand.tag(), postCommand.body(), postCommand.description()
         );
     }
 
     @Transactional
-    public void deletePost(String nickname, Long postId) {
+    public void deletePost(Long postId) {
+        Post post = postRepository.findPostById(postId).orElseThrow(
+                () -> CustomException.of(PostErrorCode.NOT_FOUND)
+        );
+        postRepository.delete(post);
+    }
+
+    @Transactional(readOnly = true)
+    public void isOwner(String nickname, Long postId) {
         Post post = postRepository.findPostById(postId).orElseThrow(
                 () -> CustomException.of(PostErrorCode.NOT_FOUND)
         );
 
-        // 게시물 작성자 체크
         if(!post.getMember().getNickname().equals(nickname)){
             throw CustomException.of(PostErrorCode.NOT_MY_COMMENT);
         }
-
-        postRepository.delete(post);
     }
 }

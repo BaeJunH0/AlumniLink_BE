@@ -1,6 +1,7 @@
 package com.sparksInTheStep.webBoard.post.presentation;
 
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
+import com.sparksInTheStep.webBoard.post.application.PostFacade;
 import com.sparksInTheStep.webBoard.post.presentation.dto.PostRequest;
 import com.sparksInTheStep.webBoard.post.presentation.dto.PostResponse;
 import com.sparksInTheStep.webBoard.post.application.PostService;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController implements PostApiSpec{
     private final PostService postService;
+    private final PostFacade postFacade;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPost(
@@ -73,7 +75,7 @@ public class PostController implements PostApiSpec{
             @AuthorizedUser MemberInfo.Default memberInfo,
             @PathVariable Long postId
     ) {
-        postService.deletePost(memberInfo.nickname(), postId);
+        postFacade.deletePost(memberInfo.nickname(), postId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

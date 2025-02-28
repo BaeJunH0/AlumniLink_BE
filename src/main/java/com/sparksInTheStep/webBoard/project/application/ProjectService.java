@@ -73,8 +73,17 @@ public class ProjectService {
             throw CustomException.of(ProjectErrorCode.LOGICAL_TEAM_SIZE_ERROR);
         }
 
+        // 프로젝트 생성
         Project project = Project.of(projectCommand);
         projectRepository.save(project);
+
+        // 프로젝트 주인 조회
+        Member member = memberRepository.findByNickname(projectCommand.nickname());
+
+        // 주인을 프로젝트의 첫 번째 멤버로 가입
+        JoinedProject joinedProject = JoinedProject.from(member, project);
+        joinedProjectRepository.save(joinedProject);
+        project.join();
     }
 
     @Transactional
@@ -127,6 +136,7 @@ public class ProjectService {
         if(project.getNowCount() == 0) {
             projectRepository.delete(project);
         }
+
         joinedProjectRepository.deleteByMemberAndProject(member, project);
     }
 

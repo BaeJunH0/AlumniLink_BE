@@ -44,7 +44,7 @@ public class Project extends TimeStamp {
         this.link = link;
         this.leaderName = leaderName;
         this.maxCount = maxCount;
-        this.nowCount = 1;
+        this.nowCount = 0;
         this.deadline = deadline;
     }
 

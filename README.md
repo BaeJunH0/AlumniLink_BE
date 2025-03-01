@@ -37,6 +37,15 @@
      - Github 이슈를 통한 기본적 요청 및 소통
      - 트러블 슈팅 과정을 기록하고 이해하기 쉽게 공유
 
+## 설계
+**ERD**
+<br>
+<img src="https://github.com/user-attachments/assets/a96bce6c-817c-4046-bb4c-06d1bc107b2a" width="500" height="300">
+
+**Architecture**
+
+추가예정
+
 ## 기술 스택
 > Framework
 > 

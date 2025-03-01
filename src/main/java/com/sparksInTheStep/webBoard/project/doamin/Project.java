@@ -53,7 +53,7 @@ public class Project extends TimeStamp {
                 projectCommand.name(),
                 projectCommand.info(),
                 projectCommand.link(),
-                projectCommand.name(),
+                projectCommand.nickname(),
                 projectCommand.maxCount(),
                 projectCommand.deadline()
         );

@@ -1,71 +1,68 @@
-# 졸업생 게시판 만들기 프로젝트
-
-## 목차
+# 📃 Alumni_Link
 
 ## 🙄 프로젝트 구상 이유
-> **Alumni_Link**는 취준, 졸업예정자들에게 도움을 주고자 **자신만의 팁 공유, 프로젝트 구인, 자소서 공유 및 첨삭**을 함께할 수 있는 서비스입니다.
+> **Alumni_Link**는 경북대학교 컴퓨터학부생이 **자신만의 팁 공유, 질문, 프로젝트 구인**을 함께할 수 있는 서비스입니다.
 > 
-> 대학원생 정도를 제외한 컴공 전공자들은 대부분 학교에서 배우는 내용이 아닌, **따로 부트캠프에 참여하거나, 독학 및 프로젝트를 해서 취업을 스스로 준비**하는 중일 것입니다.
+> 경북대학교 컴퓨터학부는 졸업 요건이 복잡하고, 어려운 편입니다.
 >
-> 정해진 공부만 하면 되던 고등학교 시절에서 고작 1년, 2년 지난 시점에서 여러 가지 정보를 스스로 찾다보면 이게 맞나 싶기도 하고, 조금은 적성과 맞지 않는 길로 갈 수도 있을 것입니다.
+> 글솝 22학번인 저는 졸업 및 취업 준비를 위한 정보를 수집하는 데에 굉장히 많은 노력이 들었고, 이런 과정이 좀 더 간소화되면 좋겠다는 생각을 하게 되었습니다.
 >
-> 또한, 우리 학부, 특히 글솝은 졸업 트랙이 복잡하고, 요건을 채우기가 어렵지만 이에 대한 정보를 구하려면 꽤 많은 시간을 소비하여야 합니다.
->
-> 그래서 이런 상황을 조금이나마 개선해보고자 **소통 창구**가 있으면 좋겠다고 생각해서 저희가 만들어 보기로 했습니다.
+> 이를 위해 서로 팁을 공유하고, 소통하는 창구를 만들어보았습니다.
 
 ## Github Repository
 > [**_BackEnd_**](https://github.com/BaeJunH0/AlumniLink_BE)
 >
-> [**_FrontEnd_**](https://github.com/BaeJunH0/AlumniLink_FE)
+> [**_FrontEnd_**](https://github.com/Sunja-An/AlumniLink_FE)
 
 ## 프로젝트 주요 기능
 **1. 로그인 및 회원가입 기능**
-   - 회원 정보로 필요한 정보는 닉네임, 비밀번호 2가지
+   - 서로의 원활한 소통을 위해 회원가입 시 Github 및 이력서 링크를 달아 공유 가능
      
-**2. 게시물 조회, 등록, 삭제 기능**
-   - 게시물은 3가지 태그로 구성 ( 팁, 프로젝트 구인, 자소서 공유 )
+**2. 게시물 기능**
+   - 단순 게시글 및 댓글 기능 구현
+
+**3. 프로젝트 구인 기능**
+   - 프로젝트에 참여 요청 시, 프로젝트 리더가 이를 수락해야 참여 가능
+   - 데드라인, 프로젝트 제한 인원 등의 조건 구현
+
+## 주안점
+**1. 자원 사용에서의 효율성**
+   - 이전까지 고수하던 AWS 프리티어 인스턴스에서 Serverless 방식으로 변경
+   - 서비스의 크기가 작을 것으로 예상되어 Neon + Fly.io 조합의 배포를 선택
+   - 서비스의 크기가 커지고, 자원적 문제가 발생할 시, 서버 마이그레이션 예정
      
-**3. 댓글 조회, 등록, 삭제 기능**
-   - 게시글에 댓글을 작성할 수 있음
-
-## 기능 별 주안점
-**1. 전체적으로 집중한 부분**
-   - **3Layered Architecture** ( **Persistent - Application - Presentation** ) 에 맞추어 DTO 및 메서드 사용에 집중
-   - **Custom Error 코드**를 사용하고, **Controller Advice를 이용하여 전역적으로 에러를 처리**
-    
-**2. 로그인 및 회원가입 기능**
-   - **JWT 토큰**, **HandlerMethodArgumentResolver** 두 가지를 조합하여 **Presentation 계층에서 로그인 유저 필터링**
-      - **Access Token, Refresh Token 사용**으로 보다 원활한 인증 가능
-   - 비밀번호 저장 시, **UUID 형태로 저장**하여 **복호화를 불가**하도록 하여 보안성을 높임
-   - admin 계정을 운용하여 **관리자 기능을 사용 가능** ( 현재는 사용자 관리만 가능, 추후 추가 가능 )
-    
-**3. 게시물 조회, 등록, 삭제 기능**
-
-**4. 댓글 조회, 등록, 삭제 기능**
-
-**5. 관리자 페이지**
-   - 보다 수월한 관리를 위한 관리자 페이지 운용
-   - Vanila JS 위주로 구현, HTML, CSS, JQuery, AJAX 등을 통해 비동기 통신 방식으로 구현 
-    
-## 테스팅
-### 게시물
-- 
-### 댓글
-- 
-### 유저
-- 
+**2. 협업 과정에서 문서화**
+   - 이전까지 협업 과정은 대면 과정이 동반되었지만, 이번 협업은 대면이 불가능한 상황에서 진행
+   - 이 과정에서 소통 오류를 최소화 하기 위해 다음과 같은 방식을 사용
+     - Github 이슈를 통한 기본적 요청 및 소통
+     - 트러블 슈팅 과정을 기록하고 이해하기 쉽게 공유
 
 ## 기술 스택
-![Spring](https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=spring&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white)
-![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-6DB33F?style=flat-square&logo=spring&logoColor=white)
-![H2 MEM Database](https://img.shields.io/badge/H2-1D539F?style=flat-square&logo=h2&logoColor=white)
-![AWS EC2](https://img.shields.io/badge/AWS%20EC2-FF9900?style=flat-square&logo=amazonaws&logoColor=white)
+> Framework
+> 
+![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+> DB
+> 
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+> Deploy & CICD
+>
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![Neon](https://img.shields.io/badge/Neon-0000FF?style=for-the-badge&logo=postgresql&logoColor=white)
+![Fly.io](https://img.shields.io/badge/Fly.io-8E75FF?style=for-the-badge&logo=flydotio&logoColor=white)
+> Collaboration Tool
+>
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
 
 ## 참조
 [개발자 블로그](https://velog.io/@baejunh0/posts)
 
-## 기여
+[개발 문서](https://tasty-sundae-b2e.notion.site/Docs-193c18f57d2b805c920df278d7275c5a?pvs=4)
+
+## 백엔드 개발
 |                     BaeJunH0                       |
 | :------------------------------------------------: |
 | <img width="240px" src="https://avatars.githubusercontent.com/u/114082026?v=4" /> |

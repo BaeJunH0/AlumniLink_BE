@@ -73,5 +73,5 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 //
 //        // 동작
 //        return MemberInfo.Default.from(memberRepository.findByEmail(email));
-//    }
+    }
 }

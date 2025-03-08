@@ -19,10 +19,9 @@ public interface CommentApiSpec {
     @ApiResponse(responseCode = "200", description = "성공")
     @ApiResponse(responseCode = "404", description = "해당 게시글이 존재하지 않음")
     public ResponseEntity<?> getComment(
-            @Parameter(description = "댓글을 찾기 위한 정보")
-            @RequestBody CommentRequest.Find postParam,
             @Parameter(description = "따로 값을 주지 않으면 기본값 : size = 10, page = 0")
-            @PageableDefault Pageable pageable
+            @PageableDefault Pageable pageable,
+            @PathVariable Long postId
     );
 
     @Operation(summary = "댓글 작성하기", description = "특정 게시글에 댓글을 작성합니다.")
@@ -32,7 +31,7 @@ public interface CommentApiSpec {
     public ResponseEntity<?> postComment(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @Parameter(description = "댓글 생성을 위한 정보")
-            @RequestBody CommentRequest.Create commentRequest
+            @RequestBody CommentRequest commentRequest
     );
 
     @Operation(summary = "댓글 수정하기", description = "특정 게시글의 댓글을 수정합니다.")
@@ -43,7 +42,7 @@ public interface CommentApiSpec {
     public ResponseEntity<?> updateComment(
             @AuthorizedUser MemberInfo.Default memberInfo,
             @Parameter(description = "댓글 수정을 위한 정보")
-            @RequestBody CommentRequest.Create commentRequest,
+            @RequestBody CommentRequest commentRequest,
             @PathVariable Long commentId
     );
 

@@ -41,13 +41,23 @@ public class PostController implements PostApiSpec{
     }
 
     @GetMapping("/my")
-    public ResponseEntity<?> getPostsByMember(
+    public ResponseEntity<?> getPostsByState(
             @PageableDefault Pageable pageable,
             @AuthorizedUser MemberInfo.Default memberInfo
     ) {
         Page<PostResponse> response = postService.getPostsByMember(memberInfo.nickname(), pageable)
                 .map(PostResponse::from);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getPostsByUserId(
+            @PageableDefault Pageable pageable,
+            @PathVariable Long userId
+    ) {
+        Page<PostResponse> responses = postService.getPostsByMemberId(userId, pageable)
+                .map(PostResponse::from);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
     @PostMapping

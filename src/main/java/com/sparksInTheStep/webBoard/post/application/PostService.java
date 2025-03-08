@@ -1,6 +1,7 @@
 package com.sparksInTheStep.webBoard.post.application;
 
 import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
+import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.MemberErrorCode;
 import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.PostErrorCode;
 import com.sparksInTheStep.webBoard.member.domain.Member;
 import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
@@ -30,6 +31,16 @@ public class PostService {
     @Transactional(readOnly = true)
     public Page<PostInfo> getPostsByMember(String nickname, Pageable pageable) {
         Member member = memberRepository.findByNickname(nickname);
+        Page<Post> posts = postRepository.findByMember(member, pageable);
+
+        return posts.map(PostInfo::from);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<PostInfo> getPostsByMemberId(Long userId, Pageable pageable) {
+        Member member = memberRepository.findById(userId).orElseThrow(
+                () -> CustomException.of(MemberErrorCode.NOT_FOUND)
+        );
         Page<Post> posts = postRepository.findByMember(member, pageable);
 
         return posts.map(PostInfo::from);

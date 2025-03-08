@@ -34,9 +34,17 @@ public interface PostApiSpec {
     @Operation(summary = "자기가 쓴 글 불러오기", description = "자기가 쓴 모든 글을 리스트로 반환합니다")
     @ApiResponse(responseCode="200", description = "성공")
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
-    public ResponseEntity<?> getPostsByMember(
+    public ResponseEntity<?> getPostsByState(
             @PageableDefault Pageable pageable,
             @AuthorizedUser MemberInfo.Default memberInfo
+    );
+
+    @Operation(summary = "특정 유저가 쓴 글 불러오기", description = "특정 유저가 쓴 모든 글을 리스트로 반환합니다")
+    @ApiResponse(responseCode="200", description = "성공")
+    @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
+    public ResponseEntity<?> getPostsByUserId(
+            @PageableDefault Pageable pageable,
+            @PathVariable Long userId
     );
 
     @Operation(summary = "게시글 저장", description = "게시글을 저장합니다.")

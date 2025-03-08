@@ -1,6 +1,7 @@
-package com.sparksInTheStep.webBoard.project.doamin;
+package com.sparksInTheStep.webBoard.joinRequest.domain;
 
 import com.sparksInTheStep.webBoard.member.domain.Member;
+import com.sparksInTheStep.webBoard.project.doamin.Project;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-public class ProjectMemberRequest {
+public class JoinRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,13 +26,13 @@ public class ProjectMemberRequest {
     @Column(nullable = false)
     private boolean state;
 
-    private ProjectMemberRequest(Project project, Member member){
+    private JoinRequest(Project project, Member member){
         this.project = project;
         this.member = member;
         this.state = false;
     }
 
-    public static ProjectMemberRequest from(Project project, Member member) {
-        return new ProjectMemberRequest(project, member);
+    public static JoinRequest from(Project project, Member member) {
+        return new JoinRequest(project, member);
     }
 }

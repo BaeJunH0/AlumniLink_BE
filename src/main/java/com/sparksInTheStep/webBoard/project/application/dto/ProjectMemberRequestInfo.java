@@ -1,6 +1,6 @@
 package com.sparksInTheStep.webBoard.project.application.dto;
 
-import com.sparksInTheStep.webBoard.project.doamin.ProjectMemberRequest;
+import com.sparksInTheStep.webBoard.joinRequest.domain.JoinRequest;
 
 import java.util.Date;
 
@@ -12,14 +12,14 @@ public record ProjectMemberRequestInfo(
         int nowCount,
         Date deadline
 ) {
-    public static ProjectMemberRequestInfo of(ProjectMemberRequest projectMemberRequest) {
+    public static ProjectMemberRequestInfo of(JoinRequest joinRequest) {
         return new ProjectMemberRequestInfo(
-                projectMemberRequest.getId(),
-                projectMemberRequest.getProject().getName(),
-                projectMemberRequest.getMember().getNickname(),
-                projectMemberRequest.getProject().getMaxCount(),
-                projectMemberRequest.getProject().getNowCount(),
-                projectMemberRequest.getProject().getDeadline()
+                joinRequest.getId(),
+                joinRequest.getProject().getName(),
+                joinRequest.getMember().getNickname(),
+                joinRequest.getProject().getMaxCount(),
+                joinRequest.getProject().getNowCount(),
+                joinRequest.getProject().getDeadline()
         );
     }
 }

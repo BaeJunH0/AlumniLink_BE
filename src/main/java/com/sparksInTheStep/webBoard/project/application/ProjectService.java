@@ -3,15 +3,15 @@ package com.sparksInTheStep.webBoard.project.application;
 import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
 import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.ProjectErrorCode;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectMemberRequestInfo;
-import com.sparksInTheStep.webBoard.project.doamin.JoinedProject;
-import com.sparksInTheStep.webBoard.project.doamin.ProjectMemberRequest;
-import com.sparksInTheStep.webBoard.project.persistent.JoinedProjectRepository;
+import com.sparksInTheStep.webBoard.project.doamin.ProjectMember;
+import com.sparksInTheStep.webBoard.joinRequest.domain.JoinRequest;
+import com.sparksInTheStep.webBoard.project.persistent.ProjectMemberRepository;
 import com.sparksInTheStep.webBoard.member.domain.Member;
 import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectCommand;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectInfo;
 import com.sparksInTheStep.webBoard.project.doamin.Project;
-import com.sparksInTheStep.webBoard.project.persistent.ProjectMemberRequestRepository;
+import com.sparksInTheStep.webBoard.joinRequest.persistent.JoinRequestRepository;
 import com.sparksInTheStep.webBoard.project.persistent.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,15 +24,14 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
-    private final JoinedProjectRepository joinedProjectRepository;
-    private final ProjectMemberRequestRepository projectMemberRequestRepository;
+    private final ProjectMemberRepository projectMemberRepository;
+    private final JoinRequestRepository joinRequestRepository;
 
     @Transactional(readOnly = true)
     public Page<ProjectInfo> getAllProjects(Pageable pageable){
@@ -59,8 +58,8 @@ public class ProjectService {
     @Transactional(readOnly = true)
     public Page<ProjectInfo> getMyProjects(Pageable pageable, String nickname) {
         Member member = memberRepository.findByNickname(nickname);
-        Page<JoinedProject> joinedProjects = joinedProjectRepository.findJoinedProjectsByMember(pageable, member);
-        return joinedProjects.map(JoinedProject::getProject).map(ProjectInfo::of);
+        Page<ProjectMember> joinedProjects = projectMemberRepository.findJoinedProjectsByMember(pageable, member);
+        return joinedProjects.map(ProjectMember::getProject).map(ProjectInfo::of);
     }
 
     @Transactional
@@ -82,8 +81,8 @@ public class ProjectService {
 
         // 주인을 프로젝트의 첫 번째 멤버로 가입
         project.join();
-        JoinedProject joinedProject = JoinedProject.from(member, project);
-        joinedProjectRepository.save(joinedProject);
+        ProjectMember projectMember = ProjectMember.from(member, project);
+        projectMemberRepository.save(projectMember);
     }
 
     @Transactional
@@ -128,7 +127,7 @@ public class ProjectService {
         );
         Member member = memberRepository.findByNickname(nickname);
 
-        if(!joinedProjectRepository.existsByMemberAndProject(member, project)){
+        if(!projectMemberRepository.existsByMemberAndProject(member, project)){
             throw CustomException.of(ProjectErrorCode.NOT_FOUND);
         }
 
@@ -137,7 +136,7 @@ public class ProjectService {
             projectRepository.delete(project);
         }
 
-        joinedProjectRepository.deleteByMemberAndProject(member, project);
+        projectMemberRepository.deleteByMemberAndProject(member, project);
     }
 
     @Transactional
@@ -150,24 +149,24 @@ public class ProjectService {
         if(project.getNowCount() == project.getMaxCount()) {
             throw CustomException.of(ProjectErrorCode.OVER_TEAM_SIZE);
         }
-        if(joinedProjectRepository.existsByMemberAndProject(member, project)){
+        if(projectMemberRepository.existsByMemberAndProject(member, project)){
             throw CustomException.of(ProjectErrorCode.ALREADY_JOINED_PROJECT);
         }
 
-        ProjectMemberRequest projectMemberRequest = ProjectMemberRequest.from(project, member);
-        projectMemberRequestRepository.save(projectMemberRequest);
+        JoinRequest joinRequest = JoinRequest.from(project, member);
+        joinRequestRepository.save(joinRequest);
     }
 
     @Transactional(readOnly = true)
     public List<ProjectMemberRequestInfo> readProjectJoinRequest(String nickname) {
-        List<ProjectMemberRequest> requests =
-                projectMemberRequestRepository.findProjectMemberRequestByMember_Nickname(nickname);
+        List<JoinRequest> requests =
+                joinRequestRepository.findProjectMemberRequestByMember_Nickname(nickname);
         return requests.stream().map(ProjectMemberRequestInfo::of).toList();
     }
 
     @Transactional
     public void choice(String nickname, Long requestId, boolean tf) {
-        ProjectMemberRequest request = projectMemberRequestRepository.findById(requestId).
+        JoinRequest request = joinRequestRepository.findById(requestId).
                 orElseThrow(() -> CustomException.of(ProjectErrorCode.NO_SUCH_REQUEST));
 
         if(!request.getProject().getLeaderName().equals(nickname)) {
@@ -179,10 +178,10 @@ public class ProjectService {
             Project project = request.getProject();
 
             project.join();
-            JoinedProject joinedProject = JoinedProject.from(member, project);
-            joinedProjectRepository.save(joinedProject);
+            ProjectMember projectMember = ProjectMember.from(member, project);
+            projectMemberRepository.save(projectMember);
         }
 
-        projectMemberRequestRepository.delete(request);
+        joinRequestRepository.delete(request);
     }
 }

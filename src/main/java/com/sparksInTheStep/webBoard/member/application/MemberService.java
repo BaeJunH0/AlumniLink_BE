@@ -70,9 +70,9 @@ public class MemberService {
 
     // 회원 정보 조회
     @Transactional(readOnly = true)
-    public Page<MemberInfo.Special> readAllMembers(String email, Pageable pageable){
+    public Page<MemberInfo> readAllMembers(String email, Pageable pageable){
         if(isAdminMember(email)){
-            return memberRepository.findAll(pageable).map(MemberInfo.Special::from);
+            return memberRepository.findAll(pageable).map(MemberInfo::of);
         }
         throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
     }
@@ -114,7 +114,7 @@ public class MemberService {
         return memberRepository.findByEmail(email).adminCheck();
     }
 
-    // RTR 동작
+    // refresh token 동작
     @Transactional(readOnly = true)
     public String refreshTokenAction(String refreshToken) {
         if(jwtTokenProvider.isTokenExpired(refreshToken)) {
@@ -133,5 +133,13 @@ public class MemberService {
         }
 
         return jwtTokenProvider.makeAccessToken(email, nickname);
+    }
+
+    // id로 유저 정보 조회
+    @Transactional(readOnly = true)
+    public MemberInfo findMemberByNickname(String nickname) {
+        Member member = memberRepository.findByNickname(nickname);
+
+        return MemberInfo.of(member);
     }
 }

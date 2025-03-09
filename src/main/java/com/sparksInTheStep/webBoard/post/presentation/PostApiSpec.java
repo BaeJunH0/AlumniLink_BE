@@ -34,9 +34,17 @@ public interface PostApiSpec {
     @Operation(summary = "자기가 쓴 글 불러오기", description = "자기가 쓴 모든 글을 리스트로 반환합니다")
     @ApiResponse(responseCode="200", description = "성공")
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
-    public ResponseEntity<?> getPostsByMember(
+    public ResponseEntity<?> getPostsByState(
             @PageableDefault Pageable pageable,
-            @AuthorizedUser MemberInfo.Default memberInfo
+            @AuthorizedUser MemberInfo memberInfo
+    );
+
+    @Operation(summary = "특정 유저가 쓴 글 불러오기", description = "특정 유저가 쓴 모든 글을 리스트로 반환합니다")
+    @ApiResponse(responseCode="200", description = "성공")
+    @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
+    public ResponseEntity<?> getPostsByUserId(
+            @PageableDefault Pageable pageable,
+            @PathVariable Long userId
     );
 
     @Operation(summary = "게시글 저장", description = "게시글을 저장합니다.")
@@ -44,7 +52,7 @@ public interface PostApiSpec {
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
     @ApiResponse(responseCode="500", description = "파라미터의 값이 유효하지 않습니다")
     public ResponseEntity<?> savePost(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @Parameter(description = "제목과 바디 및 태그를 파라미터로 받습니다")
             @RequestBody PostRequest request
     );
@@ -54,7 +62,7 @@ public interface PostApiSpec {
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
     @ApiResponse(responseCode="500", description = "게시글 없거나 이미 게시글 번호 유효하지 않음")
     public ResponseEntity<?> updatePost(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @RequestBody PostRequest postRequest,
             @PathVariable Long postId
     );
@@ -64,7 +72,7 @@ public interface PostApiSpec {
     @ApiResponse(responseCode="404", description = "Bearer 토큰이 유효하지 않습니다")
     @ApiResponse(responseCode="500", description = "게시글 없거나 이미 게시글 번호 유효하지 않음")
     public ResponseEntity<?> deletePost(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @PathVariable Long postId
     );
 }

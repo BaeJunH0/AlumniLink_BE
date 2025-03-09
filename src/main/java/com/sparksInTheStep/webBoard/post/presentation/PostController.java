@@ -41,18 +41,28 @@ public class PostController implements PostApiSpec{
     }
 
     @GetMapping("/my")
-    public ResponseEntity<?> getPostsByMember(
+    public ResponseEntity<?> getPostsByState(
             @PageableDefault Pageable pageable,
-            @AuthorizedUser MemberInfo.Default memberInfo
+            @AuthorizedUser MemberInfo memberInfo
     ) {
         Page<PostResponse> response = postService.getPostsByMember(memberInfo.nickname(), pageable)
                 .map(PostResponse::from);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getPostsByUserId(
+            @PageableDefault Pageable pageable,
+            @PathVariable Long userId
+    ) {
+        Page<PostResponse> responses = postService.getPostsByMemberId(userId, pageable)
+                .map(PostResponse::from);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> savePost(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @RequestBody PostRequest request
     ) {
         postService.createPost(memberInfo.nickname(), PostCommand.from(request));
@@ -61,7 +71,7 @@ public class PostController implements PostApiSpec{
 
     @PatchMapping("/{postId}")
     public ResponseEntity<?> updatePost(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @RequestBody PostRequest postRequest,
             @PathVariable Long postId
     ){
@@ -72,7 +82,7 @@ public class PostController implements PostApiSpec{
 
     @DeleteMapping("/{postId}")
     public ResponseEntity<?> deletePost(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @PathVariable Long postId
     ) {
         postFacade.deletePost(memberInfo.nickname(), postId);

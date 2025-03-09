@@ -9,7 +9,7 @@ public record MemberResponse() {
             Boolean employed,
             String gitLink,
             String resumeLink){
-        public static MemberResponse.Default from(MemberInfo.Default memberInfo){
+        public static MemberResponse.Default from(MemberInfo memberInfo){
             return new MemberResponse.Default(
                     memberInfo.email(),
                     memberInfo.nickname(),
@@ -25,7 +25,7 @@ public record MemberResponse() {
             String nickname,
             Long id,
             boolean isAdmin){
-        public static MemberResponse.Special from(MemberInfo.Special memberInfo){
+        public static MemberResponse.Special from(MemberInfo memberInfo){
             return new MemberResponse.Special(
                     memberInfo.email(), memberInfo.nickname(), memberInfo.id(), memberInfo.isAdmin()
             );

@@ -5,9 +5,6 @@ import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import com.sparksInTheStep.webBoard.project.application.ProjectService;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectCommand;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectInfo;
-import com.sparksInTheStep.webBoard.project.application.dto.ProjectMemberRequestInfo;
-import com.sparksInTheStep.webBoard.project.presentation.dto.Choice;
-import com.sparksInTheStep.webBoard.project.presentation.dto.ProjectMemberRequestResponse;
 import com.sparksInTheStep.webBoard.project.presentation.dto.ProjectRequest;
 import com.sparksInTheStep.webBoard.project.presentation.dto.ProjectResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +14,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,7 +40,7 @@ public class ProjectController implements ProjectApiSpec{
     @PostMapping
     public ResponseEntity<?> createProject(
             @RequestBody ProjectRequest projectRequest,
-            @AuthorizedUser MemberInfo.Default memberInfo
+            @AuthorizedUser MemberInfo memberInfo
     ){
         projectService.makeProject(ProjectCommand.from(projectRequest, memberInfo.nickname()));
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -55,7 +50,7 @@ public class ProjectController implements ProjectApiSpec{
     public ResponseEntity<?> updateProject(
             @PathVariable Long projectId,
             @RequestBody ProjectRequest projectRequest,
-            @AuthorizedUser MemberInfo.Default memberInfo
+            @AuthorizedUser MemberInfo memberInfo
     ) {
         projectService.updateProject(
                 projectId, ProjectCommand.from(projectRequest, memberInfo.nickname())
@@ -66,7 +61,7 @@ public class ProjectController implements ProjectApiSpec{
     @DeleteMapping("/{projectId}")
     public ResponseEntity<?> deleteProject(
             @PathVariable Long projectId,
-            @AuthorizedUser MemberInfo.Default memberInfo
+            @AuthorizedUser MemberInfo memberInfo
     ) {
         projectService.deleteProject(projectId, memberInfo.nickname());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -75,7 +70,7 @@ public class ProjectController implements ProjectApiSpec{
     @GetMapping("/my")
     public ResponseEntity<?> readMyProject(
             @PageableDefault Pageable pageable,
-            @AuthorizedUser MemberInfo.Default memberInfo
+            @AuthorizedUser MemberInfo memberInfo
     ) {
         Page<ProjectInfo> projects = projectService.getMyProjects(pageable, memberInfo.nickname());
         return new ResponseEntity<>(projects.map(ProjectResponse::of), HttpStatus.OK);
@@ -84,42 +79,9 @@ public class ProjectController implements ProjectApiSpec{
     @DeleteMapping("/my/{projectId}")
     public ResponseEntity<?> withdrawProject(
             @PathVariable Long projectId,
-            @AuthorizedUser MemberInfo.Default memberInfo
+            @AuthorizedUser MemberInfo memberInfo
     ) {
         projectService.withdrawProject(projectId, memberInfo.nickname());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PostMapping("/{projectId}")
-    public ResponseEntity<?> joinToProject(
-            @PathVariable Long projectId,
-            @AuthorizedUser MemberInfo.Default memberInfo
-    ) {
-        projectService.joinProject(projectId, memberInfo.nickname());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/requests")
-    public ResponseEntity<?> readMyProjectRequest(
-            @AuthorizedUser MemberInfo.Default memberInfo
-    ) {
-        List<ProjectMemberRequestInfo> requests =
-                projectService.readProjectJoinRequest(memberInfo.nickname());
-
-        return new ResponseEntity<>(
-                requests.stream().map(ProjectMemberRequestResponse::of).toList(),
-                HttpStatus.OK
-        );
-    }
-
-    @PostMapping("/requests/{requestId}")
-    public ResponseEntity<?> choiceRequest(
-            @AuthorizedUser MemberInfo.Default memberInfo,
-            @RequestBody Choice tf,
-            @PathVariable Long requestId
-    ) {
-        projectService.choice(memberInfo.nickname(), requestId, tf.tf());
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

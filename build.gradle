@@ -31,6 +31,10 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql' // 추가
 	testImplementation("com.h2database:h2")
 
+	// Cache
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+
 	// Web
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

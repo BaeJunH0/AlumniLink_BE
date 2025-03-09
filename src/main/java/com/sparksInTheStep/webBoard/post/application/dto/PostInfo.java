@@ -12,7 +12,7 @@ public record PostInfo(
         String body,
         String desscription,
         PostType tag,
-        MemberInfo.Default memberInfo,
+        MemberInfo memberInfo,
         LocalDateTime startTime,
         LocalDateTime modifiedTime
         ){
@@ -24,7 +24,7 @@ public record PostInfo(
                post.getBody(),
                post.getDescription(),
                post.getTag(),
-               MemberInfo.Default.from(post.getMember()),
+               MemberInfo.of(post.getMember()),
                post.getAtCreated(),
                post.getAtModified()
        );

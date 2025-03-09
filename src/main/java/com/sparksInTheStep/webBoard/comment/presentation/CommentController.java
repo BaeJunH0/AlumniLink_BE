@@ -19,22 +19,21 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController implements CommentApiSpec{
     private final CommentService commentService;
 
-    @GetMapping
+    @GetMapping("/{postId}")
     public ResponseEntity<?> getComment(
-            @RequestBody CommentRequest.Find postParam,
-            @PageableDefault Pageable pageable
+            @PageableDefault Pageable pageable,
+            @PathVariable Long postId
     ) {
         return new ResponseEntity<>(
-                commentService.readCommentsByPostId(postParam.postId(), pageable)
-                        .map(CommentResponse::from),
+                commentService.readCommentsByPostId(postId, pageable).map(CommentResponse::from),
                 HttpStatus.OK
         );
     }
 
     @PostMapping
     public ResponseEntity<?> postComment(
-            @AuthorizedUser MemberInfo.Default memberInfo,
-            @RequestBody CommentRequest.Create commentRequest
+            @AuthorizedUser MemberInfo memberInfo,
+            @RequestBody CommentRequest commentRequest
     ) {
         commentService.makeNewComment(
                 CommentCommand.from(commentRequest),
@@ -46,8 +45,8 @@ public class CommentController implements CommentApiSpec{
 
     @PatchMapping("/{commentId}")
     public ResponseEntity<?> updateComment(
-            @AuthorizedUser MemberInfo.Default memberInfo,
-            @RequestBody CommentRequest.Create commentRequest,
+            @AuthorizedUser MemberInfo memberInfo,
+            @RequestBody CommentRequest commentRequest,
             @PathVariable Long commentId
     ){
         commentService.updateComment(
@@ -61,7 +60,7 @@ public class CommentController implements CommentApiSpec{
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity<?> deleteComment(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @PathVariable Long commentId
     ) {
         commentService.deleteComment(memberInfo.nickname(), commentId);

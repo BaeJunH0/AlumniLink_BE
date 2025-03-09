@@ -24,7 +24,7 @@ public class AdminApiController {
 
     @GetMapping
     public ResponseEntity<?> readAllMembers(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @PageableDefault Pageable pageable
     ) {
         return new ResponseEntity<>(
@@ -54,7 +54,7 @@ public class AdminApiController {
 
     @PatchMapping("/{userId}")
     public ResponseEntity<?> makeMemberAdmin(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @PathVariable Long userId
     ) {
         memberService.grantingMember(memberInfo.email(), userId);
@@ -63,7 +63,7 @@ public class AdminApiController {
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteMember(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @PathVariable Long userId
     ) {
         memberService.deleteMember(memberInfo.email(), userId);

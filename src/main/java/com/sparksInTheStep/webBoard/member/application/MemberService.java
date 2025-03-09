@@ -70,9 +70,9 @@ public class MemberService {
 
     // 회원 정보 조회
     @Transactional(readOnly = true)
-    public Page<MemberInfo.Special> readAllMembers(String email, Pageable pageable){
+    public Page<MemberInfo> readAllMembers(String email, Pageable pageable){
         if(isAdminMember(email)){
-            return memberRepository.findAll(pageable).map(MemberInfo.Special::from);
+            return memberRepository.findAll(pageable).map(MemberInfo::of);
         }
         throw CustomException.of(MemberErrorCode.NO_AUTHENTICATION);
     }
@@ -137,9 +137,9 @@ public class MemberService {
 
     // id로 유저 정보 조회
     @Transactional(readOnly = true)
-    public MemberInfo.Default findMemberByNickname(String nickname) {
+    public MemberInfo findMemberByNickname(String nickname) {
         Member member = memberRepository.findByNickname(nickname);
 
-        return MemberInfo.Default.from(member);
+        return MemberInfo.of(member);
     }
 }

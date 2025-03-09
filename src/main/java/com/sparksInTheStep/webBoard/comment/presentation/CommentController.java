@@ -32,7 +32,7 @@ public class CommentController implements CommentApiSpec{
 
     @PostMapping
     public ResponseEntity<?> postComment(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @RequestBody CommentRequest commentRequest
     ) {
         commentService.makeNewComment(
@@ -45,7 +45,7 @@ public class CommentController implements CommentApiSpec{
 
     @PatchMapping("/{commentId}")
     public ResponseEntity<?> updateComment(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @RequestBody CommentRequest commentRequest,
             @PathVariable Long commentId
     ){
@@ -60,7 +60,7 @@ public class CommentController implements CommentApiSpec{
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity<?> deleteComment(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @PathVariable Long commentId
     ) {
         commentService.deleteComment(memberInfo.nickname(), commentId);

@@ -22,7 +22,7 @@ public interface MemberApiSpec {
     @Operation(summary = "유저 정보 변경", description = "유저의 정보를 변경합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     ResponseEntity<?> updateMember(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @RequestBody MemberRequest.Register memberRequest
     );
 }

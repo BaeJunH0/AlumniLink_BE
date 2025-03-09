@@ -29,7 +29,7 @@ public class MemberController implements MemberApiSpec {
 
     @PutMapping("/my")
     public ResponseEntity<?> updateMember(
-            @AuthorizedUser MemberInfo.Default memberInfo,
+            @AuthorizedUser MemberInfo memberInfo,
             @RequestBody MemberRequest.Register memberRequest
     ) {
         memberService.updateMember(memberInfo.email(), MemberCommand.from(memberRequest));

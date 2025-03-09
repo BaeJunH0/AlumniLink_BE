@@ -40,7 +40,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             WebDataBinderFactory binderFactory
     ) throws IOException {
         // 원활한 테스트를 위한 인증 기능 비활성화
-        return MemberInfo.Default.from(memberRepository.findById(1L).orElseThrow());
+        return MemberInfo.of(memberRepository.findById(1L).orElseThrow());
 //        // 헤더가 Authorization 필드를 가지는지 확인
 //        String token = webRequest.getHeader("Authorization");
 //        if (token == null) {

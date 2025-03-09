@@ -1,17 +1,15 @@
 package com.sparksInTheStep.webBoard.project.application;
 
 import com.sparksInTheStep.webBoard.global.errorHandling.CustomException;
+import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.MemberErrorCode;
 import com.sparksInTheStep.webBoard.global.errorHandling.errorCode.ProjectErrorCode;
-import com.sparksInTheStep.webBoard.project.application.dto.ProjectMemberRequestInfo;
 import com.sparksInTheStep.webBoard.project.doamin.ProjectMember;
-import com.sparksInTheStep.webBoard.joinRequest.domain.JoinRequest;
 import com.sparksInTheStep.webBoard.project.persistent.ProjectMemberRepository;
 import com.sparksInTheStep.webBoard.member.domain.Member;
 import com.sparksInTheStep.webBoard.member.persistent.MemberRepository;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectCommand;
 import com.sparksInTheStep.webBoard.project.application.dto.ProjectInfo;
 import com.sparksInTheStep.webBoard.project.doamin.Project;
-import com.sparksInTheStep.webBoard.joinRequest.persistent.JoinRequestRepository;
 import com.sparksInTheStep.webBoard.project.persistent.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +22,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +30,8 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
     private final ProjectMemberRepository projectMemberRepository;
-    private final JoinRequestRepository joinRequestRepository;
 
+    // 모든 Project 가져오기 ( DeadLine 안지난 Project 만 )
     @Transactional(readOnly = true)
     public Page<ProjectInfo> getAllProjects(Pageable pageable){
         LocalDate today = LocalDate.now();
@@ -47,6 +46,7 @@ public class ProjectService {
         return new PageImpl<>(projects, pageable, projects.size()).map(ProjectInfo::of);
     }
 
+    // id로 Project 가져오기
     @Transactional(readOnly = true)
     public ProjectInfo getProject(Long id){
         Project project = projectRepository.findById(id).orElseThrow(
@@ -55,6 +55,7 @@ public class ProjectService {
         return ProjectInfo.of(project);
     }
 
+    // 나의 Project 가져오기
     @Transactional(readOnly = true)
     public Page<ProjectInfo> getMyProjects(Pageable pageable, String nickname) {
         Member member = memberRepository.findByNickname(nickname);
@@ -62,6 +63,7 @@ public class ProjectService {
         return joinedProjects.map(ProjectMember::getProject).map(ProjectInfo::of);
     }
 
+    // Project 생성
     @Transactional
     public void makeProject(ProjectCommand projectCommand){
         if(projectRepository.existsByName(projectCommand.name())) {
@@ -85,6 +87,7 @@ public class ProjectService {
         projectMemberRepository.save(projectMember);
     }
 
+    // Project 업데이트
     @Transactional
     public void updateProject(Long id, ProjectCommand projectCommand){
         Project project = projectRepository.findById(id).orElseThrow(
@@ -108,6 +111,7 @@ public class ProjectService {
         );
     }
 
+    // Project 삭제
     @Transactional
     public void deleteProject(Long id, String nickname){
         Project project = projectRepository.findById(id).orElseThrow(
@@ -120,6 +124,7 @@ public class ProjectService {
         projectRepository.delete(project);
     }
 
+    // Project 탈퇴
     @Transactional
     public void withdrawProject(Long id, String nickname) {
         Project project = projectRepository.findById(id).orElseThrow(
@@ -139,49 +144,42 @@ public class ProjectService {
         projectMemberRepository.deleteByMemberAndProject(member, project);
     }
 
+    // leader 이름으로 project 조회
     @Transactional
-    public void joinProject(Long id, String nickname) {
-        Project project = projectRepository.findById(id).orElseThrow(
+    public List<Project> findByLeaderName(String leaderName) {
+        return projectRepository.findByLeaderName(leaderName);
+    }
+
+    // id로 project 조회
+    @Transactional
+    public Optional<Project> findById(Long projectId) {
+        return projectRepository.findById(projectId);
+    }
+
+    // 가입된 멤버인지 확인
+    @Transactional(readOnly = true)
+    public boolean isExistMember(Long projectId, Long memberId) {
+        Project project = projectRepository.findById(projectId).orElseThrow(
                 () -> CustomException.of(ProjectErrorCode.NOT_FOUND)
         );
-        Member member = memberRepository.findByNickname(nickname);
-
-        if(project.getNowCount() == project.getMaxCount()) {
-            throw CustomException.of(ProjectErrorCode.OVER_TEAM_SIZE);
-        }
-        if(projectMemberRepository.existsByMemberAndProject(member, project)){
-            throw CustomException.of(ProjectErrorCode.ALREADY_JOINED_PROJECT);
-        }
-
-        JoinRequest joinRequest = JoinRequest.from(project, member);
-        joinRequestRepository.save(joinRequest);
+        Member member = memberRepository.findById(memberId).orElseThrow(
+                () -> CustomException.of(MemberErrorCode.NOT_FOUND)
+        );
+        return projectMemberRepository.existsByMemberAndProject(member, project);
     }
 
-    @Transactional(readOnly = true)
-    public List<ProjectMemberRequestInfo> readProjectJoinRequest(String nickname) {
-        List<JoinRequest> requests =
-                joinRequestRepository.findProjectMemberRequestByMember_Nickname(nickname);
-        return requests.stream().map(ProjectMemberRequestInfo::of).toList();
-    }
-
+    // 멤버 가입 로직
     @Transactional
-    public void choice(String nickname, Long requestId, boolean tf) {
-        JoinRequest request = joinRequestRepository.findById(requestId).
-                orElseThrow(() -> CustomException.of(ProjectErrorCode.NO_SUCH_REQUEST));
+    public void joinMember(Long projectId, Long memberId) {
+        Project project = projectRepository.findById(projectId).orElseThrow(
+                () -> CustomException.of(ProjectErrorCode.NOT_FOUND)
+        );
+        Member member = memberRepository.findById(memberId).orElseThrow(
+                () -> CustomException.of(MemberErrorCode.NOT_FOUND)
+        );
 
-        if(!request.getProject().getLeaderName().equals(nickname)) {
-            throw CustomException.of(ProjectErrorCode.NOT_TEAM_LEADER);
-        }
-
-        if(tf) {
-            Member member = request.getMember();
-            Project project = request.getProject();
-
-            project.join();
-            ProjectMember projectMember = ProjectMember.from(member, project);
-            projectMemberRepository.save(projectMember);
-        }
-
-        joinRequestRepository.delete(request);
+        ProjectMember projectMember = ProjectMember.from(member, project);
+        projectMemberRepository.save(projectMember);
+        project.join();
     }
 }

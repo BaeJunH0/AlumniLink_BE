@@ -4,6 +4,7 @@ import com.sparksInTheStep.webBoard.global.annotation.AuthorizedUser;
 import com.sparksInTheStep.webBoard.joinRequest.application.JoinRequestFacade;
 import com.sparksInTheStep.webBoard.joinRequest.application.JoinRequestService;
 import com.sparksInTheStep.webBoard.joinRequest.application.dto.JoinRequestInfo;
+import com.sparksInTheStep.webBoard.joinRequest.presentation.dto.JoinRequestResponse;
 import com.sparksInTheStep.webBoard.member.application.dto.MemberInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/requests")
 public class JoinRequestController {
-    private final JoinRequestService joinRequestService;
     private final JoinRequestFacade joinRequestFacade;
 
     // 내가 리더인 프로젝트에 온 요청들 조회
@@ -38,7 +38,11 @@ public class JoinRequestController {
     ) {
         List<JoinRequestInfo> memberJoinRequestInfos =
                 joinRequestFacade.getMemberJoinRequests(memberInfo.id(), memberInfo.nickname());
-        return new ResponseEntity<>(memberJoinRequestInfos, HttpStatus.OK);
+
+        return new ResponseEntity<>(
+                memberJoinRequestInfos.stream().map(JoinRequestResponse::of).toList(),
+                HttpStatus.OK
+        );
     }
 
     // 요청 보내기
